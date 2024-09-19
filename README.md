@@ -1,14 +1,13 @@
 # Project Title
 
 ## 1. Project Description
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ... 
+Our team bby27 is developing a web application to help households organize their shopping to save both time and money with shared lists and community feedback.
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
-* ...
-* ...
-* ...
+* ...Kyle Cheon
+* ...Shawn Lee
+* ...Hi I'm Kaid and I'm excited and terrified to work on this project!
 	
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
