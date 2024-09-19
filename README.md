@@ -5,9 +5,11 @@ Our team bby27 is developing a web application to help households organize their
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
-* ...Kyle Cheon
-* ...Shawn Lee
+
+* Hi everyone! I am Kyle. I am looking forward to this new app we will create.
+* ...
 * ...Hi I'm Kaid and I'm excited and terrified to work on this project!
+
 	
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
