@@ -6,9 +6,13 @@ Our team bby27 is developing a web application to help households organize their
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
 
+
+
+* Hello, my name is Shawn! I am thrilled to make our own application!
+
 * Hi everyone! I am Kyle. I am looking forward to this new app we will create.
-* ...
-* ...Hi I'm Kaid and I'm excited and terrified to work on this project!
+* 
+* Hi I'm Kaid and I'm excited and terrified to work on this project!
 
 	
 ## 3. Technologies and Resources Used
