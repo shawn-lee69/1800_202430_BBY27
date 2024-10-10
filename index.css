@@ -13,11 +13,25 @@ body {
 #main {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: auto auto;
     align-items: flex-end;
     width: 440px;
-    height: 100vh;
+    height: auto;
     background-color: #ffffff;
+}
+
+header {
+    grid-row: 1 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+}
+
+header img {
+    width: 180px;
+    margin: 12px 0 12px 0;
 }
 
 #welcome {
@@ -25,13 +39,17 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#welcome span {
+    margin-top: 102px;
     font-size: 42px;
     text-align: center;
 }
 
 #welcome img {
     width: 52.5%;
-    margin: 80px 0 246px 0;
+    margin: 80px 0 256px 0;
 }
 
 #bottom {
