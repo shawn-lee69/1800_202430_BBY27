@@ -52,6 +52,19 @@ header img {
     margin: 80px 0 256px 0;
 }
 
+/* this deals with tooltip image floating over the button */
+.tooltip {
+    position: absolute;
+    top: 720px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.tooltip img {
+    width: 229px;
+}
+
 #bottom {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
