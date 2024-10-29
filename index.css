@@ -10,7 +10,7 @@ body {
     margin: 0;
 }
 
-#main {
+.main {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
@@ -34,20 +34,93 @@ header img {
     margin: 12px 0 12px 0;
 }
 
-#welcome {
+/* when a user logs in and there is at least one list */
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    height: 956px;
+    width: auto;
+}
+
+.listContainerTitle {
+    color: #111827;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 45px;
+    padding: 0 20px 0 20px;
+}
+
+.shoppingList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    gap: 20px;
+}
+
+.listItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    background-color: #D1D5DB;
+    border-radius: 8px;
+    width: 368px;
+}
+
+.listItemContentHeader {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.listName {
+    font-size: 2.25rem;
+    font-weight: normal;
+    color: #000000;
+}
+
+.listItemNumberCounter {
+    display: flex;
+    font-size: 1.75rem;
+    color: #6B7280;
+}
+
+.listItemContentBottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-top: 26px;
+}
+
+.listItemTimeStamp {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #9CA3AF;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* welcome deals with empty list or not logged in user */
+.welcome {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#welcome span {
+.welcome span {
     margin-top: 102px;
     font-size: 42px;
     text-align: center;
 }
 
-#welcome img {
+.welcome img {
     width: 52.5%;
     margin: 80px 0 256px 0;
 }
@@ -65,7 +138,7 @@ header img {
     width: 229px;
 }
 
-#bottom {
+.bottom {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 4fr 1fr;
@@ -78,7 +151,7 @@ header img {
     z-index: 1;
 }
 
-#add {
+.add {
     grid-column: 2 / 3;
     width: 75%;
     position: absolute;
@@ -86,7 +159,7 @@ header img {
     z-index: 2; /* Ensures the image stays above the #bottom div */
 }
 
-#add-span {
+.add-span {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
     font-size: 20px;
@@ -95,14 +168,14 @@ header img {
     margin-bottom: 12px;
 }
 
-#tag {
+.tag {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     align-self: center;
     width: 56.02px;
 }
 
-#tag-span {
+.tag-span {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
     font-size: 16px;
@@ -111,14 +184,14 @@ header img {
     margin-bottom: 10px;
 }
 
-#profile {
+.profile {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     align-self: center;
     width: 64px;
 }
 
-#profile-span {
+.profile-span {
     grid-column: 3 / 4;
     grid-row: 2 / 3;
     font-size: 16px;

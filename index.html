@@ -13,26 +13,126 @@
         
     </head>
     <body>
-        <div id="main">
-            <header>
-                <img src="SamePage.png" alt="main logo">
-            </header>
-            <div id="welcome">
-                <span>Share your list, <br> Get on the SamePage</span>
-                <img id="logo" src="logo.png">
+        <!-- Content for logged-in users -->
+        <div id="listContent" style="display: none;">
+            <div class="main">
+                <header>
+                    <img src="SamePage.png" alt="main logo">
+                </header>
+                <div class='listContainer'>
+                    <div class='listContainerTitle'>My Lists</div>
+                    <div class="shoppingList">
+                        <!-- grocery lists will appear here dynamically -->
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                <img class="add" src="add.png" alt="add">
+                <img class="tag" src="tag.png" alt="tag">
+                <img class="profile" src="profile.png" alt="profile">
+                <span class="add-span">Create List</span>
+                <span class="tag-span">Add Sale</span>
+                <span class="profile-span">My Page</span>
             </div>
         </div>
-        <div class="tooltip">
-            <img src="ToolTip.png" alt="tooltip">
+
+        <!-- Content for logged-out users -->
+        <div id="emptyListContent" style="display: none;">
+            <div class="main">
+                <header>
+                    <img src="SamePage.png" alt="main logo">
+                </header>
+                <div class="welcome">
+                    <span>Share your list, <br> Get on the SamePage</span>
+                    <img class="logo" src="logo.png" alt='Same Page logo'>
+                </div>
+            </div>
+            <div class="tooltip">
+                <img src="ToolTip.png" alt="tooltip">
+            </div>
+            <div class="bottom">
+                <img class="add" src="add.png" alt="add">
+                <img class="tag" src="tag.png" alt="tag">
+                <img class="profile" src="profile.png" alt="profile">
+                <span class="add-span">Create List</span>
+                <span class="tag-span">Add Sale</span>
+                <span class="profile-span">My Page</span>
+            </div>
         </div>
-        <div id="bottom">
-            <img id="add" src="add.png" alt="add">
-            <img id="tag" src="tag.png" alt="tag">
-            <img id="profile" src="profile.png" alt="profile">
-            <span id="add-span">Create List</span>
-            <span id="tag-span">Add Sale</span>
-            <span id="profile-span">My Page</span>
-        </div>
+
+        <script>
+            var isLoggedIn = true; // Change this value based on user's login status
+            // Array to store list item objects
+            var listItems = [
+                {
+                    name: 'List with Mary',
+                    currentNumberOfItems: 3,
+                    maxNumberOfItems: 4,
+                    createdAt: new Date(2024, 10, 25, 14, 30)
+                },
+                {
+                    name: 'Thanksgiving',
+                    currentNumberOfItems: 3,
+                    maxNumberOfItems: 7,
+                    createdAt: new Date(2024, 9, 25, 14, 30)
+                }
+            ];
+
+
+            var isListItem = listItems.length > 0;
+
+            // Function to render the appropriate content
+            function renderContent() {
+                if (isLoggedIn && isListItem) {
+                    document.getElementById('listContent').style.display = 'block';
+                } else {
+                    document.getElementById('emptyListContent').style.display = 'block';
+                }
+                displayListItems();
+            }
+
+            // Helper function to format date as "YYYY-MM-DD"
+            function formatDate(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+
+            // Function to display the list items in the shoppingList div
+            function displayListItems() {
+                const shoppingListDiv = document.querySelector('.shoppingList');
+                shoppingListDiv.innerHTML = ''; // Clear any existing items
+
+                listItems.forEach((item, index) => {
+                    const formattedDate = formatDate(item.createdAt);
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'list-item';
+                    itemDiv.innerHTML = `
+                        <div class='listItem'>
+                          <div class='listItemContentHeader'>
+                            <div class='listName'>${item.name}</div>
+                            <div class='listItemNumberCounter'>${item.currentNumberOfItems} / ${item.maxNumberOfItems}</div>
+                          </div>
+                          <div class='listItemContentBottom'>
+                            <div class='listItemTimeStamp'>${formattedDate}</div>
+                          </div>
+                        </div>
+                    `;
+                    shoppingListDiv.appendChild(itemDiv);
+                });
+            }
+
+            // // Example: Add a new list item (you can call this function elsewhere in your code)
+            // function addListItem(item) {
+            //     item.createdAt = new Date().toLocaleString(); // Add current timestamp
+            //     listItems.push(item);
+            //     isListItem = listItems.length > 0; // Update isListItem status
+            //     renderContent(); // Re-render content
+            // }
+
+            renderContent();
+        </script>
     </body>
 
 </html>
