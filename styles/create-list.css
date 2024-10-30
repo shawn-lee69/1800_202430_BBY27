@@ -1,0 +1,103 @@
+
+html {
+    font-family: "Crimson Text", serif;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E5E7EB;
+    margin: 0;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 440px;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+    padding: 24px 20px 18px 20px;
+}
+
+.back-arrow img {
+    width: 16px;
+    font-weight: 600;
+}
+
+.list-name {
+    font-size: 2rem;
+
+}
+
+.top-right-menu-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.top-right-menu-icons img {
+    width: 52px;
+}
+
+.divider {
+    width: 90%;
+    height: 1px;
+    background-color: #D9D9D9;
+    margin-top: 16px;
+}
+
+.list-items-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    gap: 16px;
+}
+
+.selected-items-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.shopping-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 364px;
+    padding: 16px 18px;
+    border-radius: 8px;
+    box-shadow: 0px 3px 10px rgba(137, 142, 159, 0.12);
+}
+
+.shopping-item img {
+    width: 32px;
+}
+
+.item-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #6B7280;
+}
+
+.item-add-button img {
+    width: 420px;
+}
