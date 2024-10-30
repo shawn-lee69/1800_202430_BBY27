@@ -151,12 +151,16 @@ header img {
     z-index: 1;
 }
 
-.add {
+.bottom a {
     grid-column: 2 / 3;
-    width: 75%;
     position: absolute;
+    cursor: pointer;
     top: -50px; /* Moves the image up over the #bottom div */
     z-index: 2; /* Ensures the image stays above the #bottom div */
+}
+
+.add {
+    width: 75%;
 }
 
 .add-span {
