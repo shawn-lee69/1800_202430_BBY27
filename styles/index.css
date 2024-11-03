@@ -1,0 +1,212 @@
+html {
+    font-family: "Crimson Text", serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E5E7EB;
+    margin: 0;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-items: flex-end;
+    width: 440px;
+    height: auto;
+    background-color: #ffffff;
+}
+
+header {
+    grid-row: 1 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+}
+
+header img {
+    width: 180px;
+    margin: 12px 0 12px 0;
+}
+
+/* when a user logs in and there is at least one list */
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    height: 956px;
+    width: auto;
+}
+
+.listContainerTitle {
+    color: #111827;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 45px;
+    padding: 0 20px 0 20px;
+}
+
+.shoppingList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    gap: 20px;
+}
+
+.listItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    background-color: #D1D5DB;
+    border-radius: 8px;
+    width: 368px;
+}
+
+.listItemContentHeader {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.listName {
+    font-size: 2.25rem;
+    font-weight: normal;
+    color: #000000;
+}
+
+.listItemNumberCounter {
+    display: flex;
+    font-size: 1.75rem;
+    color: #6B7280;
+}
+
+.listItemContentBottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-top: 26px;
+}
+
+.listItemTimeStamp {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #9CA3AF;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* welcome deals with empty list or not logged in user */
+.welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome span {
+    margin-top: 102px;
+    font-size: 42px;
+    text-align: center;
+}
+
+.welcome img {
+    width: 52.5%;
+    margin: 80px 0 256px 0;
+}
+
+/* this deals with tooltip image floating over the button */
+.tooltip {
+    position: absolute;
+    top: 720px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.tooltip img {
+    width: 229px;
+}
+
+.bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4fr 1fr;
+    width: 440px;
+    height: 116px;
+    justify-items: center;
+    text-align: center;
+    position: relative;
+    background-color: rgb(217, 215, 215);
+    z-index: 1;
+}
+
+.bottom a {
+    grid-column: 2 / 3;
+    position: absolute;
+    cursor: pointer;
+    top: -50px; /* Moves the image up over the #bottom div */
+    z-index: 2; /* Ensures the image stays above the #bottom div */
+}
+
+.add {
+    width: 75%;
+}
+
+.add-span {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    font-size: 20px;
+    font-weight: 400;
+    align-self: center;
+    margin-bottom: 12px;
+}
+
+.tag {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    align-self: center;
+    width: 56.02px;
+}
+
+.tag-span {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    font-size: 16px;
+    font-weight: 400;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+.profile {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    align-self: center;
+    width: 64px;
+}
+
+.profile-span {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    font-size: 16px;
+    font-weight: 400;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+#center {
+    display: grid;
+    width: 440px;
+    height: 813px;
+
+}
