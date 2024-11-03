@@ -20,7 +20,7 @@ var listItems = [
 ];
 
 
-var isListItem = listItems.length > 0;
+isListItem = listItems.length > 0;
 
 // Function to render the appropriate content
 function renderContent() {
@@ -29,7 +29,7 @@ function renderContent() {
   } else {
     document.getElementById('emptyListContent').style.display = 'block';
   }
-  displayListItems();
+  fetchAndDisplayLists();
 }
 
 // Helper function to format date as "YYYY-MM-DD"
@@ -50,25 +50,77 @@ function displayListItems() {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'list-item';
     itemDiv.innerHTML = `
-                        <div class='listItem'>
-                          <div class='listItemContentHeader'>
-                            <div class='listName'>${item.name}</div>
-                            <div class='listItemNumberCounter'>${item.currentNumberOfItems} / ${item.maxNumberOfItems}</div>
-                          </div>
-                          <div class='listItemContentBottom'>
-                            <div class='listItemTimeStamp'>${formattedDate}</div>
-                          </div>
-                        </div>
-                    `;
+      <div class='listItem'>
+        <div class='listItemContentHeader'>
+          <div class='listName'>${item.name}</div>
+          <div class='listItemNumberCounter'>${item.currentNumberOfItems} / ${item.maxNumberOfItems}</div>
+        </div>
+        <div class='listItemContentBottom'>
+          <div class='listItemTimeStamp'>${formattedDate}</div>
+        </div>
+      </div>
+    `;
     shoppingListDiv.appendChild(itemDiv);
   });
 }
 
-// function addListItem(item) {
-//     item.createdAt = new Date().toLocaleString(); // Add current timestamp
-//     listItems.push(item);
-//     isListItem = listItems.length > 0; // Update isListItem status
-//     renderContent(); // Re-render content
-// }
+// Function to fetch lists from Firestore and display them
+function fetchAndDisplayLists() {
+  db.collection('lists').get().then((querySnapshot) => {
+    listItems = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      listItems.push({
+        name: data.name,
+        currentNumberOfItems: 0, // You can fetch the count of items if needed
+        maxNumberOfItems: 0,
+        createdAt: data.createdAt.toDate()
+      });
+    });
+    displayListItems();
+  });
+}
+
+
+// Function to add a new list to Firestore and navigate to create-list.html
+function addListToFirestore() {
+  const listName = 'New List'; // You can prompt the user for a name or let them edit it later
+  if (listName) {
+    const currentTime = new Date();
+    const newList = {
+      name: listName,
+      createdAt: firebase.firestore.Timestamp.fromDate(currentTime),
+      updatedAt: firebase.firestore.Timestamp.fromDate(currentTime),
+      sharableLink: '' // You can generate a sharable link if needed
+    };
+
+    // Add the new list document to Firestore
+    db.collection('lists').add(newList)
+      .then((docRef) => {
+        console.log('List added with ID: ', docRef.id);
+        // Navigate to create-list.html with the new list ID
+        window.location.href = `create-list.html?id=${docRef.id}`;
+      })
+      .catch((error) => {
+        console.error('Error adding list: ', error);
+      });
+  } else {
+    console.log('No list name entered.');
+  }
+}
+
+// Function to set up the 'add' button event listener
+function setupAddListButton() {
+  // Select the anchor tag that wraps the 'add' image
+  const addLink = document.querySelector('.bottom a');
+
+  if (addLink) {
+    addLink.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent default navigation
+      addListToFirestore();   // Call the function to add the list and navigate
+    });
+  }
+}
 
 renderContent();
+setupAddListButton();
