@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #E5E7EB;
+    background-color: #F3F4F6;
     margin: 0;
 }
 
@@ -65,7 +65,7 @@ header img {
     justify-content: center;
     align-items: center;
     padding: 16px;
-    background-color: #D1D5DB;
+    background-color: #C0EBA6;
     border-radius: 8px;
     width: 368px;
 }
@@ -86,7 +86,7 @@ header img {
 .listItemNumberCounter {
     display: flex;
     font-size: 1.75rem;
-    color: #6B7280;
+    color: #347928;
 }
 
 .listItemContentBottom {
@@ -147,7 +147,7 @@ header img {
     justify-items: center;
     text-align: center;
     position: relative;
-    background-color: rgb(217, 215, 215);
+    background-color: #E5E7EB;
     z-index: 1;
 }
 
