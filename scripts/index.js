@@ -48,7 +48,6 @@ function displayListItems() {
   listItems.forEach((item, index) => {
     const formattedDate = formatDate(item.createdAt);
     const itemDiv = document.createElement('div');
-    itemDiv.className = 'list-item';
     itemDiv.innerHTML = `
       <div class='listItem'>
         <div class='listItemContentHeader'>
