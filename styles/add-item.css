@@ -120,6 +120,7 @@ body {
     color: #347928;
     box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .item-add-button img {

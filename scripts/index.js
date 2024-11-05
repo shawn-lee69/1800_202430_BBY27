@@ -29,10 +29,10 @@ function displayListItems() {
 
   listItems.forEach((item, index) => {
     const formattedDate = formatDate(item.createdAt);
-    const itemDiv = document.createElement('a');
-    itemDiv.href = `${basePath}/create-list.html?id=${item.id}`;
-    itemDiv.classList.add('list-item-wrapper');
-    itemDiv.innerHTML = `
+    const itemAnchor = document.createElement('a');
+    itemAnchor.href = `${basePath}/create-list.html?id=${item.id}`;
+    itemAnchor.classList.add('list-item-wrapper');
+    itemAnchor.innerHTML = `
       <div class='list-item'>
         <div class='list-item-content-header'>
           <div class='list-name'>${item.name}</div>
@@ -43,7 +43,7 @@ function displayListItems() {
         </div>
       </div>
     `;
-    shoppingListDiv.appendChild(itemDiv);
+    shoppingListDiv.appendChild(itemAnchor);
   });
 }
 
@@ -81,7 +81,6 @@ function addListToFirestore() {
     // Add the new list document to Firestore
     db.collection('lists').add(newList)
       .then((docRef) => {
-        console.log('List added with ID: ', docRef.id);
         // Navigate to create-list.html with the new list ID
         window.location.href = `create-list.html?id=${docRef.id}`;
       })
@@ -89,7 +88,7 @@ function addListToFirestore() {
         console.error('Error adding list: ', error);
       });
   } else {
-    console.log('No list name entered.');
+    console.log('No list created.');
   }
 }
 

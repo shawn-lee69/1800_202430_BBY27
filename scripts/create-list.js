@@ -95,3 +95,10 @@ function fetchAndDisplayItems(listId) {
     displayItems();
   });
 }
+
+document.getElementById('item-add-button').addEventListener('click', function(event) {
+  const listId = getQueryParam('id');
+  window.location.href = `add-item.html?id=${listId}`;
+});
+
+
