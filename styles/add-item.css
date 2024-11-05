@@ -96,6 +96,12 @@ body {
     margin-top: 62px;
 }
 
+.favorite-tab-image {
+    width: 100%;
+    height: 32px;
+    margin-top: 32px;
+}
+
 .list-items-container {
     display: flex;
     flex-direction: column;
@@ -105,52 +111,7 @@ body {
     gap: 16px;
 }
 
-.selected-items-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-}
-
-.shopping-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 364px;
-    padding: 16px 18px;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
-}
-
-.shopping-item img {
-    width: 32px;
-}
-
-.item-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    color: #347928;
-}
-
 .item-add-button img {
     width: 420px;
 }
 
-
-/* added some checkbox animation for an emphasis */
-.checkbox {
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-}
-
-.checkbox.checked {
-    transform: scale(1.2);
-    opacity: 0.8;
-}
-
-.checkbox.shrink {
-    transform: scale(1);
-}
