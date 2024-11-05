@@ -72,7 +72,7 @@ body {
     margin-right: 5px;
 }
 
-.search-input {
+#search-input {
     border: none;
     background: none;
     outline: none;
@@ -111,7 +111,19 @@ body {
     gap: 16px;
 }
 
+.item-add-button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 364px;
+    padding: 18px 16px;
+    color: #347928;
+    box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
+    border-radius: 8px;
+}
+
 .item-add-button img {
-    width: 420px;
+    width: 32px;
+    margin-right: 10px;
 }
 
