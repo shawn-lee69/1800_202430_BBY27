@@ -11,12 +11,6 @@ var listItems = [
     maxNumberOfItems: 4,
     createdAt: new Date(2024, 10, 25, 14, 30)
   },
-  {
-    name: 'Thanksgiving',
-    currentNumberOfItems: 3,
-    maxNumberOfItems: 7,
-    createdAt: new Date(2024, 9, 25, 14, 30)
-  }
 ];
 
 
@@ -42,20 +36,24 @@ function formatDate(date) {
 
 // Function to display the list items in the shoppingList div
 function displayListItems() {
+  const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
+
   const shoppingListDiv = document.querySelector('.shoppingList');
   shoppingListDiv.innerHTML = ''; // Clear any existing items
 
   listItems.forEach((item, index) => {
     const formattedDate = formatDate(item.createdAt);
-    const itemDiv = document.createElement('div');
+    const itemDiv = document.createElement('a');
+    itemDiv.href = `${basePath}/create-list.html?id=${item.id}`;
+    itemDiv.classList.add('list-item-wrapper');
     itemDiv.innerHTML = `
-      <div class='listItem'>
-        <div class='listItemContentHeader'>
-          <div class='listName'>${item.name}</div>
-          <div class='listItemNumberCounter'>${item.currentNumberOfItems} / ${item.maxNumberOfItems}</div>
+      <div class='list-item'>
+        <div class='list-item-content-header'>
+          <div class='list-name'>${item.name}</div>
+          <div class='list-item-number-counter'>${item.currentNumberOfItems} / ${item.maxNumberOfItems}</div>
         </div>
-        <div class='listItemContentBottom'>
-          <div class='listItemTimeStamp'>${formattedDate}</div>
+        <div class='list-item-content-bottom'>
+          <div class='list-item-time-stamp'>${formattedDate}</div>
         </div>
       </div>
     `;
@@ -70,8 +68,9 @@ function fetchAndDisplayLists() {
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       listItems.push({
+        id: doc.id,
         name: data.name,
-        currentNumberOfItems: 0, // You can fetch the count of items if needed
+        currentNumberOfItems: 0,
         maxNumberOfItems: 0,
         createdAt: data.createdAt.toDate()
       });

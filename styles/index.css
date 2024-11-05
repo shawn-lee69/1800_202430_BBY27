@@ -59,7 +59,12 @@ header img {
     gap: 20px;
 }
 
-.listItem {
+.list-item-wrapper{
+    color: inherit;
+    text-decoration: none;
+}
+
+.list-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -70,26 +75,26 @@ header img {
     width: 368px;
 }
 
-.listItemContentHeader {
+.list-item-content-header {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: space-between;
 }
 
-.listName {
+.list-name {
     font-size: 2.25rem;
     font-weight: normal;
     color: #000000;
 }
 
-.listItemNumberCounter {
+.list-item-number-counter {
     display: flex;
     font-size: 1.75rem;
     color: #347928;
 }
 
-.listItemContentBottom {
+.list-item-content-bottom {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -97,7 +102,7 @@ header img {
     margin-top: 26px;
 }
 
-.listItemTimeStamp {
+.list-item-time-stamp {
     display: flex;
     align-items: center;
     justify-content: flex-end;
