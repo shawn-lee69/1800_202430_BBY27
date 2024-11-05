@@ -18,8 +18,7 @@ document.getElementById('cancel-button').addEventListener('click', function(even
   document.getElementById('search-input').value = '';
 });
 
-function addItemToFirestore() {
-  const itemAddButton = document.querySelector('.item-add-button');
+function addItemToFirestore(itemAddButton) {
   const itemName = itemAddButton ? itemAddButton.textContent.trim() : '';
 
   if (itemName) {
@@ -31,7 +30,7 @@ function addItemToFirestore() {
     };
 
     db.collection('lists').doc(listId).collection('items').add(newItem)
-      .then((docRef) => {
+      .then(() => {
         // TODO: show modal that informs user that adding item was a success
         window.location.href = `create-list.html?id=${listId}`;
       })
@@ -55,11 +54,11 @@ function goBackToTheList() {
 }
 
 function setupAddItemButton() {
-  const addLink = document.querySelector('.item-add-button');
+  const addButton = document.querySelector('.item-add-button');
 
-  if (addLink) {
-    addLink.addEventListener('click', function(event) {
-      addItemToFirestore();
+  if (addButton) {
+    addButton.addEventListener('click', function(event) {
+      addItemToFirestore(addButton);
     });
   }
 }

@@ -82,9 +82,15 @@ function displayItems() {
         <img class='checkbox' src='./images/create-list/check-box-empty.png' alt='checkbox' />
         ${item.name}
       </div>
-      <img src='./images/create-list/delete-circle-button.png' alt='delete button' />
+      <img class='delete-item-button' src='./images/create-list/delete-circle-button.png' alt='delete button' />
     `;
     selectedItemsContainer.appendChild(itemDiv);
+
+    // Attach event listener to the delete button
+    const deleteButton = itemDiv.querySelector('.delete-item-button'); // Select within itemDiv
+    deleteButton.addEventListener('click', function () {
+      removeItemFromFirestore(item.id);
+    });
 
     // Attach event listener to the checkbox
     const checkbox = itemDiv.querySelector('.checkbox');
@@ -130,4 +136,13 @@ document.getElementById('item-add-button').addEventListener('click', function(ev
   window.location.href = `add-item.html?id=${listId}`;
 });
 
-
+function removeItemFromFirestore(itemId) {
+  db.collection('lists').doc(listId).collection('items').doc(itemId).delete()
+    .then(() => {
+      // TODO: show modal that asks user to really delete the item
+      window.location.href = `create-list.html?id=${listId}`;
+    })
+    .catch((error) => {
+      console.log('Failed to remove item: ', error);
+    })
+}
