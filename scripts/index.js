@@ -2,23 +2,9 @@
 // TODO: make this use query parameter passed by login page.
 var isLoggedIn = true;
 
-
-// Array to store list item objects (for now i just hard coded them)
-var listItems = [
-  {
-    name: 'List with Mary',
-    currentNumberOfItems: 3,
-    maxNumberOfItems: 4,
-    createdAt: new Date(2024, 10, 25, 14, 30)
-  },
-];
-
-
-isListItem = listItems.length > 0;
-
 // Function to render the appropriate content
 function renderContent() {
-  if (isLoggedIn && isListItem) {
+  if (isLoggedIn) {
     document.getElementById('listContent').style.display = 'block';
   } else {
     document.getElementById('emptyListContent').style.display = 'block';
