@@ -27,7 +27,7 @@ function displayListItems() {
   const shoppingListDiv = document.querySelector('.shoppingList');
   shoppingListDiv.innerHTML = ''; // Clear any existing items
 
-  listItems.forEach((item, index) => {
+  itemsList.forEach((item, index) => {
     const formattedDate = formatDate(item.createdAt);
     const itemAnchor = document.createElement('a');
     itemAnchor.href = `${basePath}/create-list.html?id=${item.id}`;
@@ -50,7 +50,7 @@ function displayListItems() {
 // Function to fetch lists from Firestore and display them
 function fetchAndDisplayLists() {
   db.collection('lists').get().then((querySnapshot) => {
-    listItems = [];
+    itemsList = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       listItems.push({

@@ -5,9 +5,34 @@ function getQueryParam(param) {
   return urlParams.get(param);
 }
 
+const listId = getQueryParam('id');
+
+function toggleIsChecked(itemId) {
+  docRef = db.collection('lists').doc(listId).collection('items').doc(itemId);
+
+  docRef.get().then((doc) => {
+    if (doc.exists) {
+      const currentValue = doc.data().isChecked;
+
+      // Toggle the value and update it in Firestore
+      docRef.update({
+        isChecked: !currentValue
+      }).then(() => {
+        console.log('Toggled successfully');
+      }).catch((error) => {
+        console.error('Error toggling: ', error);
+      });
+    } else {
+      console.log('No such item');
+    }
+  }).catch((error) => {
+    console.error('Error fetching document: ', error);
+  });
+
+}
+
 // Ensure code runs after DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-  const listId = getQueryParam('id');
 
   if (listId) {
     // Fetch the list from Firestore
@@ -43,13 +68,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Declare listItems globally
-let listItems = [];
+let itemsList = [];
 
 function displayItems() {
   const selectedItemsContainer = document.querySelector('.selected-items-container');
   selectedItemsContainer.innerHTML = ''; // Clear any existing items
 
-  listItems.forEach((item, index) => {
+  itemsList.forEach((item, index) => {
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('shopping-item');
     itemDiv.innerHTML = `
@@ -75,6 +100,9 @@ function displayItems() {
         this.classList.remove('checked'); // Reset
         this.classList.remove('shrink'); // Remove shrink class
       }
+
+      // Toggle the item's isChecked status in Firestore
+      toggleIsChecked(item.id);
     });
   });
 }
@@ -82,14 +110,15 @@ function displayItems() {
 // Function to fetch lists from Firestore and display them
 function fetchAndDisplayItems(listId) {
   db.collection('lists').doc(listId).collection('items').get().then((querySnapshot) => {
-    listItems = [];
+    itemsList = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      listItems.push({
+      itemsList.push({
+        id: doc.id,
         name: data.name,
-        isChecked: false,
-        quantity: 1,
-        saleLink: "https://google.com",
+        isChecked: data.isChecked || false,
+        quantity: data.quantity || 1,
+        saleLink: data.saleLink || "https://google.com",
       });
     });
     displayItems();
