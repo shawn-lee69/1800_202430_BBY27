@@ -53,7 +53,7 @@ function fetchAndDisplayLists() {
     itemsList = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      listItems.push({
+      itemsList.push({
         id: doc.id,
         name: data.name,
         currentNumberOfItems: 0,
