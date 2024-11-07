@@ -18,10 +18,8 @@ if (getQueryParameter('isLoggedIn') == 'false') {
 // Function to render the appropriate content
 function renderContent() {
   if (isLoggedIn) {
-    console.log("I am here");
     document.getElementById('listContent').style.display = 'block';
   } else {
-    console.log("I am here");
     document.getElementById('emptyListContent').style.display = 'block';
   }
   fetchAndDisplayLists();
