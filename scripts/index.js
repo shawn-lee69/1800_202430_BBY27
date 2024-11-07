@@ -2,11 +2,26 @@
 // TODO: make this use query parameter passed by login page.
 var isLoggedIn = true;
 
+function getQueryParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  const paramValue = urlParams.get(name);
+  
+  return paramValue;
+}
+
+if (getQueryParameter('isLoggedIn') == 'false') {
+
+  isLoggedIn = false;
+}
+
 // Function to render the appropriate content
 function renderContent() {
   if (isLoggedIn) {
+    console.log("I am here");
     document.getElementById('listContent').style.display = 'block';
   } else {
+    console.log("I am here");
     document.getElementById('emptyListContent').style.display = 'block';
   }
   fetchAndDisplayLists();
@@ -107,3 +122,4 @@ function setupAddListButton() {
 
 renderContent();
 setupAddListButton();
+
