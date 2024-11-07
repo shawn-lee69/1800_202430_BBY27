@@ -146,3 +146,25 @@ function removeItemFromFirestore(itemId) {
       console.log('Failed to remove item: ', error);
     })
 }
+
+
+// Attach event listener to the delete button for list
+const deleteListButton = document.getElementById('delete-list-button');
+deleteListButton.addEventListener('click', function () {
+  // TODO: show modal that asks user to really delete the item
+  removeListFromFirestore(listId);
+});
+
+function removeListFromFirestore(listId) {
+  if (!listId) {
+    console.error("Error: listId is empty or undefined.");
+    return;
+  }
+  db.collection('lists').doc(listId).delete()
+    .then(() => {
+      window.location.href = 'index.html';
+    })
+    .catch((error) => {
+      console.log('Failed to remove list: ', error);
+    });
+}
