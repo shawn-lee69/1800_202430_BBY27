@@ -4,6 +4,13 @@
   <meta charset='UTF-8'>
   <title>Create a shopping list!</title>
   <link rel="stylesheet" href='styles/create-list.css'>
+
+  <!-- Firebase SDKs (Place these before your scripts) -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+  <!-- Your Firebase initialization script -->
+  <script src="./scripts/firebase.js"></script>
 </head>
 <body>
   <div class='main'>
@@ -22,6 +29,7 @@
     <div class='divider'></div>
     <div class='list-items-container'>
       <div class='selected-items-container'>
+          <!-- grocery items will appear here dynamically -->
         <div class='shopping-item'>
           <div class='item-header'>
             <img class='checkbox' src='./images/create-list/check-box-empty.png' alt='button for adding an item' />
@@ -31,13 +39,13 @@
         </div>
         <div class='shopping-item'>
           <div class='item-header'>
-            <img src='./images/create-list/check-box-empty.png' alt='button for adding an item' />
+            <img class='checkbox' src='./images/create-list/check-box-empty.png' alt='button for adding an item' />
             argula
           </div>
-          <img src='./images/create-list/delete-circle-button.png' alt='button for deleting an item' />
+          <img class='delete-item-button' src='./images/create-list/delete-circle-button.png' alt='button for deleting an item' />
         </div>
       </div>
-      <div class='item-add-button'>
+      <div id='item-add-button'>
         <img src='./images/create-list/add-item-button.png' alt='button for adding an item in the list' />
       </div>
     </div>

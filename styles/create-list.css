@@ -83,7 +83,7 @@ body {
     width: 364px;
     padding: 16px 18px;
     border-radius: 8px;
-    box-shadow: 0px 3px 10px rgba(137, 142, 159, 0.12);
+    box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
 }
 
 .shopping-item img {
@@ -95,11 +95,12 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    color: #6B7280;
+    color: #347928;
 }
 
-.item-add-button img {
+#item-add-button img {
     width: 420px;
+    cursor: pointer;
 }
 
 

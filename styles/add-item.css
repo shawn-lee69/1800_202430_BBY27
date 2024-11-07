@@ -1,0 +1,130 @@
+
+html {
+    font-family: "Crimson Text", serif;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E5E7EB;
+    margin: 0;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 440px;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+    padding: 24px 20px 18px 20px;
+}
+
+.back-arrow img {
+    width: 16px;
+    font-weight: 600;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.back-icon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+.search-input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-width: 280px;
+    background-color: #F3F4F6;
+    border-radius: 20px;
+    padding: 12px 0 12px 12px;
+}
+
+.search-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+#search-input {
+    border: none;
+    background: none;
+    outline: none;
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.cancel-button {
+    margin-left: 46px;
+    color: #888;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.divider {
+    width: 90%;
+    height: 1px;
+    background-color: #D9D9D9;
+    margin-top: 62px;
+}
+
+.favorite-tab-image {
+    width: 100%;
+    height: 32px;
+    margin-top: 32px;
+}
+
+.list-items-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    gap: 16px;
+}
+
+.item-add-button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 364px;
+    padding: 18px 16px;
+    color: #347928;
+    box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.item-add-button img {
+    width: 32px;
+    margin-right: 10px;
+}
+

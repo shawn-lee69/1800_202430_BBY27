@@ -2,34 +2,29 @@
 // TODO: make this use query parameter passed by login page.
 var isLoggedIn = true;
 
+function getQueryParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  const paramValue = urlParams.get(name);
+  
+  return paramValue;
+}
 
-// Array to store list item objects (for now i just hard coded them)
-var listItems = [
-  {
-    name: 'List with Mary',
-    currentNumberOfItems: 3,
-    maxNumberOfItems: 4,
-    createdAt: new Date(2024, 10, 25, 14, 30)
-  },
-  {
-    name: 'Thanksgiving',
-    currentNumberOfItems: 3,
-    maxNumberOfItems: 7,
-    createdAt: new Date(2024, 9, 25, 14, 30)
-  }
-];
+if (getQueryParameter('isLoggedIn') == 'false') {
 
-
-var isListItem = listItems.length > 0;
+  isLoggedIn = false;
+}
 
 // Function to render the appropriate content
 function renderContent() {
-  if (isLoggedIn && isListItem) {
+  if (isLoggedIn) {
+    console.log("I am here");
     document.getElementById('listContent').style.display = 'block';
   } else {
+    console.log("I am here");
     document.getElementById('emptyListContent').style.display = 'block';
   }
-  displayListItems();
+  fetchAndDisplayLists();
 }
 
 // Helper function to format date as "YYYY-MM-DD"
@@ -42,33 +37,89 @@ function formatDate(date) {
 
 // Function to display the list items in the shoppingList div
 function displayListItems() {
+  const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
+
   const shoppingListDiv = document.querySelector('.shoppingList');
   shoppingListDiv.innerHTML = ''; // Clear any existing items
 
-  listItems.forEach((item, index) => {
+  itemsList.forEach((item, index) => {
     const formattedDate = formatDate(item.createdAt);
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'list-item';
-    itemDiv.innerHTML = `
-                        <div class='listItem'>
-                          <div class='listItemContentHeader'>
-                            <div class='listName'>${item.name}</div>
-                            <div class='listItemNumberCounter'>${item.currentNumberOfItems} / ${item.maxNumberOfItems}</div>
-                          </div>
-                          <div class='listItemContentBottom'>
-                            <div class='listItemTimeStamp'>${formattedDate}</div>
-                          </div>
-                        </div>
-                    `;
-    shoppingListDiv.appendChild(itemDiv);
+    const itemAnchor = document.createElement('a');
+    itemAnchor.href = `${basePath}/create-list.html?id=${item.id}`;
+    itemAnchor.classList.add('list-item-wrapper');
+    itemAnchor.innerHTML = `
+      <div class='list-item'>
+        <div class='list-item-content-header'>
+          <div class='list-name'>${item.name}</div>
+          <div class='list-item-number-counter'>${item.currentNumberOfItems} / ${item.maxNumberOfItems}</div>
+        </div>
+        <div class='list-item-content-bottom'>
+          <div class='list-item-time-stamp'>${formattedDate}</div>
+        </div>
+      </div>
+    `;
+    shoppingListDiv.appendChild(itemAnchor);
   });
 }
 
-// function addListItem(item) {
-//     item.createdAt = new Date().toLocaleString(); // Add current timestamp
-//     listItems.push(item);
-//     isListItem = listItems.length > 0; // Update isListItem status
-//     renderContent(); // Re-render content
-// }
+// Function to fetch lists from Firestore and display them
+function fetchAndDisplayLists() {
+  db.collection('lists').get().then((querySnapshot) => {
+    itemsList = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      itemsList.push({
+        id: doc.id,
+        name: data.name,
+        currentNumberOfItems: 0,
+        maxNumberOfItems: 0,
+        createdAt: data.createdAt.toDate()
+      });
+    });
+    displayListItems();
+  });
+}
+
+
+// Function to add a new list to Firestore and navigate to create-list.html
+function addListToFirestore() {
+  const listName = 'New List'; // You can prompt the user for a name or let them edit it later
+  if (listName) {
+    const currentTime = new Date();
+    const newList = {
+      name: listName,
+      createdAt: firebase.firestore.Timestamp.fromDate(currentTime),
+      updatedAt: firebase.firestore.Timestamp.fromDate(currentTime),
+      sharableLink: '' // You can generate a sharable link if needed
+    };
+
+    // Add the new list document to Firestore
+    db.collection('lists').add(newList)
+      .then((docRef) => {
+        // Navigate to create-list.html with the new list ID
+        window.location.href = `create-list.html?id=${docRef.id}`;
+      })
+      .catch((error) => {
+        console.error('Error adding list: ', error);
+      });
+  } else {
+    console.log('No list created.');
+  }
+}
+
+// Function to set up the 'add' button event listener
+function setupAddListButton() {
+  // Select the anchor tag that wraps the 'add' image
+  const addLink = document.querySelector('.bottom a');
+
+  if (addLink) {
+    addLink.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent default navigation
+      addListToFirestore();   // Call the function to add the list and navigate
+    });
+  }
+}
 
 renderContent();
+setupAddListButton();
+
