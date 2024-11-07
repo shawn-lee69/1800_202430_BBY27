@@ -64,7 +64,7 @@ function displayListItems() {
 
 // Function to fetch lists from Firestore and display them
 function fetchAndDisplayLists(userId) {
-  db.collection('users').doc(userId).collection('lists').get().then((querySnapshot) => {
+  db.collection('lists').where('userID', '==', userId).get().then((querySnapshot) => {
     itemsList = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
@@ -102,7 +102,7 @@ function addListToFirestore() {
         };
 
         // Add the new list document to Firestore
-        db.collection('users').doc(userID).collection('lists').add(newList)
+        db.collection('lists').add(newList)
           .then((docRef) => {
             // Navigate to create-list.html with the new list ID
             window.location.href = `create-list.html?id=${docRef.id}`;
