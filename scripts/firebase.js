@@ -43,8 +43,8 @@
     });
 
     confirmButton.addEventListener('click', (e) => {
-        console.log("Button clicked");  // Debugging log
+        console.log("Button clicked");  
         e.preventDefault();
-        // Your Firestore code
+        
     });
   }); 
