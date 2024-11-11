@@ -139,13 +139,15 @@ body {
 }
 
 .results-container {
-    width: 90%;
+    display: none;
+    width: 80%;
     max-width: 400px;
     background-color: #fff;
     box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
     border-radius: 8px;
     margin-top: 8px;
     padding: 10px;
+    border: 1px black solid;
 }
 
 .results-container div {

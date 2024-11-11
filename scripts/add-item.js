@@ -94,12 +94,14 @@ function searchCommonGroceryItems(query) {
 // Display search results
 function displaySearchResults(results) {
   resultsContainer.innerHTML = ''; // Clear previous results
+  resultsContainer.style.display = 'block';
 
   if (results.length === 0) {
     noResultItem.addEventListener('click', () => {
       const query = searchInput.value.trim();
       updateAddItemButton(query);
       resultsContainer.innerHTML = '';
+      resultsContainer.style.display = 'none';
     });
     resultsContainer.appendChild(noResultItem);
     return;
@@ -112,6 +114,7 @@ function displaySearchResults(results) {
       searchInput.value = item;         // Update input field
       updateAddItemButton(item);        // Update 'add item' button
       resultsContainer.innerHTML = '';  // Clear search results
+      resultsContainer.style.display = 'none';
     });
     resultsContainer.appendChild(resultItem);
   });
