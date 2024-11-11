@@ -4,6 +4,7 @@
 <head>
     <title>BBY-27 Project</title>
     <meta name="comp1800 template" content="My 1800 App">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href='styles/index.css'>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,58 +30,59 @@
 </head>
 
 <body>
-    <!-- Content for logged-in users -->
-    <div id="listContent" style="display: none;">
-        <div class="main">
-            <header>
-                <img src="SamePage.png" alt="main logo">
-            </header>
-            <div class='listContainer'>
-                <div class='listContainerTitle'>My Lists</div>
-                <div class="shoppingList">
-                    <!-- grocery lists will appear here dynamically -->
+    <div class='content-wrapper'>
+        <!-- Content for logged-in users -->
+        <div id="listContent" style="display: none;">
+            <div class="main">
+                <header>
+                    <img src="SamePage.png" alt="main logo">
+                </header>
+                <div class='listContainer'>
+                    <div class='listContainerTitle'>My Lists</div>
+                    <div class="shoppingList">
+                        <!-- grocery lists will appear here dynamically -->
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="bottom">
-            <a href='create-list.html'>
-                <img class="add" src="./images/index/add-list.png" alt="add">
-            </a>
-            <img class="tag" src="tag.png" alt="tag">
-            <img class="profile" src="profile.png" alt="profile">
-            <span class="add-span">Create List</span>
-            <span class="tag-span">Add Sale</span>
-            <span class="profile-span">My Page</span>
-        </div>
-    </div>
-
-    <!-- Content for logged-out users -->
-    <div id="emptyListContent" style="display: none;">
-        <div class="main">
-            <header>
-                <img src="SamePage.png" alt="main logo">
-            </header>
-            <div class="welcome">
-                <span>Share your list, <br> Get on the SamePage</span>
-                <img class="logo" src="./images/index/logo.png" alt='Same Page logo'>
+            <div class="bottom">
+                <a href='create-list.html'>
+                    <img class="add" src="./images/index/add-list.png" alt="add">
+                </a>
+                <img class="tag" src="tag.png" alt="tag">
+                <img class="profile" src="profile.png" alt="profile">
+                <span class="add-span">Create List</span>
+                <span class="tag-span">Add Sale</span>
+                <span class="profile-span">My Page</span>
             </div>
         </div>
-        <div class="tooltip">
-            <img src="./images/index/tooltip.png" alt="tooltip">
-        </div>
-        <div class="bottom">
-            <a href='create-list.html'>
-                <img class="add" src="./images/index/add-list.png" alt="add">
-            </a>
-            <img class="tag" src="tag.png" alt="tag">
-            <img class="profile" src="profile.png" alt="profile">
-            <span class="add-span">Create List</span>
-            <span class="tag-span">Add Sale</span>
-            <span class="profile-span">My Page</span>
+
+        <!-- Content for logged-out users -->
+        <div id="emptyListContent" style="display: none;">
+            <div class="main">
+                <header>
+                    <img src="SamePage.png" alt="main logo">
+                </header>
+                <div class="welcome">
+                    <span>Share your list, <br> Get on the SamePage</span>
+                    <img class="logo" src="./images/index/logo.png" alt='Same Page logo'>
+                </div>
+            </div>
+            <div class="tooltip">
+                <img src="./images/index/tooltip.png" alt="tooltip">
+            </div>
+            <div class="bottom">
+                <a href='create-list.html'>
+                    <img class="add" src="./images/index/add-list.png" alt="add">
+                </a>
+                <img class="tag" src="tag.png" alt="tag">
+                <img class="profile" src="profile.png" alt="profile">
+                <span class="add-span">Create List</span>
+                <span class="tag-span">Add Sale</span>
+                <span class="profile-span">My Page</span>
+            </div>
         </div>
     </div>
-
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" defer></script>
 </body>
 
 </html>

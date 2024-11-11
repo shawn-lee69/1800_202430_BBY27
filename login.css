@@ -5,9 +5,13 @@ html {
 body {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  background-color: #E5E7EB;
+  width: 100vw;
+  height: 100vh;
+  background-color: #F3F4F6;
   margin: 0;
+  padding: 0;
 }
 
 .main {
@@ -15,8 +19,8 @@ body {
   grid-template-columns: 1fr;
   grid-template-rows: repeat(8, 1fr);
   align-items: flex-end;
-  width: 440px;
-  height: 956px;
+  width: 100%;
+  height: 100vh;
   background-color: #ffffff;
 }
 
@@ -61,7 +65,20 @@ a {
   align-self: center;
 }
 
-#guestLogin {
-  margin-left: 148.5px;
-  margin-bottom: 30px;
+#loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 440px) {
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 440px;
+    height: 100vh;
+    background-color: #ffffff;
+  }
 }

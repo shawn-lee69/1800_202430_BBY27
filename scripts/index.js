@@ -1,5 +1,4 @@
 // Change this value based on user's login status
-// TODO: make this use query parameter passed by login page.
 var isLoggedIn = true;
 
 function getQueryParameter(name) {
