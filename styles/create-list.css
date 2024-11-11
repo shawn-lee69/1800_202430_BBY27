@@ -7,9 +7,13 @@ html {
 body {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    background-color: #E5E7EB;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F3F4F6;
     margin: 0;
+    padding: 0;
 }
 
 .main {
@@ -17,7 +21,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 440px;
+    width: 100vw;
     height: 100vh;
     background-color: #ffffff;
 }
@@ -81,6 +85,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 40px);
     gap: 16px;
 }
 
@@ -88,7 +93,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 364px;
+    width: calc(100% - 40px);
     padding: 16px 18px;
     border-radius: 8px;
     box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
@@ -106,8 +111,14 @@ body {
     color: #347928;
 }
 
+#item-add-button {
+    display: flex;
+    justify-content: center;
+    width: calc(100% - 28px);
+}
+
 #item-add-button img {
-    width: 420px;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -125,4 +136,16 @@ body {
 
 .checkbox.shrink {
     transform: scale(1);
+}
+
+@media screen and (min-width: 440px) {
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 440px;
+        height: 100vh;
+        background-color: #ffffff;
+    }
 }
