@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang='en'>
+
 <head>
   <meta charset='UTF-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create a shopping list!</title>
   <link rel="stylesheet" href='styles/create-list.css'>
 
@@ -16,45 +18,62 @@
   <!-- Your Firebase initialization script -->
   <script src="./scripts/firebase.js"></script>
 </head>
+
 <body>
   <div class='main'>
     <div class='top-navbar'>
       <div class='back-arrow'>
         <a href='index.html'>
-          <img src='images/create-list/back-arrow.png' alt='arrow image for moving back'/>
+          <img src='images/create-list/back-arrow.png' alt='arrow image for moving back' />
         </a>
       </div>
       <div class='list-name'>New List</div>
       <div class='top-right-menu-icons'>
         <img id='edit-button' src='./images/create-list/edit-button.png' alt='edit button image' />
-        <img src='./images/create-list/share-button.png' alt='share button image' />
+        <img id='share-button' src='./images/create-list/share-button.png' alt='share button image' />
         <img id='delete-list-button' src='./images/create-list/delete-button.png' alt='delete button image' />
       </div>
     </div>
     <div class='divider'></div>
     <div class='list-items-container'>
       <div class='selected-items-container'>
-          <!-- grocery items will appear here dynamically -->
-        <div class='shopping-item'>
-          <div class='item-header'>
-            <img class='checkbox' src='./images/create-list/check-box-empty.png' alt='button for adding an item' />
-            egg
-          </div>
-          <img src='./images/create-list/delete-circle-button.png' alt='button for deleting an item' />
-        </div>
-        <div class='shopping-item'>
-          <div class='item-header'>
-            <img class='checkbox' src='./images/create-list/check-box-empty.png' alt='button for adding an item' />
-            argula
-          </div>
-          <img class='delete-item-button' src='./images/create-list/delete-circle-button.png' alt='button for deleting an item' />
-        </div>
+        <!-- grocery items will appear here dynamically -->
       </div>
       <div id='item-add-button'>
         <img src='./images/create-list/add-item-button.png' alt='button for adding an item in the list' />
       </div>
     </div>
   </div>
+  <!-- Overlay container after clicking share button -->
+  <div id="share-overlay" class="overlay hidden">
+    <div class="share-container">
+      <h3>Share your list!</h3>
+      <div class="share-options">
+        <button onclick="copyLink()">Copy Link</button>
+        <button onclick="shareOnWhatsApp()">WhatsApp</button>
+        <button onclick="shareViaMessages()">Messages</button>
+        <button onclick="shareViaEmail()">Email</button>
+      </div>
+      <button class="close-overlay" onclick="closeShareOverlay()">Close</button>
+    </div>
+  </div>
+
+  <div id='deleteModal' class='modal'>
+    <div class='modal-content'>
+      <p>Delete list <br>"New List"?</p>
+      <div class='button-wrapper'>
+        <button id="confirmDeleteButton" class="modal-button">Yes</button>
+        <button id="cancelDeleteButton" class="modal-button">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div id='delete-success-modal' class='modal'>
+    <div class='modal-success-content'>
+      <img src='./images/create-list/success.png' alt='successfully deleted list' />
+      <p>List deleted!</p>
+    </div>
+  </div>
   <script src="./scripts/create-list.js"></script>
 </body>
+
 </html>

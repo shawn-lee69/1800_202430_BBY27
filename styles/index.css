@@ -27,8 +27,10 @@ body {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 100px);
     background-color: #ffffff;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
 header {
@@ -71,6 +73,11 @@ header img {
 }
 
 .list-item-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 72px);
     color: inherit;
     text-decoration: none;
 }
@@ -83,7 +90,7 @@ header img {
     padding: 16px;
     background-color: #C0EBA6;
     border-radius: 8px;
-    width: 368px;
+    width: 100%;
 }
 
 .list-item-content-header {
@@ -235,8 +242,8 @@ header img {
 
     .main {
         width: 100vw;
-        height: 100%;
-        overflow: hidden;
+        height: calc(100vh - 116px);
+        overflow-y: auto;
         max-width: 440px;
     }
 

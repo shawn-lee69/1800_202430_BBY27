@@ -18,8 +18,8 @@ document.getElementById('cancel-button').addEventListener('click', function(even
   document.getElementById('search-input').value = '';
 });
 
-function addItemToFirestore(itemAddButton) {
-  const itemName = itemAddButton ? itemAddButton.textContent.trim() : '';
+function addItemToFirestore(itemName) {
+  itemName = itemName ? itemName.trim() : '';
 
   if (itemName) {
     const newItem = {
@@ -31,12 +31,11 @@ function addItemToFirestore(itemAddButton) {
 
     db.collection('lists').doc(listId).collection('items').add(newItem)
       .then(() => {
-        // TODO: show modal that informs user that adding item was a success
         window.location.href = `create-list.html?id=${listId}`;
       })
       .catch((error) => {
         console.log('Failed to add item: ', error);
-      })
+      });
   } else {
     console.log('No item added.');
   }
@@ -58,9 +57,98 @@ function setupAddItemButton() {
 
   if (addButton) {
     addButton.addEventListener('click', function(event) {
-      addItemToFirestore(addButton);
+      const itemName = searchInput.value.trim();
+      addItemToFirestore(itemName);
     });
   }
 }
 
 setupAddItemButton();
+
+
+//codes related to search features
+let groceryItems = [];
+
+// Fetch the grocery items JSON file
+fetch('common-grocery-items.json')
+  .then(response => response.json())
+  .then(data => groceryItems = data)
+  .catch(error => console.error('Error loading grocery items:', error));
+
+
+// Elements
+const searchInput = document.getElementById('search-input');
+const resultsContainer = document.getElementById('results-container');
+const itemAddButton = document.querySelector('.item-add-button');
+
+
+// Search function
+function searchCommonGroceryItems(query) {
+  if (!query) return [];
+  return groceryItems
+    .filter(item => item.toLowerCase().includes(query.toLowerCase()))
+    .sort()
+    .slice(0, 4); // Limit to 4 suggestions
+}
+
+// Display search results
+function displaySearchResults(results) {
+  resultsContainer.innerHTML = ''; // Clear previous results
+  resultsContainer.style.display = 'block';
+
+  if (results.length === 0) {
+    noResultItem.addEventListener('click', () => {
+      const query = searchInput.value.trim();
+      updateAddItemButton(query);
+      resultsContainer.innerHTML = '';
+      resultsContainer.style.display = 'none';
+    });
+    resultsContainer.appendChild(noResultItem);
+    return;
+  }
+
+  results.forEach(item => {
+    const resultItem = document.createElement('div');
+    resultItem.textContent = item;
+    resultItem.addEventListener('click', () => {
+      searchInput.value = item;         // Update input field
+      updateAddItemButton(item);        // Update 'add item' button
+      resultsContainer.innerHTML = '';  // Clear search results
+      resultsContainer.style.display = 'none';
+    });
+    resultsContainer.appendChild(resultItem);
+  });
+}
+
+// Update search results and button text in real-time
+searchInput.addEventListener('input', event => {
+  const query = event.target.value.trim();
+  const results = searchCommonGroceryItems(query);
+
+  // Display results and update button text
+  displaySearchResults(results);
+
+  // Update the 'add item' button
+  updateAddItemButton(query);
+
+  // Create and update the add button with the search query
+  itemAddButton.innerHTML = ''; // Clear existing content
+
+  const addIcon = document.createElement('img'); // Define addIcon here
+  addIcon.src = './images/add-item/add-circle-green.png';
+  addIcon.alt = 'button for adding an item in the list';
+
+  itemAddButton.appendChild(addIcon);
+  itemAddButton.appendChild(document.createTextNode(` ${query || ' '}`));
+});
+
+function updateAddItemButton(query) {
+  itemAddButton.innerHTML = ''; // Clear existing content
+
+  const addIcon = document.createElement('img');
+  addIcon.src = './images/add-item/add-circle-green.png';
+  addIcon.alt = 'Add item button';
+
+  itemAddButton.appendChild(addIcon);
+  itemAddButton.appendChild(document.createTextNode(` ${query || ' '}`));
+}
