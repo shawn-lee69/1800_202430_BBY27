@@ -12,6 +12,7 @@ body {
     background-color: #F3F4F6;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .content-wrapper {
@@ -27,8 +28,10 @@ body {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 100px);
     background-color: #ffffff;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
 header {
@@ -235,8 +238,8 @@ header img {
 
     .main {
         width: 100vw;
-        height: 100%;
-        overflow: hidden;
+        height: calc(100vh - 116px);
+        overflow-y: auto;
         max-width: 440px;
     }
 
