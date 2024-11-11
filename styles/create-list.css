@@ -138,6 +138,87 @@ body {
     transform: scale(1);
 }
 
+#share-button {
+    cursor: pointer;
+}
+/* Overlay container styling */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+.share-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.share-container h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 40px;
+    font-family: "Crimson Text", serif;
+}
+
+.share-options {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.share-options button {
+    background-color: #347928;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 0.5em;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-options button:hover {
+    background-color: #285a1e;
+}
+
+.close-overlay {
+    margin-top: 10px;
+    background-color: #e0e0e0;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.close-overlay:hover {
+    background-color: #bdbdbd;
+}
+
+
 .modal {
     display: none;
     position: fixed;

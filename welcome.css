@@ -1,0 +1,67 @@
+html {
+  font-family: "Crimson Text", serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #E5E7EB;
+  margin: 0;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(8, 1fr);
+  align-items: flex-end;
+  width: 440px;
+  height: 956px;
+  background-color: #ffffff;
+}
+
+.container {
+  grid-row: 1 / 2;
+  text-align: center;
+}
+
+#firebaseui-auth-container {
+  grid-row: 3 / 4;
+}
+
+.welcome {
+  display: grid;
+  grid-template-rows: 1fr 1fr 3fr 1fr;
+  justify-items: center;
+  height: auto;
+}
+
+.responsive {
+  grid-row: 1 / 2;
+  width: 180px;
+  margin: 12px 0 12px 0;
+}
+
+#sentence {
+  grid-row: 2 / 3;
+  font-size: 120%;
+}
+
+.logo {
+  grid-row: 4 / 6;
+  width: 50%;
+  height: auto;
+  margin-top: 15px;
+  margin-left: 110px;
+}
+
+a {
+  width:20%;
+  grid-row: 5 / 6;
+  align-self: center;
+}
+
+#guestLogin {
+  margin-left: 148.5px;
+  margin-bottom: 30px;
+}

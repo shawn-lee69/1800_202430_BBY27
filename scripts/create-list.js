@@ -3,8 +3,6 @@ let listName = "New List";
 const CHECKBOX_EMPTY_SRC = './images/create-list/check-box-empty.png';
 const CHECKBOX_CHECKED_SRC = './images/create-list/check-box-checked.png';
 
-// Use these constants in your code
-
 // Function to get query parameters from the URL
 function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
@@ -47,7 +45,8 @@ if (deleteListButton) {
       // Fetch the list name from Firestore
       docRef.get().then((doc) => {
         if (doc.exists) {
-          const listName = doc.data().name || "New List";
+          // Update the global listName variable
+          listName = doc.data().name || "New List";
 
           // Set the modal message with the list name
           const modalMessage = deleteModal.querySelector('p');
@@ -68,7 +67,6 @@ if (deleteListButton) {
 } else {
   console.warn('Element with ID "delete-list-button" not found');
 }
-
 
 // Hide the modal and proceed with delete if "Yes" is clicked
 confirmDeleteButton.addEventListener('click', function () {
@@ -95,39 +93,45 @@ document.addEventListener('DOMContentLoaded', function () {
     // Fetch the list from Firestore
     db.collection('lists').doc(listId).get()
       .then((doc) => {
-        const listNameInput = document.getElementById('listNameInput');
+        const listNameElement = document.querySelector('.list-name');
 
-        if (doc.exists) {
-          const listData = doc.data();
-          listName = listData.name || "New List";
-          listNameInput.value = listName;
-        }
-
-        if (!listNameInput) {
-          console.warn('Element with ID "listNameInput" not found');
+        // Check if listNameElement exists before using it
+        if (!listNameElement) {
+          console.warn('Element with class "list-name" not found');
           return;
         }
 
         if (doc.exists) {
           const listData = doc.data();
-          listNameInput.value = listData.name || "New List";
+          listName = listData.name || "New List";
+          listNameElement.innerText = listName;
         } else {
           console.log('No such document!');
-          listNameInput.value = "New List";
+          listNameElement.innerText = "New List";
         }
       })
       .catch((error) => {
         console.log('Error getting document:', error);
-        document.getElementById('listNameInput').value = "New List";
+        const listNameElement = document.querySelector('.list-name');
+        if (listNameElement) {
+          listNameElement.innerText = "New List";
+        } else {
+          console.warn('Element with class "list-name" not found');
+        }
       });
     fetchAndDisplayItems(listId);
   } else {
     console.log('No list ID provided in the URL.');
-    document.getElementById('listNameInput').value = "New List";
+    const listNameElement = document.querySelector('.list-name');
+    if (listNameElement) {
+      listNameElement.innerText = "New List";
+    } else {
+      console.warn('Element with class "list-name" not found');
+    }
   }
 });
 
-// Declare listItems globally
+// Declare itemsList globally
 let itemsList = [];
 
 function displayItems() {
@@ -188,7 +192,7 @@ selectedItemsContainer.addEventListener('click', function (event) {
   }
 });
 
-// Function to fetch lists from Firestore and display them
+// Function to fetch items from Firestore and display them
 function fetchAndDisplayItems(listId) {
   db.collection('lists').doc(listId).collection('items').get().then((querySnapshot) => {
     itemsList = [];
@@ -213,11 +217,43 @@ document.getElementById('item-add-button').addEventListener('click', function(ev
 function removeItemFromFirestore(itemId) {
   db.collection('lists').doc(listId).collection('items').doc(itemId).delete()
     .then(() => {
-      window.location.href = `create-list.html?id=${listId}`;
+      // Remove the item from itemsList and re-render the items
+      itemsList = itemsList.filter(item => item.id !== itemId);
+      displayItems();
     })
     .catch((error) => {
       console.log('Failed to remove item: ', error);
     });
+}
+
+// Show the overlay when the share button is clicked
+document.getElementById('share-button').addEventListener('click', function () {
+  document.getElementById('share-overlay').classList.remove('hidden');
+});
+
+// Hide the overlay when the close button is clicked
+function closeShareOverlay() {
+  document.getElementById('share-overlay').classList.add('hidden');
+}
+
+// Example functions for sharing options
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href)
+    .then(() => alert("Link copied to clipboard!"))
+    .catch((error) => console.error("Failed to copy link: ", error));
+}
+
+function shareOnWhatsApp() {
+  const url = `https://wa.me/?text=${encodeURIComponent(window.location.href)}`;
+  window.open(url, '_blank');
+}
+
+function shareViaMessages() {
+  window.open(`sms:?body=${encodeURIComponent(window.location.href)}`);
+}
+
+function shareViaEmail() {
+  window.open(`mailto:?subject=Check out this list&body=${encodeURIComponent(window.location.href)}`);
 }
 
 function removeListFromFirestore(listId) {
