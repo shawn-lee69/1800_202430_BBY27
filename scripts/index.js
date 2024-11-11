@@ -4,12 +4,10 @@ var isLoggedIn = true;
 function getQueryParameter(name) {
   const urlParams = new URLSearchParams(window.location.search);
 
-  const paramValue = urlParams.get(name);
-
-  return paramValue;
+  return urlParams.get(name);
 }
 
-if (getQueryParameter('isLoggedIn') == 'false') {
+if (getQueryParameter('isLoggedIn') === 'false') {
 
   isLoggedIn = false;
 }
@@ -41,7 +39,7 @@ function displayListItems() {
   const shoppingListDiv = document.querySelector('.shoppingList');
   shoppingListDiv.innerHTML = ''; // Clear any existing items
 
-  itemsList.forEach((item, index) => {
+  itemsList.forEach((item) => {
     const formattedDate = formatDate(item.createdAt);
     const itemAnchor = document.createElement('a');
     itemAnchor.href = `${basePath}/create-list.html?id=${item.id}`;
