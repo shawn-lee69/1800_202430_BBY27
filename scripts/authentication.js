@@ -30,8 +30,6 @@ var uiConfig = {
             return false;
         },
         uiShown: function () {
-
-            document.getElementById('loader').style.display = 'block';
         }
     },
 
@@ -39,7 +37,7 @@ var uiConfig = {
     signInFlow: 'popup',
     signInSuccessUrl: "index.html",
     signInOptions: [
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
 
 };

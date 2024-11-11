@@ -5,18 +5,29 @@ html {
 body {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+    width: 100vw;
+    height: 100vh;
     background-color: #F3F4F6;
     margin: 0;
+    padding: 0;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
 }
 
 .main {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    align-items: flex-end;
-    width: 440px;
-    height: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
     background-color: #ffffff;
 }
 
@@ -38,7 +49,7 @@ header img {
 .listContainer {
     display: flex;
     flex-direction: column;
-    height: 956px;
+    height: 100vh;
     width: auto;
 }
 
@@ -120,38 +131,40 @@ header img {
 }
 
 .welcome span {
-    margin-top: 102px;
-    font-size: 42px;
+    margin-top: 40px;
+    font-size: 36px;
     text-align: center;
 }
 
 .welcome img {
-    width: 52.5%;
-    margin: 80px 0 256px 0;
+    width: 40%;
+    margin-top: 40px;
 }
 
 /* this deals with tooltip image floating over the button */
 .tooltip {
-    position: absolute;
-    top: 720px;
+    position: fixed;
+    bottom: 150px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 3;
 }
 
 .tooltip img {
-    width: 229px;
+    width: 160px;
 }
 
 .bottom {
+    position: fixed;
+    bottom: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 4fr 1fr;
-    width: 440px;
-    height: 116px;
+    max-width: 440px;
+    width: 100%;
+    height: 100px;
     justify-items: center;
     text-align: center;
-    position: relative;
     background-color: #E5E7EB;
     z-index: 1;
 }
@@ -160,12 +173,12 @@ header img {
     grid-column: 2 / 3;
     position: absolute;
     cursor: pointer;
-    top: -50px; /* Moves the image up over the #bottom div */
+    top: -40px; /* Moves the image up over the #bottom div */
     z-index: 2; /* Ensures the image stays above the #bottom div */
 }
 
 .add {
-    width: 75%;
+    width: 70%;
 }
 
 .add-span {
@@ -181,7 +194,8 @@ header img {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     align-self: center;
-    width: 56.02px;
+    margin-top: 12px;
+    width: 35.5%;
 }
 
 .tag-span {
@@ -197,7 +211,8 @@ header img {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     align-self: center;
-    width: 64px;
+    margin-top: 12px;
+    width: 43.6%;
 }
 
 .profile-span {
@@ -213,5 +228,68 @@ header img {
     display: grid;
     width: 440px;
     height: 813px;
+}
 
+
+@media screen and (min-width: 440px) {
+
+    .main {
+        width: 100vw;
+        height: 100%;
+        overflow: hidden;
+        max-width: 440px;
+    }
+
+    header img {
+        width: 40%;
+        margin: 24px 0 12px 0;
+    }
+
+    .welcome span {
+        margin-top: 80px;
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 440px;
+        height: 100vh;
+        background-color: #ffffff;
+    }
+
+    .tooltip {
+        bottom: 160px;
+    }
+
+    .bottom {
+        max-width: 440px;
+        height: 116px;
+        justify-items: center;
+        text-align: center;
+        background-color: #E5E7EB;
+    }
+
+    .add-span {
+        font-size: 1.5rem;
+    }
+
+    .tag {
+        width: 30%;
+    }
+
+    .tag-span {
+        font-size: 1.5rem;
+    }
+
+    .profile {
+        width: 36%;
+    }
+
+    .profile-span {
+        font-size: 1.5rem;
+    }
 }

@@ -56,6 +56,10 @@ body {
     width: 24px;
 }
 
+#delete-list-button {
+    cursor: pointer;
+}
+
 .divider {
     width: 90%;
     height: 1px;

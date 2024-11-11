@@ -1,12 +1,11 @@
 // Change this value based on user's login status
-// TODO: make this use query parameter passed by login page.
 var isLoggedIn = true;
 
 function getQueryParameter(name) {
   const urlParams = new URLSearchParams(window.location.search);
-  
+
   const paramValue = urlParams.get(name);
-  
+
   return paramValue;
 }
 
@@ -15,16 +14,16 @@ if (getQueryParameter('isLoggedIn') == 'false') {
   isLoggedIn = false;
 }
 
-// Function to render the appropriate content
 function renderContent() {
-  if (isLoggedIn) {
-    console.log("I am here");
-    document.getElementById('listContent').style.display = 'block';
-  } else {
-    console.log("I am here");
-    document.getElementById('emptyListContent').style.display = 'block';
-  }
-  fetchAndDisplayLists();
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      const userID = user.uid;
+      document.getElementById('listContent').style.display = 'block';
+      fetchAndDisplayLists(userID);
+    } else {
+      document.getElementById('emptyListContent').style.display = 'block';
+    }
+  });
 }
 
 // Helper function to format date as "YYYY-MM-DD"
@@ -63,8 +62,8 @@ function displayListItems() {
 }
 
 // Function to fetch lists from Firestore and display them
-function fetchAndDisplayLists() {
-  db.collection('lists').get().then((querySnapshot) => {
+function fetchAndDisplayLists(userId) {
+  db.collection('lists').where('userID', '==', userId).get().then((querySnapshot) => {
     itemsList = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
@@ -83,29 +82,42 @@ function fetchAndDisplayLists() {
 
 // Function to add a new list to Firestore and navigate to create-list.html
 function addListToFirestore() {
-  const listName = 'New List'; // You can prompt the user for a name or let them edit it later
-  if (listName) {
-    const currentTime = new Date();
-    const newList = {
-      name: listName,
-      createdAt: firebase.firestore.Timestamp.fromDate(currentTime),
-      updatedAt: firebase.firestore.Timestamp.fromDate(currentTime),
-      sharableLink: '' // You can generate a sharable link if needed
-    };
+  // Ensure the user is authenticated
+  firebase.auth().onAuthStateChanged(user => {
 
-    // Add the new list document to Firestore
-    db.collection('lists').add(newList)
-      .then((docRef) => {
-        // Navigate to create-list.html with the new list ID
-        window.location.href = `create-list.html?id=${docRef.id}`;
-      })
-      .catch((error) => {
-        console.error('Error adding list: ', error);
-      });
-  } else {
-    console.log('No list created.');
-  }
+    if (user) {
+      // Get the user ID
+      const userID = user.uid;
+      const listName = 'New List'; // You can prompt the user for a name or let them edit it later
+
+      if (listName) {
+        const currentTime = new Date();
+        const newList = {
+          name: listName,
+          createdAt: firebase.firestore.Timestamp.fromDate(currentTime),
+          updatedAt: firebase.firestore.Timestamp.fromDate(currentTime),
+          userID: userID,  // Store the user ID in the list document
+          sharableLink: '' // You can generate a sharable link if needed
+        };
+
+        // Add the new list document to Firestore
+        db.collection('lists').add(newList)
+          .then((docRef) => {
+            // Navigate to create-list.html with the new list ID
+            window.location.href = `create-list.html?id=${docRef.id}`;
+          })
+          .catch((error) => {
+            console.error('Error adding list: ', error);
+          });
+      } else {
+        console.log('No list created.');
+      }
+    } else {
+      console.error("User is not authenticated. Please log in first.");
+    }
+  });
 }
+
 
 // Function to set up the 'add' button event listener
 function setupAddListButton() {
@@ -113,7 +125,7 @@ function setupAddListButton() {
   const addLink = document.querySelector('.bottom a');
 
   if (addLink) {
-    addLink.addEventListener('click', function(event) {
+    addLink.addEventListener('click', function (event) {
       event.preventDefault(); // Prevent default navigation
       addListToFirestore();   // Call the function to add the list and navigate
     });
