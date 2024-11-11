@@ -138,6 +138,25 @@ body {
     margin-right: 10px;
 }
 
+.results-container {
+    width: 90%;
+    max-width: 400px;
+    background-color: #fff;
+    box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
+    border-radius: 8px;
+    margin-top: 8px;
+    padding: 10px;
+}
+
+.results-container div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.results-container div:hover {
+    background-color: #f3f4f6;
+}
+
 @media screen and (min-width: 440px) {
     .main {
         display: flex;
