@@ -147,6 +147,36 @@ function removeItemFromFirestore(itemId) {
     })
 }
 
+// Show the overlay when the share button is clicked
+document.getElementById('share-button').addEventListener('click', function () {
+  document.getElementById('share-overlay').classList.remove('hidden');
+});
+
+// Hide the overlay when the close button is clicked
+function closeShareOverlay() {
+  document.getElementById('share-overlay').classList.add('hidden');
+}
+
+// Example functions for sharing options
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href)
+    .then(() => alert("Link copied to clipboard!"))
+    .catch((error) => console.error("Failed to copy link: ", error));
+}
+
+function shareOnWhatsApp() {
+  const url = `https://wa.me/?text=${encodeURIComponent(window.location.href)}`;
+  window.open(url, '_blank');
+}
+
+function shareViaMessages() {
+  window.open(`sms:?body=${encodeURIComponent(window.location.href)}`);
+}
+
+function shareViaEmail() {
+  window.open(`mailto:?subject=Check out this list&body=${encodeURIComponent(window.location.href)}`);
+}
+
 
 // Attach event listener to the delete button for list
 const deleteListButton = document.getElementById('delete-list-button');
