@@ -138,6 +138,10 @@ body {
     transform: scale(1);
 }
 
+.delete-item-button {
+    cursor: pointer;
+}
+
 #share-button {
     cursor: pointer;
 }

@@ -256,16 +256,21 @@ function shareViaEmail() {
   window.open(`mailto:?subject=Check out this list&body=${encodeURIComponent(window.location.href)}`);
 }
 
-function removeListFromFirestore(listId) {
+function pause(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function removeListFromFirestore(listId) {
   if (!listId) {
     console.error("Error: listId is empty or undefined.");
     return;
   }
-  db.collection('lists').doc(listId).delete()
-    .then(() => {
-      window.location.href = 'index.html';
-    })
-    .catch((error) => {
-      console.log('Failed to remove list: ', error);
-    });
+
+  try {
+    await db.collection('lists').doc(listId).delete();
+    await pause(1000); // Wait for 1 second (1000 milliseconds)
+    window.location.href = 'index.html';
+  } catch (error) {
+    console.log('Failed to remove list: ', error);
+  }
 }
