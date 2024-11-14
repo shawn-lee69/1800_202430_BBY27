@@ -1,23 +1,39 @@
-
+/*
+ * Global constants and functions
+ */
 // Function to get query parameters from the URL
 function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 }
 
+const listId = getQueryParam('id');
+
+
+
+/*
+ * Following cluster of codes is for "go back" button navigation feature.
+ */
 // Ensure that the back button is created after the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   goBackToTheList();
 });
 
-const listId = getQueryParam('id');
+function goBackToTheList() {
+  const linkAnchor = document.createElement('a');
+  const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
+  linkAnchor.href = `${basePath}/create-list.html?id=${listId}`;
+  linkAnchor.innerHTML = `
+      <img src='images/create-list/back-arrow.png' alt='arrow image for moving back'/>
+    `;
+  const backArrowDiv = document.querySelector('.back-arrow');
+  backArrowDiv.appendChild(linkAnchor);
+}
 
-// JavaScript to clear the input when the cancel button is clicked
-document.getElementById('cancel-button').addEventListener('click', function(event) {
-  event.preventDefault();
-  document.getElementById('search-input').value = '';
-});
 
+/*
+ * Following cluster of codes is for item addition feature.
+ */
 function addItemToFirestore(itemName) {
   itemName = itemName ? itemName.trim() : '';
 
@@ -41,17 +57,6 @@ function addItemToFirestore(itemName) {
   }
 }
 
-function goBackToTheList() {
-  const linkAnchor = document.createElement('a');
-  const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-  linkAnchor.href = `${basePath}/create-list.html?id=${listId}`;
-  linkAnchor.innerHTML = `
-      <img src='images/create-list/back-arrow.png' alt='arrow image for moving back'/>
-    `;
-  const backArrowDiv = document.querySelector('.back-arrow');
-  backArrowDiv.appendChild(linkAnchor);
-}
-
 function setupAddItemButton() {
   const addButton = document.querySelector('.item-add-button');
 
@@ -66,7 +71,9 @@ function setupAddItemButton() {
 setupAddItemButton();
 
 
-//codes related to search features
+/*
+ * Following cluster of codes is for item search feature.
+ */
 let groceryItems = [];
 
 // Fetch the grocery items JSON file
@@ -152,3 +159,9 @@ function updateAddItemButton(query) {
   itemAddButton.appendChild(addIcon);
   itemAddButton.appendChild(document.createTextNode(` ${query || ' '}`));
 }
+
+// JavaScript to clear the input when the cancel button is clicked
+document.getElementById('cancel-button').addEventListener('click', function(event) {
+  event.preventDefault();
+  document.getElementById('search-input').value = '';
+});
