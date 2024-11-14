@@ -200,3 +200,27 @@ document.getElementById('cancel-button').addEventListener('click', function(even
   event.preventDefault();
   document.getElementById('search-input').value = '';
 });
+
+
+/*
+ * Following is the cluster of codes for favorite bar feature.
+ */
+
+
+
+const favoritePopularBar = document.querySelector('.favorite-tab-popular');
+const favoriteRecentBar = document.querySelector('.favorite-tab-recent');
+
+favoriteRecentBar.addEventListener('click', () => {
+  favoritePopularBar.style.backgroundColor = '#E5E7EB';
+  favoritePopularBar.style.color = '#9CA3AF';
+  favoriteRecentBar.style.backgroundColor ='#D1D5DB';
+  favoriteRecentBar.style.color = '#030712';
+})
+
+favoritePopularBar.addEventListener('click', () => {
+  favoritePopularBar.style.backgroundColor = '';
+  favoritePopularBar.style.color = '';
+  favoriteRecentBar.style.backgroundColor ='';
+  favoriteRecentBar.style.color = '';
+})
