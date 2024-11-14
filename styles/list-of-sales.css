@@ -1,0 +1,63 @@
+
+html {
+    font-family: "Crimson Text", serif;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a0b4e0;
+    margin: 0;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 440px;
+    height: 100vh;
+    background-color: #FFFF;
+}
+
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+    padding: 24px 20px 18px 20px;
+    font-size: 30px;
+}
+
+.current-sales {
+    margin-right: 105px;
+}
+
+.back-arrow img {
+    width: 16px;
+    font-weight: 600;
+}
+
+#divider {
+    width: 90%;
+    height: 1px;
+    background-color: #D9D9D9;
+    margin-top: 16px;
+}
+
+.table {
+    margin-top: 50px;
+}
+
+
+
+
+
+
+
+
+
+

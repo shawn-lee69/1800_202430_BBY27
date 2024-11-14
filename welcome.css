@@ -5,13 +5,9 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: #F3F4F6;
+  background-color: #E5E7EB;
   margin: 0;
-  padding: 0;
 }
 
 .main {
@@ -19,8 +15,8 @@ body {
   grid-template-columns: 1fr;
   grid-template-rows: repeat(8, 1fr);
   align-items: flex-end;
-  width: 100%;
-  height: 100vh;
+  width: 440px;
+  height: 956px;
   background-color: #ffffff;
 }
 
@@ -65,20 +61,7 @@ a {
   align-self: center;
 }
 
-#loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@media screen and (min-width: 440px) {
-  .content-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    max-width: 440px;
-    height: 100vh;
-    background-color: #ffffff;
-  }
+#guestLogin {
+  margin-left: 148.5px;
+  margin-bottom: 30px;
 }

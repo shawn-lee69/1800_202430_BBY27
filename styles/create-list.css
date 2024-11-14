@@ -1,15 +1,72 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 900;
+    src: local('Pretendard Black'),  url('/assets/fonts/Pretendard-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 800;
+    src: local('Pretendard ExtraBold'), url('/assets/fonts/Pretendard-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    src: local('Pretendard Bold'), url('/assets/fonts/Pretendard-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    src: local('Pretendard SemiBold'), url('/assets/fonts/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    src: local('Pretendard Medium'), url('/assets/fonts/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: local('Pretendard Regular'), url('/assets/fonts/Pretendard-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    src: local('Pretendard Light'), url('/assets/fonts/Pretendard-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 200;
+    src: local('Pretendard ExtraLight'), url('/assets/fonts/Pretendard-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 100;
+    src: local('Pretendard Thin'), url('/assets/fonts/Pretendard-Thin.woff') format('woff');
+}
 
 html {
-    font-family: "Crimson Text", serif;
+    font-family: "Pretendard", serif;
 }
 
 
 body {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    background-color: #E5E7EB;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F3F4F6;
     margin: 0;
+    padding: 0;
 }
 
 .main {
@@ -17,7 +74,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 440px;
+    width: 100vw;
     height: 100vh;
     background-color: #ffffff;
 }
@@ -45,11 +102,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 8px;
 }
 
 .top-right-menu-icons img {
-    width: 52px;
+    width: 32px;
+}
+
+#edit-button {
+    width: 24px;
+}
+
+#delete-list-button {
+    cursor: pointer;
 }
 
 .divider {
@@ -73,6 +138,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 40px);
     gap: 16px;
 }
 
@@ -80,10 +146,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 364px;
+    width: calc(100% - 40px);
     padding: 16px 18px;
     border-radius: 8px;
-    box-shadow: 0px 3px 10px rgba(137, 142, 159, 0.12);
+    box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
 }
 
 .shopping-item img {
@@ -95,11 +161,18 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    color: #6B7280;
+    color: #347928;
 }
 
-.item-add-button img {
-    width: 420px;
+#item-add-button {
+    display: flex;
+    justify-content: center;
+    width: calc(100% - 28px);
+}
+
+#item-add-button img {
+    width: 100%;
+    cursor: pointer;
 }
 
 
@@ -116,4 +189,177 @@ body {
 
 .checkbox.shrink {
     transform: scale(1);
+}
+
+.delete-item-button {
+    cursor: pointer;
+}
+
+#share-button {
+    cursor: pointer;
+}
+/* Overlay container styling */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+.share-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.share-container h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 40px;
+    font-family: "Crimson Text", serif;
+}
+
+.share-options {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.share-options button {
+    background-color: #347928;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 0.5em;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-options button:hover {
+    background-color: #285a1e;
+}
+
+.close-overlay {
+    margin-top: 10px;
+    background-color: #e0e0e0;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.close-overlay:hover {
+    background-color: #bdbdbd;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 54%;
+    max-width: 300px;
+    margin: 15% auto;
+    text-align: center;
+}
+
+.modal-content p {
+    font-size: 1.6rem;
+    color: #4B5563;
+    margin-bottom: 20px;
+}
+
+.modal-success-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 24px 20px 12px 20px;
+    border-radius: 8px;
+    width: 40%;
+    max-width: 300px;
+    margin: 15% auto;
+    text-align: center;
+}
+
+.modal-success-content p {
+    font-size: 1.6rem;
+    color: #4B5563;
+    margin-bottom: 20px;
+}
+
+.modal-success-content img {
+    width: 100px;
+}
+
+.modal-button {
+    width: 40%;
+    padding: 9px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#confirmDeleteButton {
+    background-color: #E5E7EB;
+    color: black;
+}
+
+#cancelDeleteButton {
+    background-color: #C0EBA6;
+    color: black;
+}
+
+@media screen and (min-width: 440px) {
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 440px;
+        height: 100vh;
+        background-color: #ffffff;
+    }
 }
