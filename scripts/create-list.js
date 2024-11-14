@@ -16,7 +16,7 @@ function getQueryParam(param) {
 const listId = getQueryParam('id');
 
 /*
- * This is a utility function for accessing Firestore
+ * This is a utility function for fetching data from Firestore
  */
 function getFirestoreDocument(collection, docId) {
   return db.collection(collection).doc(docId).get()
