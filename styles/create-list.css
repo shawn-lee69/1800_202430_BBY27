@@ -216,6 +216,10 @@ body {
     display: none;
 }
 
+#share-icon {
+    width: 180%;
+}
+
 .share-container {
     background-color: #ffffff;
     padding: 20px;
@@ -240,7 +244,7 @@ body {
 }
 
 .share-options button {
-    background-color: #347928;
+    background-color: rgba(192, 235, 166, 1);
     color: white;
     border: none;
     border-radius: 8px;
@@ -257,7 +261,7 @@ body {
 }
 
 .share-options button:hover {
-    background-color: #285a1e;
+    background-color: #4a873e;
 }
 
 .close-overlay {

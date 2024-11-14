@@ -27,7 +27,8 @@
           <img src='images/create-list/back-arrow.png' alt='arrow image for moving back' />
         </a>
       </div>
-      <div class='list-name'>New List</div>
+      
+      <div class='list-name'></div>
       <div class='top-right-menu-icons'>
         <img id='edit-button' src='./images/create-list/edit-button.png' alt='edit button image' />
         <img id='share-button' src='./images/create-list/share-button.png' alt='share button image' />
@@ -44,15 +45,24 @@
       </div>
     </div>
   </div>
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Edit List Name</h2>
+      <input type="text" id="listNameInput" placeholder="Enter new list name" />
+      <button id="saveButton">Save</button>
+    </div>
+  </div>
+  
   <!-- Overlay container after clicking share button -->
   <div id="share-overlay" class="overlay hidden">
     <div class="share-container">
       <h3>Share your list!</h3>
       <div class="share-options">
-        <button onclick="copyLink()">Copy Link</button>
-        <button onclick="shareOnWhatsApp()">WhatsApp</button>
-        <button onclick="shareViaMessages()">Messages</button>
-        <button onclick="shareViaEmail()">Email</button>
+        <button onclick="copyLink()"><img id="share-icon" src='./images/create-list/Copy Link.png' alt='button for Copy Link'></button>
+        <button onclick="shareOnWhatsApp()"><img id="share-icon" src='./images/create-list/Group.png' alt='button for WhatsApp'></button>
+        <button onclick="shareViaMessages()"><img id="share-icon" src='./images/create-list/message (2).png' alt='button for Message'></button>
+        <button onclick="shareViaEmail()"><img id="share-icon" src='./images/create-list/email.png' alt='button for Email'></button>
       </div>
       <button class="close-overlay" onclick="closeShareOverlay()">Close</button>
     </div>

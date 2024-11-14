@@ -144,6 +144,73 @@ function removeItemFromFirestore(itemId) {
     })
 }
 
+// Modal elements
+const editModal = document.getElementById('editModal');
+const closeModalButton = editModal.querySelector('.close');
+const saveButton = document.getElementById('saveButton');
+const listNameInput = document.getElementById('listNameInput');
+
+// Open the modal and populate the current list name
+document.getElementById('edit-button').addEventListener('click', function () {
+  if (listId) {
+    const docRef = db.collection('lists').doc(listId);
+
+    // Fetch the current list name from Firestore
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        // Set the current name in the input field
+        listNameInput.value = doc.data().name || "New List";
+        // Show the modal
+        editModal.style.display = 'block';
+      } else {
+        console.log("No such document!");
+      }
+    }).catch((error) => {
+      console.error("Error fetching document:", error);
+    });
+  } else {
+    console.error("Error: listId is empty or undefined.");
+  }
+});
+
+// Close the modal
+closeModalButton.addEventListener('click', function () {
+  editModal.style.display = 'none';
+});
+
+// Save the new list name to Firestore
+saveButton.addEventListener('click', function () {
+  const newListName = listNameInput.value.trim();
+
+  if (newListName && listId) {
+    const docRef = db.collection('lists').doc(listId);
+
+    // Update the list name in Firestore
+    docRef.update({
+      name: newListName,
+      updatedAt: firebase.firestore.Timestamp.fromDate(new Date())
+    })
+    .then(() => {
+      console.log("List name updated successfully!");
+      // Update the list name in the UI
+      document.querySelector('.list-name').innerText = newListName;
+      // Close the modal
+      editModal.style.display = 'none';
+    })
+    .catch((error) => {
+      console.error("Error updating list name:", error);
+    });
+  } else {
+    console.log("Please enter a valid list name.");
+  }
+});
+
+// Close the modal when clicking outside of it
+window.addEventListener('click', function (event) {
+  if (event.target === editModal) {
+    editModal.style.display = 'none';
+  }
+});
 
 /*
  * Following cluster of codes is for list sharing feature
