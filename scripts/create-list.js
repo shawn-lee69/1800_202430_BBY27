@@ -221,9 +221,19 @@ async function toggleIsChecked(itemId) {
 
     if (itemData) {
       const currentValue = itemData.isChecked;
-      const docRef = db.collection('lists').doc(listId).collection('items').doc(itemId);
-      await docRef.update({ isChecked: !currentValue });
-      console.log('Toggled successfully');
+      const itemDocRef = db.collection('lists').doc(listId).collection('items').doc(itemId);
+      await itemDocRef.update({ isChecked: !currentValue });
+
+      const listDocRef = db.collection('lists').doc(listId);
+      const listDocSnapshot = await listDocRef.get();
+
+      let currentCheckedNumberOfItems = listDocSnapshot.data().checkedNumberOfItems || 0;
+      if (!currentValue) {
+        await listDocRef.update({ checkedNumberOfItems: currentCheckedNumberOfItems + 1 });
+      } else {
+        await listDocRef.update({ checkedNumberOfItems: currentCheckedNumberOfItems - 1 });
+      }
+
     } else {
       console.log('No such item');
     }
