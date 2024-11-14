@@ -1,5 +1,59 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 900;
+    src: local('Pretendard Black'),  url('/assets/fonts/Pretendard-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 800;
+    src: local('Pretendard ExtraBold'), url('/assets/fonts/Pretendard-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    src: local('Pretendard Bold'), url('/assets/fonts/Pretendard-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    src: local('Pretendard SemiBold'), url('/assets/fonts/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    src: local('Pretendard Medium'), url('/assets/fonts/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: local('Pretendard Regular'), url('/assets/fonts/Pretendard-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    src: local('Pretendard Light'), url('/assets/fonts/Pretendard-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 200;
+    src: local('Pretendard ExtraLight'), url('/assets/fonts/Pretendard-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 100;
+    src: local('Pretendard Thin'), url('/assets/fonts/Pretendard-Thin.woff') format('woff');
+}
+
 html {
-    font-family: "Crimson Text", serif;
+    font-family: "Pretendard", serif;
 }
 
 body {
@@ -58,9 +112,9 @@ header img {
 .listContainerTitle {
     color: #111827;
     font-size: 1.5rem;
-    font-weight: bold;
-    margin-top: 45px;
-    padding: 0 20px 0 20px;
+    font-weight: 500;
+    margin: 28px 0 12px 0;
+    padding: 0 20px 0 24px;
 }
 
 .shoppingList {
@@ -87,7 +141,7 @@ header img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 12px;
     background-color: #C0EBA6;
     border-radius: 8px;
     width: 100%;
@@ -101,7 +155,7 @@ header img {
 }
 
 .list-name {
-    font-size: 2.25rem;
+    font-size: 2rem;
     font-weight: normal;
     color: #000000;
 }
@@ -117,7 +171,7 @@ header img {
     justify-content: flex-end;
     align-items: center;
     width: 100%;
-    margin-top: 26px;
+    margin-top: 12px;
 }
 
 .list-item-time-stamp {
@@ -126,7 +180,7 @@ header img {
     justify-content: flex-end;
     color: #9CA3AF;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 /* welcome deals with empty list or not logged in user */

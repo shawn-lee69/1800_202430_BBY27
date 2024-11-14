@@ -37,9 +37,9 @@ confirmButton.addEventListener('click', (e) => {
       saleInformationForm.reset();
     });
 
-  confirmButton.addEventListener('click', (e) => {
-    console.log("Button clicked");  // Debugging log
-    e.preventDefault();
-    // Your Firestore code
-  });
-}); 
+    confirmButton.addEventListener('click', (e) => {
+        console.log("Button clicked");  
+        e.preventDefault();
+        
+    });
+  }); 

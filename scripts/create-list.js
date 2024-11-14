@@ -1,7 +1,11 @@
-let listName = "New List";
-
+/*
+ * Global constants and functions
+ */
+const DEFAULT_LIST_NAME = "New List";
 const CHECKBOX_EMPTY_SRC = './images/create-list/check-box-empty.png';
 const CHECKBOX_CHECKED_SRC = './images/create-list/check-box-checked.png';
+
+let listName = DEFAULT_LIST_NAME;
 
 // Function to get query parameters from the URL
 function getQueryParam(param) {
@@ -11,126 +15,29 @@ function getQueryParam(param) {
 
 const listId = getQueryParam('id');
 
-async function toggleIsChecked(itemId) {
-  try {
-    const docRef = db.collection('lists').doc(listId).collection('items').doc(itemId);
-    const doc = await docRef.get();
-
-    if (doc.exists) {
-      const currentValue = doc.data().isChecked;
-      await docRef.update({ isChecked: !currentValue });
-      console.log('Toggled successfully');
-    } else {
-      console.log('No such item');
-    }
-  } catch (error) {
-    console.error('Error toggling:', error);
-  }
+/*
+ * This is a utility function for fetching data from Firestore
+ */
+function getFirestoreDocument(collection, docId) {
+  return db.collection(collection).doc(docId).get()
+    .then(doc => {
+      if (doc.exists) {
+        return doc.data();
+      } else {
+        console.log('No such document!');
+        return null;
+      }
+    })
+    .catch(error => {
+      console.error(`Error getting document from ${collection}/${docId}:`, error);
+      return null;
+    });
 }
 
-// Modal elements
-const deleteModal = document.getElementById('deleteModal');
-const deleteSuccessModal = document.getElementById('delete-success-modal');
-const confirmDeleteButton = document.getElementById('confirmDeleteButton');
-const cancelDeleteButton = document.getElementById('cancelDeleteButton');
 
-// Show the modal when the delete button is clicked
-const deleteListButton = document.getElementById('delete-list-button');
-
-if (deleteListButton) {
-  deleteListButton.addEventListener('click', function () {
-    if (listId) {
-      const docRef = db.collection('lists').doc(listId);
-
-      // Fetch the list name from Firestore
-      docRef.get().then((doc) => {
-        if (doc.exists) {
-          // Update the global listName variable
-          listName = doc.data().name || "New List";
-
-          // Set the modal message with the list name
-          const modalMessage = deleteModal.querySelector('p');
-          modalMessage.innerHTML = `Delete list <br>"${listName}"?`;
-
-          // Show the modal
-          deleteModal.style.display = 'block';
-        } else {
-          console.log("No such document!");
-        }
-      }).catch((error) => {
-        console.error("Error fetching document:", error);
-      });
-    } else {
-      console.error("Error: listId is empty or undefined.");
-    }
-  });
-} else {
-  console.warn('Element with ID "delete-list-button" not found');
-}
-
-// Hide the modal and proceed with delete if "Yes" is clicked
-confirmDeleteButton.addEventListener('click', function () {
-  removeListFromFirestore(listId);
-  deleteSuccessModal.style.display = 'block';
-  deleteModal.style.display = 'none';
-});
-
-// Hide the modal if "Cancel" is clicked
-cancelDeleteButton.addEventListener('click', function () {
-  deleteModal.style.display = 'none';
-});
-
-// Hide modal when clicking outside of it
-window.addEventListener('click', function (event) {
-  if (event.target === deleteModal) {
-    deleteModal.style.display = 'none';
-  }
-});
-
-// Ensure code runs after DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function () {
-  if (listId) {
-    // Fetch the list from Firestore
-    db.collection('lists').doc(listId).get()
-      .then((doc) => {
-        const listNameElement = document.querySelector('.list-name');
-
-        // Check if listNameElement exists before using it
-        if (!listNameElement) {
-          console.warn('Element with class "list-name" not found');
-          return;
-        }
-
-        if (doc.exists) {
-          const listData = doc.data();
-          listName = listData.name || "New List";
-          listNameElement.innerText = listName;
-        } else {
-          console.log('No such document!');
-          listNameElement.innerText = "New List";
-        }
-      })
-      .catch((error) => {
-        console.log('Error getting document:', error);
-        const listNameElement = document.querySelector('.list-name');
-        if (listNameElement) {
-          listNameElement.innerText = "New List";
-        } else {
-          console.warn('Element with class "list-name" not found');
-        }
-      });
-    fetchAndDisplayItems(listId);
-  } else {
-    console.log('No list ID provided in the URL.');
-    const listNameElement = document.querySelector('.list-name');
-    if (listNameElement) {
-      listNameElement.innerText = "New List";
-    } else {
-      console.warn('Element with class "list-name" not found');
-    }
-  }
-});
-
+/*
+ * Following cluster of codes is responsible for fetching lists from DB
+ */
 // Declare itemsList globally
 let itemsList = [];
 
@@ -159,39 +66,6 @@ function displayItems() {
   });
 }
 
-// Get the container that holds all the items
-const selectedItemsContainer = document.querySelector('.selected-items-container');
-
-// Attach a single event listener to the container
-selectedItemsContainer.addEventListener('click', function (event) {
-  const target = event.target;
-  const itemDiv = target.closest('.shopping-item');
-
-  if (!itemDiv) return;
-  const itemId = itemDiv.getAttribute('data-item-id');
-
-  if (target.classList.contains('delete-item-button')) {
-    // Delete button was clicked
-    removeItemFromFirestore(itemId);
-  } else if (target.classList.contains('checkbox')) {
-    // Checkbox was clicked
-
-    // Toggle the checkbox UI
-    if (target.src.includes('check-box-empty.png')) {
-      target.src = CHECKBOX_CHECKED_SRC;
-      target.classList.add('checked');
-      setTimeout(() => target.classList.add('shrink'), 200);
-    } else {
-      target.src = CHECKBOX_EMPTY_SRC;
-      target.classList.remove('checked');
-      target.classList.remove('shrink');
-    }
-
-    // Toggle the isChecked value in Firestore
-    toggleIsChecked(itemId);
-  }
-});
-
 // Function to fetch items from Firestore and display them
 function fetchAndDisplayItems(listId) {
   db.collection('lists').doc(listId).collection('items').get().then((querySnapshot) => {
@@ -210,90 +84,70 @@ function fetchAndDisplayItems(listId) {
   });
 }
 
+// Ensure code runs after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function () {
+
+  const listNameElement = document.querySelector('.list-name');
+
+  // Check if listNameElement exists before using it
+  if (!listNameElement) {
+    console.warn('Element with class "list-name" not found');
+  }
+
+  if (listId) {
+    // Fetch the list from Firestore
+    getFirestoreDocument('lists', listId).then(listData => {
+      if (listData) {
+        listName = listData.name || DEFAULT_LIST_NAME;
+      } else {
+        listName = DEFAULT_LIST_NAME;
+      }
+      listNameElement.innerText = listName;
+    });
+    fetchAndDisplayItems(listId);
+  } else {
+    console.log('No list ID provided in the URL.');
+      listNameElement.innerText = DEFAULT_LIST_NAME;
+  }
+});
+
+
+/*
+ * Following snippet of code navigates user to add-item page when add item button is clicked.
+ */
 document.getElementById('item-add-button').addEventListener('click', function(event) {
   window.location.href = `add-item.html?id=${listId}`;
 });
 
+
+/*
+ * Following cluster of codes is for item deleting feature
+ */
 function removeItemFromFirestore(itemId) {
-  db.collection('lists').doc(listId).collection('items').doc(itemId).delete()
-    .then(() => {
-      // Remove the item from itemsList and re-render the items
-      itemsList = itemsList.filter(item => item.id !== itemId);
-      displayItems();
+  db.collection('lists').doc(listId).get()
+    .then((doc) => {
+      if (doc.exists) {
+        let currentTotalNumberOfItems = doc.data().totalNumberOfItems || 0;
+        db.collection('lists').doc(listId).collection('items').doc(itemId).delete()
+          .then(() => {
+            // Remove the item from itemsList and re-render the items
+            itemsList = itemsList.filter(item => item.id !== itemId);
+            db.collection('lists').doc(listId).update({
+              totalNumberOfItems: currentTotalNumberOfItems - 1
+            });
+            displayItems();
+          })
+      }
     })
     .catch((error) => {
       console.log('Failed to remove item: ', error);
-    });
+    })
 }
 
-// Modal elements
-const editModal = document.getElementById('editModal');
-const closeModalButton = editModal.querySelector('.close');
-const saveButton = document.getElementById('saveButton');
-const listNameInput = document.getElementById('listNameInput');
 
-// Open the modal and populate the current list name
-document.getElementById('edit-button').addEventListener('click', function () {
-  if (listId) {
-    const docRef = db.collection('lists').doc(listId);
-
-    // Fetch the current list name from Firestore
-    docRef.get().then((doc) => {
-      if (doc.exists) {
-        // Set the current name in the input field
-        listNameInput.value = doc.data().name || "New List";
-        // Show the modal
-        editModal.style.display = 'block';
-      } else {
-        console.log("No such document!");
-      }
-    }).catch((error) => {
-      console.error("Error fetching document:", error);
-    });
-  } else {
-    console.error("Error: listId is empty or undefined.");
-  }
-});
-
-// Close the modal
-closeModalButton.addEventListener('click', function () {
-  editModal.style.display = 'none';
-});
-
-// Save the new list name to Firestore
-saveButton.addEventListener('click', function () {
-  const newListName = listNameInput.value.trim();
-
-  if (newListName && listId) {
-    const docRef = db.collection('lists').doc(listId);
-
-    // Update the list name in Firestore
-    docRef.update({
-      name: newListName,
-      updatedAt: firebase.firestore.Timestamp.fromDate(new Date())
-    })
-    .then(() => {
-      console.log("List name updated successfully!");
-      // Update the list name in the UI
-      document.querySelector('.list-name').innerText = newListName;
-      // Close the modal
-      editModal.style.display = 'none';
-    })
-    .catch((error) => {
-      console.error("Error updating list name:", error);
-    });
-  } else {
-    console.log("Please enter a valid list name.");
-  }
-});
-
-// Close the modal when clicking outside of it
-window.addEventListener('click', function (event) {
-  if (event.target === editModal) {
-    editModal.style.display = 'none';
-  }
-});
-
+/*
+ * Following cluster of codes is for list sharing feature
+ */
 // Show the overlay when the share button is clicked
 document.getElementById('share-button').addEventListener('click', function () {
   document.getElementById('share-overlay').classList.remove('hidden');
@@ -324,16 +178,144 @@ function shareViaEmail() {
   window.open(`mailto:?subject=Check out this list&body=${encodeURIComponent(window.location.href)}`);
 }
 
-function removeListFromFirestore(listId) {
+
+/*
+ * Following cluster of codes is for item toggling(crossing-off) feature
+ */
+// Get the container that holds all the items
+const selectedItemsContainer = document.querySelector('.selected-items-container');
+
+// Attach a single event listener to the container
+selectedItemsContainer.addEventListener('click', function (event) {
+  const target = event.target;
+  const itemDiv = target.closest('.shopping-item');
+
+  if (!itemDiv) return;
+  const itemId = itemDiv.getAttribute('data-item-id');
+
+  if (target.classList.contains('delete-item-button')) {
+    // Delete button was clicked
+    removeItemFromFirestore(itemId);
+  } else if (target.classList.contains('checkbox')) {
+    // Checkbox was clicked
+
+    // Toggle the checkbox UI
+    if (target.src.includes('check-box-empty.png')) {
+      target.src = CHECKBOX_CHECKED_SRC;
+      target.classList.add('checked');
+      setTimeout(() => target.classList.add('shrink'), 100);
+    } else {
+      target.src = CHECKBOX_EMPTY_SRC;
+      target.classList.remove('checked');
+      target.classList.remove('shrink');
+    }
+
+    // Toggle the isChecked value in Firestore
+    toggleIsChecked(itemId);
+  }
+});
+
+async function toggleIsChecked(itemId) {
+  try {
+    const itemData = await getFirestoreDocument(`lists/${listId}/items`, itemId);
+
+    if (itemData) {
+      const currentValue = itemData.isChecked;
+      const itemDocRef = db.collection('lists').doc(listId).collection('items').doc(itemId);
+      await itemDocRef.update({ isChecked: !currentValue });
+
+      const listDocRef = db.collection('lists').doc(listId);
+      const listDocSnapshot = await listDocRef.get();
+
+      let currentCheckedNumberOfItems = listDocSnapshot.data().checkedNumberOfItems || 0;
+      if (!currentValue) {
+        await listDocRef.update({ checkedNumberOfItems: currentCheckedNumberOfItems + 1 });
+      } else {
+        await listDocRef.update({ checkedNumberOfItems: currentCheckedNumberOfItems - 1 });
+      }
+
+    } else {
+      console.log('No such item');
+    }
+  } catch (error) {
+    console.error('Error toggling:', error);
+  }
+}
+
+
+
+/*
+ * Following cluster of codes is for list deletion function.
+ */
+// Modal elements
+const deleteModal = document.getElementById('deleteModal');
+const deleteSuccessModal = document.getElementById('delete-success-modal');
+const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+const cancelDeleteButton = document.getElementById('cancelDeleteButton');
+
+// Show the modal when the delete button is clicked
+const deleteListButton = document.getElementById('delete-list-button');
+
+if (deleteListButton) {
+  deleteListButton.addEventListener('click', function () {
+    if (listId) {
+      getFirestoreDocument('lists', listId).then(listData => {
+        if (listData) {
+          // Update the global listName variable
+          listName = listData.name || DEFAULT_LIST_NAME;
+
+          // Set the modal message with the list name
+          const modalMessage = deleteModal.querySelector('p');
+          modalMessage.innerHTML = `Delete list <br>"${listName}"?`;
+
+          // Show the modal
+          deleteModal.style.display = 'block';
+        } else {
+          console.log("No such document!");
+        }
+      });
+    } else {
+      console.error("Error: listId is empty or undefined.");
+    }
+  });
+} else {
+  console.warn('Element with ID "delete-list-button" not found');
+}
+
+// Hide the modal and proceed with delete if "Yes" is clicked
+confirmDeleteButton.addEventListener('click', function () {
+  removeListFromFirestore(listId);
+  deleteSuccessModal.style.display = 'block';
+  deleteModal.style.display = 'none';
+});
+
+// Hide the modal if "Cancel" is clicked
+cancelDeleteButton.addEventListener('click', function () {
+  deleteModal.style.display = 'none';
+});
+
+// Hide modal when clicking outside of it
+window.addEventListener('click', function (event) {
+  if (event.target === deleteModal) {
+    deleteModal.style.display = 'none';
+  }
+});
+
+function pause(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function removeListFromFirestore(listId) {
   if (!listId) {
     console.error("Error: listId is empty or undefined.");
     return;
   }
-  db.collection('lists').doc(listId).delete()
-    .then(() => {
-      window.location.href = 'index.html';
-    })
-    .catch((error) => {
-      console.log('Failed to remove list: ', error);
-    });
+
+  try {
+    await db.collection('lists').doc(listId).delete();
+    await pause(1000); // Wait for 1 second (1000 milliseconds)
+    window.location.href = 'index.html';
+  } catch (error) {
+    console.log('Failed to remove list: ', error);
+  }
 }

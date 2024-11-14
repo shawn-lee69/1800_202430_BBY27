@@ -48,7 +48,7 @@ function displayListItems() {
       <div class='list-item'>
         <div class='list-item-content-header'>
           <div class='list-name'>${item.name}</div>
-          <div class='list-item-number-counter'>${item.currentNumberOfItems} / ${item.maxNumberOfItems}</div>
+          <div class='list-item-number-counter'>${item.checkedNumberOfItems} / ${item.totalNumberOfItems}</div>
         </div>
         <div class='list-item-content-bottom'>
           <div class='list-item-time-stamp'>${formattedDate}</div>
@@ -68,8 +68,8 @@ function fetchAndDisplayLists(userId) {
       itemsList.push({
         id: doc.id,
         name: data.name,
-        currentNumberOfItems: 0,
-        maxNumberOfItems: 0,
+        totalNumberOfItems: data.totalNumberOfItems,
+        checkedNumberOfItems: data.checkedNumberOfItems,
         createdAt: data.createdAt.toDate()
       });
     });
@@ -95,7 +95,8 @@ function addListToFirestore() {
           createdAt: firebase.firestore.Timestamp.fromDate(currentTime),
           updatedAt: firebase.firestore.Timestamp.fromDate(currentTime),
           userID: userID,  // Store the user ID in the list document
-          sharableLink: '' // You can generate a sharable link if needed
+          totalNumberOfItems: 0, // At first there is no item in the list
+          checkedNumberOfItems: 0, // At first no item is crossed off
         };
 
         // Add the new list document to Firestore
