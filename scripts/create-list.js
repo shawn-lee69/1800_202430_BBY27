@@ -124,15 +124,24 @@ document.getElementById('item-add-button').addEventListener('click', function(ev
  * Following cluster of codes is for item deleting feature
  */
 function removeItemFromFirestore(itemId) {
-  db.collection('lists').doc(listId).collection('items').doc(itemId).delete()
-    .then(() => {
-      // Remove the item from itemsList and re-render the items
-      itemsList = itemsList.filter(item => item.id !== itemId);
-      displayItems();
+  db.collection('lists').doc(listId).get()
+    .then((doc) => {
+      if (doc.exists) {
+        let currentTotalNumberOfItems = doc.data().totalNumberOfItems || 0;
+        db.collection('lists').doc(listId).collection('items').doc(itemId).delete()
+          .then(() => {
+            // Remove the item from itemsList and re-render the items
+            itemsList = itemsList.filter(item => item.id !== itemId);
+            db.collection('lists').doc(listId).update({
+              totalNumberOfItems: currentTotalNumberOfItems - 1
+            });
+            displayItems();
+          })
+      }
     })
     .catch((error) => {
       console.log('Failed to remove item: ', error);
-    });
+    })
 }
 
 

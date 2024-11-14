@@ -10,6 +10,25 @@ function getQueryParam(param) {
 const listId = getQueryParam('id');
 
 
+/*
+ * This is a utility function for fetching data from Firestore
+ */
+function getFirestoreDocument(collection, docId) {
+  return db.collection(collection).doc(docId).get()
+    .then(doc => {
+      if (doc.exists) {
+        return doc.data();
+      } else {
+        console.log('No such document!');
+        return null;
+      }
+    })
+    .catch(error => {
+      console.error(`Error getting document from ${collection}/${docId}:`, error);
+      return null;
+    });
+}
+
 
 /*
  * Following cluster of codes is for "go back" button navigation feature.
@@ -45,12 +64,28 @@ function addItemToFirestore(itemName) {
       saleLink: 'https://google.com',
     };
 
-    db.collection('lists').doc(listId).collection('items').add(newItem)
-      .then(() => {
-        window.location.href = `create-list.html?id=${listId}`;
+    db.collection('lists').doc(listId).get()
+      .then((doc) => {
+        if (doc.exists) {
+          let currentTotalNumberOfItems = doc.data().totalNumberOfItems || 0;
+          // Add the new item to the 'items' subcollection
+          db.collection('lists').doc(listId).collection('items').add(newItem)
+            .then(() => {
+              // Increment the total number of items in the main document
+              db.collection('lists').doc(listId).update({
+                totalNumberOfItems: currentTotalNumberOfItems + 1
+              });
+              window.location.href = `create-list.html?id=${listId}`;
+            })
+            .catch((error) => {
+              console.log('Failed to add item: ', error);
+            });
+        } else {
+          console.log('Document does not exist');
+        }
       })
       .catch((error) => {
-        console.log('Failed to add item: ', error);
+        console.log('Error fetching document:', error);
       });
   } else {
     console.log('No item added.');
