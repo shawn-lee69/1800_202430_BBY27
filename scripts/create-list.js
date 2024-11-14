@@ -128,12 +128,15 @@ function removeItemFromFirestore(itemId) {
     .then((doc) => {
       if (doc.exists) {
         let currentTotalNumberOfItems = doc.data().totalNumberOfItems || 0;
+        let currentCheckedNumberOfItems = doc.data().checkedNumberOfItems || 0;
+
         db.collection('lists').doc(listId).collection('items').doc(itemId).delete()
           .then(() => {
             // Remove the item from itemsList and re-render the items
             itemsList = itemsList.filter(item => item.id !== itemId);
             db.collection('lists').doc(listId).update({
-              totalNumberOfItems: currentTotalNumberOfItems - 1
+              totalNumberOfItems: currentTotalNumberOfItems - 1,
+              checkedNumberOfItems: currentCheckedNumberOfItems - 1
             });
             displayItems();
           })
