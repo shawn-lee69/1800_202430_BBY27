@@ -154,14 +154,39 @@ body {
 
 .favorite-tab {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    width: calc(100% - 80px);
+    height: 32px;
+    background-color: #E5E7EB;
+    border-radius: 8px;
+    margin-top: 32px;
 }
 
-.favorite-tab-image {
-    width: calc(100% - 40px);
-    height: 32px;
-    margin-top: 32px;
+.favorite-tab-popular {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 85%;
+    margin-left: 2px;
+    background-color: #D1D5DB;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #030712;
+}
+
+.favorite-tab-recent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 85%;
+    margin-left: 2px;
+    background-color: #E5E7EB;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #9CA3AF;
 }
 
 .list-items-container {
