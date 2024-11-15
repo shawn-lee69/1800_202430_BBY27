@@ -216,7 +216,7 @@ body {
     display: none;
 }
 
-#share-icon {
+.share-icon {
     width: 180%;
 }
 
