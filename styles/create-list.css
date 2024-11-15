@@ -88,6 +88,13 @@ body {
     padding: 24px 20px 18px 20px;
 }
 
+.name-arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
 .back-arrow img {
     width: 16px;
     font-weight: 600;
@@ -95,7 +102,7 @@ body {
 
 .list-name {
     font-size: 2rem;
-
+    margin-bottom: 4px;
 }
 
 .top-right-menu-icons {
