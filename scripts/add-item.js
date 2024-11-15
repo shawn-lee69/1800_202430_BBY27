@@ -145,10 +145,17 @@ function searchCommonGroceryItems(query) {
     .slice(0, 4); // Limit to 4 suggestions
 }
 
+// Reference to the list item container
+const listItemContainer = document.querySelector('.list-items-container');
+
 // Display search results
 function displaySearchResults(results) {
   resultsContainer.innerHTML = ''; // Clear previous results
   resultsContainer.style.display = 'block';
+
+  while (listItemContainer.children.length > 1) {
+    listItemContainer.removeChild(listItemContainer.lastChild);
+  }
 
   if (results.length === 0) {
     noResultItem.addEventListener('click', () => {
@@ -169,6 +176,7 @@ function displaySearchResults(results) {
       updateAddItemButton(item);        // Update 'add item' button
       resultsContainer.innerHTML = '';  // Clear search results
       resultsContainer.style.display = 'none';
+      renderPopularItems();
     });
     resultsContainer.appendChild(resultItem);
   });
@@ -177,6 +185,14 @@ function displaySearchResults(results) {
 // Update search results and button text in real-time
 searchInput.addEventListener('input', event => {
   const query = event.target.value.trim();
+  // If the query is an empty string, clear the results and exit
+  if (!query) {
+    resultsContainer.innerHTML = '';
+    resultsContainer.style.display = 'none';
+    updateAddItemButton('');
+    return;
+  }
+
   const results = searchCommonGroceryItems(query);
 
   // Display results and update button text
