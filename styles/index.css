@@ -183,6 +183,11 @@ header img {
     font-weight: 400;
 }
 
+.empty-message {
+    margin-top: 30%;
+    color: #9CA3AF;
+}
+
 /* welcome deals with empty list or not logged in user */
 .welcome {
     display: flex;

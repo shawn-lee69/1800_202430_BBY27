@@ -39,6 +39,17 @@ function displayListItems() {
   const shoppingListDiv = document.querySelector('.shoppingList');
   shoppingListDiv.innerHTML = ''; // Clear any existing items
 
+  if (!itemsList || itemsList.length === 0) {
+    // Create a message element
+    const emptyMessage = document.createElement('div');
+    emptyMessage.classList.add('empty-message');
+    emptyMessage.textContent = 'List is empty';
+
+    // Append the message to the shopping list div
+    shoppingListDiv.appendChild(emptyMessage);
+    return; // Exit the function since there's nothing to display
+  }
+
   itemsList.forEach((item) => {
     const formattedDate = formatDate(item.createdAt);
     const itemAnchor = document.createElement('a');
