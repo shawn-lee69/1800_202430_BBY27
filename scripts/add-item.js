@@ -11,26 +11,6 @@ const listId = getQueryParam('id');
 
 
 /*
- * This is a utility function for fetching data from Firestore
- */
-function getFirestoreDocument(collection, docId) {
-  return db.collection(collection).doc(docId).get()
-    .then(doc => {
-      if (doc.exists) {
-        return doc.data();
-      } else {
-        console.log('No such document!');
-        return null;
-      }
-    })
-    .catch(error => {
-      console.error(`Error getting document from ${collection}/${docId}:`, error);
-      return null;
-    });
-}
-
-
-/*
  * Following cluster of codes is for "go back" button navigation feature.
  */
 // Ensure that the back button is created after the DOM is loaded
