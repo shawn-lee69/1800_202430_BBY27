@@ -43,7 +43,7 @@ function goBackToTheList() {
   const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
   linkAnchor.href = `${basePath}/create-list.html?id=${listId}`;
   linkAnchor.innerHTML = `
-      <img src='images/create-list/back-arrow.png' alt='arrow image for moving back'/>
+      <img src='/images/create-list/back-arrow.png' alt='arrow image for moving back'/>
     `;
   const backArrowDiv = document.querySelector('.back-arrow');
   backArrowDiv.appendChild(linkAnchor);
@@ -129,7 +129,19 @@ function searchCommonGroceryItems(query) {
   if (!query) return [];
   return groceryItems
     .filter(item => item.toLowerCase().includes(query.toLowerCase()))
-    .sort()
+    .sort((a, b) => {
+      const aStartsWith = a.toLowerCase().startsWith(query.toLowerCase());
+      const bStartsWith = b.toLowerCase().startsWith(query.toLowerCase());
+
+      if (aStartsWith && !bStartsWith) {
+        return -1; // a comes before b
+      } else if (!aStartsWith && bStartsWith) {
+        return 1; // b comes before a
+      } else {
+        // Both start or don't start with query; sort alphabetically
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+      }
+    })
     .slice(0, 4); // Limit to 4 suggestions
 }
 
@@ -205,9 +217,6 @@ document.getElementById('cancel-button').addEventListener('click', function(even
 /*
  * Following is the cluster of codes for favorite bar feature.
  */
-
-
-
 const favoritePopularBar = document.querySelector('.favorite-tab-popular');
 const favoriteRecentBar = document.querySelector('.favorite-tab-recent');
 
