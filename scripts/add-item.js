@@ -72,20 +72,6 @@ function addItemToFirestore(itemName) {
   }
 }
 
-function setupAddItemButton() {
-  const addButton = document.querySelector('.item-add-button');
-
-  if (addButton) {
-    addButton.addEventListener('click', function(event) {
-      const itemName = searchInput.value.trim();
-      addItemToFirestore(itemName);
-    });
-  }
-}
-
-setupAddItemButton();
-
-
 /*
  * Following cluster of codes is for item search feature.
  */
@@ -201,6 +187,9 @@ function updateAddItemButton(query) {
 
   itemAddButton.appendChild(addIcon);
   itemAddButton.appendChild(document.createTextNode(` ${query || ' '}`));
+
+  // Set data attribute for event delegation
+  itemAddButton.setAttribute('data-item-name', query);
 }
 
 // JavaScript to clear the input when the cancel button is clicked
@@ -229,6 +218,7 @@ function renderPopularItems() {
   popularItems.forEach((item) => {
     const itemAddButton = document.createElement('div');
     itemAddButton.classList.add('item-add-button');
+    itemAddButton.setAttribute('data-item-name', item); // Adding data attribute for event delegation
     itemAddButton.innerHTML = `
       <img src='./images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
       ${item}
@@ -273,3 +263,19 @@ favoritePopularBar.addEventListener('click', () => {
 
   renderPopularItems();
 })
+
+/*
+ * Event Delegation for 'Add Item' Buttons
+ */
+listItemContainer.addEventListener('click', function(event) {
+  const itemButton = event.target.closest('.item-add-button');
+
+  if (itemButton && listItemContainer.contains(itemButton)) {
+    const itemName = itemButton.getAttribute('data-item-name');
+    if (itemName) {
+      addItemToFirestore(itemName);
+    } else {
+      console.log('No item name found for this button.');
+    }
+  }
+});
