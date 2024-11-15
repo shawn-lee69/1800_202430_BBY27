@@ -198,7 +198,11 @@ body {
     justify-content: center;
     margin-top: 28px;
     width: calc(100% - 40px);
-    gap: 16px;
+    gap: 12px;
+}
+
+.selected-items-container {
+    border: 1px solid black;
 }
 
 .item-add-button {

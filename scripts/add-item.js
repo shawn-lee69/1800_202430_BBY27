@@ -217,6 +217,41 @@ document.getElementById('cancel-button').addEventListener('click', function(even
 /*
  * Following is the cluster of codes for favorite bar feature.
  */
+let popularItems = [];
+
+
+// Function to render popular items
+function renderPopularItems() {
+  const listItemContainer = document.querySelector('.list-items-container');
+
+  // Remove all child elements except the first one
+  while (listItemContainer.children.length > 1) {
+    listItemContainer.removeChild(listItemContainer.lastChild);
+  }
+
+  // Append popular items
+  popularItems.forEach((item) => {
+    const itemAddButton = document.createElement('div');
+    itemAddButton.classList.add('item-add-button');
+    itemAddButton.innerHTML = `
+      <img src='./images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
+      ${item}
+    `;
+
+    listItemContainer.appendChild(itemAddButton);
+  });
+}
+
+// Fetch the popular items JSON file
+fetch('popular-items.json')
+  .then(response => response.json())
+  .then(data => {
+    popularItems = data;
+    renderPopularItems();
+  })
+  .catch(error => console.error('Error loading popular items:', error));
+
+
 const favoritePopularBar = document.querySelector('.favorite-tab-popular');
 const favoriteRecentBar = document.querySelector('.favorite-tab-recent');
 
@@ -225,6 +260,13 @@ favoriteRecentBar.addEventListener('click', () => {
   favoritePopularBar.style.color = '#9CA3AF';
   favoriteRecentBar.style.backgroundColor ='#D1D5DB';
   favoriteRecentBar.style.color = '#030712';
+
+  const listItemContainer = document.querySelector('.list-items-container');
+
+  // Remove all child elements except the first one
+  while (listItemContainer.children.length > 1) {
+    listItemContainer.removeChild(listItemContainer.lastChild);
+  }
 })
 
 favoritePopularBar.addEventListener('click', () => {
@@ -232,4 +274,6 @@ favoritePopularBar.addEventListener('click', () => {
   favoritePopularBar.style.color = '';
   favoriteRecentBar.style.backgroundColor ='';
   favoriteRecentBar.style.color = '';
+
+  renderPopularItems();
 })
