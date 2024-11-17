@@ -134,3 +134,6 @@ function setupAddListButton() {
 renderContent();
 setupAddListButton();
 
+document.querySelector('.profile').addEventListener('click', function () {
+      window.location.href = "myPage.html";
+});
