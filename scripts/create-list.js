@@ -169,7 +169,7 @@ function removeItemFromFirestore(itemId) {
   });
 }
 
-// Modal elements
+// Start of the code for editing list name
 const editModal = document.getElementById('editModal');
 const closeModalButton = editModal.querySelector('.close');
 const saveButton = document.getElementById('saveButton');

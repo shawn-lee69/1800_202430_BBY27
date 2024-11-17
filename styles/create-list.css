@@ -118,6 +118,7 @@ body {
 
 #edit-button {
     width: 24px;
+    cursor: pointer;
 }
 
 #delete-list-button {
