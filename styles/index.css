@@ -136,6 +136,11 @@ header img {
     text-decoration: none;
 }
 
+.list-item-wrapper:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
 .list-item {
     display: flex;
     flex-direction: column;
@@ -178,9 +183,30 @@ header img {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    color: #9CA3AF;
+    color: #6B7280;
     font-size: 1rem;
     font-weight: 400;
+}
+
+.list-item.completed {
+    background-color: #E5E7EB;
+}
+
+.list-item.completed .list-name {
+    color: #6B7280;
+}
+
+.list-item.completed .list-item-number-counter {
+    color: #6B7280;
+}
+
+.list-item.completed .list-item-time-stamp {
+    color: #9CA3AF;
+}
+
+.empty-message {
+    margin-top: 30%;
+    color: #9CA3AF;
 }
 
 /* welcome deals with empty list or not logged in user */

@@ -24,12 +24,32 @@ function renderContent() {
   });
 }
 
-// Helper function to format date as "YYYY-MM-DD"
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+// Helper function to format date dynamically
+function formatSemanticTime(createdAt) {
+  const now = new Date();
+  const diffInMs = now - createdAt; // Difference in milliseconds
+  const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInYears = Math.floor(diffInDays / 365);
+
+  if (diffInYears >= 1) {
+    return `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(createdAt.getDate()).padStart(2, '0')}`;
+  } else if (diffInDays === 1) {
+    return 'Yesterday';
+  } else if (diffInDays > 1) {
+    return `${String(createdAt.getDate()).padStart(2, '0')}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${createdAt.getFullYear()}`;
+  } else if (diffInHours >= 1) {
+    return `${diffInHours} hour ago`;
+  } else if (diffInHours >= 2) {
+    return `${diffInHours} hours ago`;
+  } else if (diffInMinutes >= 1) {
+    return `${diffInMinutes} minute ago`;
+  } else if (diffInMinutes >= 2) {
+    return `${diffInMinutes} minutes ago`;
+  } else {
+    return 'Just now';
+  }
 }
 
 // Function to display the list items in the shoppingList div
@@ -39,19 +59,35 @@ function displayListItems() {
   const shoppingListDiv = document.querySelector('.shoppingList');
   shoppingListDiv.innerHTML = ''; // Clear any existing items
 
+  if (!itemsList || itemsList.length === 0) {
+    // Create a message element
+    const emptyMessage = document.createElement('div');
+    emptyMessage.classList.add('empty-message');
+    emptyMessage.textContent = 'List is empty';
+
+    // Append the message to the shopping list div
+    shoppingListDiv.appendChild(emptyMessage);
+    return; // Exit the function since there's nothing to display
+  }
+
   itemsList.forEach((item) => {
-    const formattedDate = formatDate(item.createdAt);
+    const semanticTime = formatSemanticTime(item.createdAt);
     const itemAnchor = document.createElement('a');
     itemAnchor.href = `${basePath}/create-list.html?id=${item.id}`;
     itemAnchor.classList.add('list-item-wrapper');
+
+    // determine if the CSS for completed items should be applied
+    const isCompleted = item.totalNumberOfItems === item.checkedNumberOfItems;
+    const listItemClass = isCompleted ? 'list-item completed' : 'list-item';
+
     itemAnchor.innerHTML = `
-      <div class='list-item'>
+      <div class='${listItemClass}'>
         <div class='list-item-content-header'>
           <div class='list-name'>${item.name}</div>
           <div class='list-item-number-counter'>${item.checkedNumberOfItems} / ${item.totalNumberOfItems}</div>
         </div>
         <div class='list-item-content-bottom'>
-          <div class='list-item-time-stamp'>${formattedDate}</div>
+          <div class='list-item-time-stamp'>${semanticTime}</div>
         </div>
       </div>
     `;
@@ -61,6 +97,18 @@ function displayListItems() {
 
 // Function to fetch lists from Firestore and display them
 function fetchAndDisplayLists(userId) {
+  // code snippet for spinner
+  const spinner = document.querySelector('.spinner-border');
+  const shoppingListDiv = document.querySelector('.shoppingList');
+
+  // Show the spinner and clear the shopping list div
+  if (spinner) {
+    spinner.style.display = 'block';
+  }
+  if (shoppingListDiv) {
+    shoppingListDiv.innerHTML = '';
+  }
+
   db.collection('lists').where('userID', '==', userId).get().then((querySnapshot) => {
     itemsList = [];
     querySnapshot.forEach((doc) => {
@@ -73,7 +121,20 @@ function fetchAndDisplayLists(userId) {
         createdAt: data.createdAt.toDate()
       });
     });
+
+    // Hide the spinner after fetching is done
+    if (spinner) {
+      spinner.style.display = 'none';
+    }
+
     displayListItems();
+  }).catch((error) => {
+    console.error('Error fetching lists: ', error);
+
+    // Hide the spinner even if an error occurs
+    if (spinner) {
+      spinner.style.display = 'none';
+    }
   });
 }
 

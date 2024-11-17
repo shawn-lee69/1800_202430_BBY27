@@ -68,6 +68,19 @@ function displayItems() {
 
 // Function to fetch items from Firestore and display them
 function fetchAndDisplayItems(listId) {
+  // code snippet for spinner
+  const spinner = document.querySelector('.spinner-border');
+  const selectedItemsContainer = document.querySelector('.selected-items-container');
+
+  // Show the spinner and clear the selected item list div
+  if (spinner) {
+    spinner.style.display = 'block';
+  }
+  if (selectedItemsContainer) {
+    selectedItemsContainer.innerHTML = '';
+  }
+
+
   db.collection('lists').doc(listId).collection('items').get().then((querySnapshot) => {
     itemsList = [];
     querySnapshot.forEach((doc) => {
@@ -80,7 +93,20 @@ function fetchAndDisplayItems(listId) {
         saleLink: data.saleLink || "https://google.com",
       });
     });
+
+    // Hide the spinner after fetching is done
+    if (spinner) {
+      spinner.style.display = 'none';
+    }
+
     displayItems();
+  }).catch((error) => {
+    console.error('Error fetching items: ', error);
+
+    // Hide the spinner even if an error occurs
+    if (spinner) {
+      spinner.style.display = 'none';
+    }
   });
 }
 
