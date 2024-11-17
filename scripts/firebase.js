@@ -1,5 +1,4 @@
-
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyDLzHDBsObO3YfM0k-JPfg98e1TTfLqy0E",
   authDomain: "bby27---samepage.firebaseapp.com",
   projectId: "bby27---samepage",
@@ -10,6 +9,6 @@ const firebaseConfig = {
 };
 
 
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();

@@ -37,19 +37,16 @@ function populateUserInfo() {
     });
 }
 
-//call the function to run it 
-populateUserInfo();
-
-document.getElementById('edit-button').addEventListener('click', function () {
+function updateUserInfo() {
     document.getElementById('userInfoFields').disabled = false;
-});
+}
 
-document.getElementById('save-button').addEventListener('click', function () {
+function saveUserInfo() {
     //a) get user entered values
-    userName = document.getElementById('nameInput').value;   
-    userEmail = document.getElementById('emailInput').value;    
-    userAddress = document.getElementById('addressInput').value;     
-    userMarket = document.getElementById('marketInput').value;      
+    userName = document.getElementById('nameInput').value;
+    userEmail = document.getElementById('emailInput').value;
+    userAddress = document.getElementById('addressInput').value;
+    userMarket = document.getElementById('marketInput').value;
 
     //b) update user's document in Firestore
     currentUser.update({
@@ -60,19 +57,40 @@ document.getElementById('save-button').addEventListener('click', function () {
     })
         .then(() => {
             console.log("Document successfully updated!");
+            //c) disable edit 
+            document.getElementById('userInfoFields').disabled = true;
+            // This locks the form.
         })
+        .catch((error) => {
+            console.error("Error updating document: ", error);
+        });
+}
 
-    //c) disable edit 
-    document.getElementById('userInfoFields').disabled = true;
-    // This locks the form.
-});
+document.addEventListener("DOMContentLoaded", function () {
+    //call the function to run it 
+    populateUserInfo();
 
-document.getElementById('logout').addEventListener('click', function () {
-    firebase.auth().signOut().then(() => {
-        console.log("User signed out successfully.");
+    document.getElementById('edit-button').addEventListener('click', function () {
+        updateUserInfo();
+    });
 
-        window.location.href = "welcome.html";
-    }).catch((error) => {
-        console.error("Error signing out: ", error);
+    document.getElementById('save-button').addEventListener('click', function () {
+        saveUserInfo();
+    });
+
+    document.getElementById('logout').addEventListener('click', function () {
+        firebase.auth().signOut().then(() => {
+            console.log("User signed out successfully.");
+            window.location.href = "welcome.html";
+        }).catch((error) => {
+            console.error("Error signing out: ", error);
+        });
+    });
+
+    document.getElementById('back-arrow').addEventListener('click', function () {
+        window.location.href = "index.html";
     });
 });
+
+
+
