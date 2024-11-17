@@ -183,9 +183,25 @@ header img {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    color: #9CA3AF;
+    color: #6B7280;
     font-size: 1rem;
     font-weight: 400;
+}
+
+.list-item.completed {
+    background-color: #E5E7EB;
+}
+
+.list-item.completed .list-name {
+    color: #6B7280;
+}
+
+.list-item.completed .list-item-number-counter {
+    color: #6B7280;
+}
+
+.list-item.completed .list-item-time-stamp {
+    color: #9CA3AF;
 }
 
 .empty-message {
