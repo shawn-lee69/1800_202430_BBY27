@@ -88,6 +88,13 @@ body {
     padding: 24px 20px 18px 20px;
 }
 
+.name-arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
 .back-arrow img {
     width: 16px;
     font-weight: 600;
@@ -95,7 +102,7 @@ body {
 
 .list-name {
     font-size: 2rem;
-
+    margin-bottom: 4px;
 }
 
 .top-right-menu-icons {
@@ -111,6 +118,7 @@ body {
 
 #edit-button {
     width: 24px;
+    cursor: pointer;
 }
 
 #delete-list-button {
@@ -216,6 +224,10 @@ body {
     display: none;
 }
 
+.share-icon {
+    width: 180%;
+}
+
 .share-container {
     background-color: #ffffff;
     padding: 20px;
@@ -240,7 +252,7 @@ body {
 }
 
 .share-options button {
-    background-color: #347928;
+    background-color: rgba(192, 235, 166, 1);
     color: white;
     border: none;
     border-radius: 8px;
@@ -257,7 +269,7 @@ body {
 }
 
 .share-options button:hover {
-    background-color: #285a1e;
+    background-color: #4a873e;
 }
 
 .close-overlay {

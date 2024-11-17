@@ -1,0 +1,83 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F3F4F6; /* Light background color */
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center the content */
+    align-items: center; /* Horizontally center the content */
+    position: relative; /* Position for #back-arrow */
+    width: 100%;
+    max-width: 440px; /* Max width for the container */
+    height: 100%; /* Fill the full height */
+    background-color: #ffffff; /* White background */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 0;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+    padding: 24px 130px 100px 20px;
+}
+
+#back-arrow {
+    width: 16px;
+    font-weight: 600;
+}
+
+img {
+    width: 180px;
+}
+
+#userProfile {
+    width: 80%;
+}
+
+.userInfo {
+    width: auto;
+    display: flex;
+    flex-direction: column; 
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; 
+    margin-bottom: 16px; 
+}
+
+.form-group label {
+    font-weight: bold; 
+    margin-bottom: 8px; 
+}
+
+.form-control {
+    padding: 8px; 
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+@media screen and (min-width: 440px) {
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 440px;
+        height: 100vh;
+        background-color: #ffffff;
+    }
+}

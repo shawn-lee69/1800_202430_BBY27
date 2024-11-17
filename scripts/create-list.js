@@ -124,26 +124,118 @@ document.getElementById('item-add-button').addEventListener('click', function(ev
  * Following cluster of codes is for item deleting feature
  */
 function removeItemFromFirestore(itemId) {
-  db.collection('lists').doc(listId).get()
-    .then((doc) => {
-      if (doc.exists) {
-        let currentTotalNumberOfItems = doc.data().totalNumberOfItems || 0;
-        db.collection('lists').doc(listId).collection('items').doc(itemId).delete()
-          .then(() => {
-            // Remove the item from itemsList and re-render the items
-            itemsList = itemsList.filter(item => item.id !== itemId);
-            db.collection('lists').doc(listId).update({
-              totalNumberOfItems: currentTotalNumberOfItems - 1
-            });
-            displayItems();
-          })
-      }
-    })
-    .catch((error) => {
-      console.log('Failed to remove item: ', error);
-    })
+
+  if (!listId) {
+    console.error("Error: listId is empty or undefined.");
+    return;
+  }
+
+  const listRef = db.collection('lists').doc(listId);
+  const itemRef = listRef.collection('items').doc(itemId);
+
+  db.runTransaction(async (transaction) => {
+    const listDoc = await transaction.get(listRef);
+    const itemDoc = await transaction.get(itemRef);
+
+    if (!listDoc.exists) {
+      throw "List does not exist!";
+    }
+
+    if (!itemDoc.exists) {
+      throw "Item does not exist!";
+    }
+
+    const isChecked = itemDoc.data().isChecked || false;
+    let totalNumberOfItems = listDoc.data().totalNumberOfItems || 0;
+    let checkedNumberOfItems = listDoc.data().checkedNumberOfItems || 0;
+
+    // Calculate new counts ensuring they don't go below zero
+    const newTotal = Math.max(totalNumberOfItems - 1, 0);
+    const newChecked = isChecked ? Math.max(checkedNumberOfItems - 1, 0) : checkedNumberOfItems;
+
+    // Update counts
+    transaction.update(listRef, {
+      totalNumberOfItems: newTotal,
+      checkedNumberOfItems: newChecked
+    });
+
+    // Delete the item
+    transaction.delete(itemRef);
+  }).then(() => {
+    itemsList = itemsList.filter(item => item.id !== itemId);
+    displayItems();
+  }).catch((error) => {
+    console.error("Transaction failed: ", error);
+  });
 }
 
+// Start of the code for editing list name
+const editModal = document.getElementById('editModal');
+const closeModalButton = editModal.querySelector('.close');
+const saveButton = document.getElementById('saveButton');
+const listNameInput = document.getElementById('listNameInput');
+
+// Open the modal and populate the current list name
+document.getElementById('edit-button').addEventListener('click', function () {
+  if (listId) {
+    const docRef = db.collection('lists').doc(listId);
+
+    // Fetch the current list name from Firestore
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        // Set the current name in the input field
+        listNameInput.value = doc.data().name || "New List";
+        // Show the modal
+        editModal.style.display = 'block';
+      } else {
+        console.log("No such document!");
+      }
+    }).catch((error) => {
+      console.error("Error fetching document:", error);
+    });
+  } else {
+    console.error("Error: listId is empty or undefined.");
+  }
+});
+
+// Close the modal
+closeModalButton.addEventListener('click', function () {
+  editModal.style.display = 'none';
+});
+
+// Save the new list name to Firestore
+saveButton.addEventListener('click', function () {
+  const newListName = listNameInput.value.trim();
+
+  if (newListName && listId) {
+    const docRef = db.collection('lists').doc(listId);
+
+    // Update the list name in Firestore
+    docRef.update({
+      name: newListName,
+      updatedAt: firebase.firestore.Timestamp.fromDate(new Date())
+    })
+    .then(() => {
+      console.log("List name updated successfully!");
+      // Update the list name in the UI
+      document.querySelector('.list-name').innerText = newListName;
+      // Close the modal
+      editModal.style.display = 'none';
+    })
+    .catch((error) => {
+      console.error("Error updating list name:", error);
+    });
+  } else {
+    console.log("Please enter a valid list name.");
+  }
+});
+
+// Close the modal when clicking outside of it
+window.addEventListener('click', function (event) {
+  if (event.target === editModal) {
+    editModal.style.display = 'none';
+  }
+});
 
 /*
  * Following cluster of codes is for list sharing feature
@@ -216,32 +308,48 @@ selectedItemsContainer.addEventListener('click', function (event) {
 });
 
 async function toggleIsChecked(itemId) {
+  if (!listId) {
+    console.error("Error: listId is empty or undefined.");
+    return;
+  }
+
+  const listRef = db.collection('lists').doc(listId);
+  const itemRef = listRef.collection('items').doc(itemId);
+
   try {
-    const itemData = await getFirestoreDocument(`lists/${listId}/items`, itemId);
+    await db.runTransaction(async (transaction) => {
+      const itemDoc = await transaction.get(itemRef);
+      const listDoc = await transaction.get(listRef);
 
-    if (itemData) {
-      const currentValue = itemData.isChecked;
-      const itemDocRef = db.collection('lists').doc(listId).collection('items').doc(itemId);
-      await itemDocRef.update({ isChecked: !currentValue });
-
-      const listDocRef = db.collection('lists').doc(listId);
-      const listDocSnapshot = await listDocRef.get();
-
-      let currentCheckedNumberOfItems = listDocSnapshot.data().checkedNumberOfItems || 0;
-      if (!currentValue) {
-        await listDocRef.update({ checkedNumberOfItems: currentCheckedNumberOfItems + 1 });
-      } else {
-        await listDocRef.update({ checkedNumberOfItems: currentCheckedNumberOfItems - 1 });
+      if (!itemDoc.exists) {
+        throw "Item does not exist!";
       }
 
-    } else {
-      console.log('No such item');
-    }
+      if (!listDoc.exists) {
+        throw "List does not exist!";
+      }
+
+      const currentIsChecked = itemDoc.data().isChecked || false;
+      const newIsChecked = !currentIsChecked;
+
+      // Update the item's isChecked status
+      transaction.update(itemRef, { isChecked: newIsChecked });
+
+      // Update the checkedNumberOfItems using FieldValue.increment
+      const incrementValue = newIsChecked ? 1 : -1;
+
+      // Ensure that checkedNumberOfItems does not go below zero
+      let currentCheckedNumberOfItems = listDoc.data().checkedNumberOfItems || 0;
+      let newCheckedNumberOfItems = currentCheckedNumberOfItems + incrementValue;
+      newCheckedNumberOfItems = Math.max(newCheckedNumberOfItems, 0);
+
+      transaction.update(listRef, { checkedNumberOfItems: newCheckedNumberOfItems });
+    });
+
   } catch (error) {
-    console.error('Error toggling:', error);
+    console.error("Transaction failed: ", error);
   }
 }
-
 
 
 /*

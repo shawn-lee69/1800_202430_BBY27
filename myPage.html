@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SamePage</title>
+    <meta name="comp1800 template" content="My 1800 App">
+    <link rel="stylesheet" href="/styles/myPage.css">
+
+    <!--Firebase Libraries-->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+    <!-- Your Firebase initialization script -->
+    <script src="./scripts/firebase.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <meta charset="utf-8">
+
+</head>
+
+<body>
+    <div class='main'>
+        <div class="top-bar">
+            <a href="index.html">
+                <img id='back-arrow' src="images/create-list/back-arrow.png" alt="arrow image to go back">
+            </a>
+            <img src="SamePage.png" alt="main logo">
+        </div>
+        <!--Inputs forms and labels-->
+        <form id="userProfile">
+            <fieldset class="userInfo" id="userInfoFields" disabled>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="nameInput" class="form-control" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" id="addressInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Preferred Market</label>
+                    <input type="text" id="marketInput" class="form-control">
+                </div>
+            </fieldset>
+            <div>
+                <button type="button" id="edit-button">Edit</button>
+                <button type="button" id="save-button">Save</button>
+            </div>
+        </form>
+        <div id="bottom">
+            <button type="submit" id="logout" class="logout-button">Logout</button>
+        </div>
+    </div>
+
+    <script src="./scripts/myPage.js"></script>
+</body>
+
+</html>

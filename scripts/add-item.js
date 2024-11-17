@@ -11,26 +11,6 @@ const listId = getQueryParam('id');
 
 
 /*
- * This is a utility function for fetching data from Firestore
- */
-function getFirestoreDocument(collection, docId) {
-  return db.collection(collection).doc(docId).get()
-    .then(doc => {
-      if (doc.exists) {
-        return doc.data();
-      } else {
-        console.log('No such document!');
-        return null;
-      }
-    })
-    .catch(error => {
-      console.error(`Error getting document from ${collection}/${docId}:`, error);
-      return null;
-    });
-}
-
-
-/*
  * Following cluster of codes is for "go back" button navigation feature.
  */
 // Ensure that the back button is created after the DOM is loaded
@@ -43,7 +23,7 @@ function goBackToTheList() {
   const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
   linkAnchor.href = `${basePath}/create-list.html?id=${listId}`;
   linkAnchor.innerHTML = `
-      <img src='images/create-list/back-arrow.png' alt='arrow image for moving back'/>
+      <img src='/images/create-list/back-arrow.png' alt='arrow image for moving back'/>
     `;
   const backArrowDiv = document.querySelector('.back-arrow');
   backArrowDiv.appendChild(linkAnchor);
@@ -92,20 +72,6 @@ function addItemToFirestore(itemName) {
   }
 }
 
-function setupAddItemButton() {
-  const addButton = document.querySelector('.item-add-button');
-
-  if (addButton) {
-    addButton.addEventListener('click', function(event) {
-      const itemName = searchInput.value.trim();
-      addItemToFirestore(itemName);
-    });
-  }
-}
-
-setupAddItemButton();
-
-
 /*
  * Following cluster of codes is for item search feature.
  */
@@ -129,14 +95,33 @@ function searchCommonGroceryItems(query) {
   if (!query) return [];
   return groceryItems
     .filter(item => item.toLowerCase().includes(query.toLowerCase()))
-    .sort()
+    .sort((a, b) => {
+      const aStartsWith = a.toLowerCase().startsWith(query.toLowerCase());
+      const bStartsWith = b.toLowerCase().startsWith(query.toLowerCase());
+
+      if (aStartsWith && !bStartsWith) {
+        return -1; // a comes before b
+      } else if (!aStartsWith && bStartsWith) {
+        return 1; // b comes before a
+      } else {
+        // Both start or don't start with query; sort alphabetically
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+      }
+    })
     .slice(0, 4); // Limit to 4 suggestions
 }
+
+// Reference to the list item container
+const listItemContainer = document.querySelector('.list-items-container');
 
 // Display search results
 function displaySearchResults(results) {
   resultsContainer.innerHTML = ''; // Clear previous results
   resultsContainer.style.display = 'block';
+
+  while (listItemContainer.children.length > 1) {
+    listItemContainer.removeChild(listItemContainer.lastChild);
+  }
 
   if (results.length === 0) {
     noResultItem.addEventListener('click', () => {
@@ -157,6 +142,7 @@ function displaySearchResults(results) {
       updateAddItemButton(item);        // Update 'add item' button
       resultsContainer.innerHTML = '';  // Clear search results
       resultsContainer.style.display = 'none';
+      renderPopularItems();
     });
     resultsContainer.appendChild(resultItem);
   });
@@ -165,6 +151,14 @@ function displaySearchResults(results) {
 // Update search results and button text in real-time
 searchInput.addEventListener('input', event => {
   const query = event.target.value.trim();
+  // If the query is an empty string, clear the results and exit
+  if (!query) {
+    resultsContainer.innerHTML = '';
+    resultsContainer.style.display = 'none';
+    updateAddItemButton('');
+    return;
+  }
+
   const results = searchCommonGroceryItems(query);
 
   // Display results and update button text
@@ -193,10 +187,95 @@ function updateAddItemButton(query) {
 
   itemAddButton.appendChild(addIcon);
   itemAddButton.appendChild(document.createTextNode(` ${query || ' '}`));
+
+  // Set data attribute for event delegation
+  itemAddButton.setAttribute('data-item-name', query);
 }
 
 // JavaScript to clear the input when the cancel button is clicked
 document.getElementById('cancel-button').addEventListener('click', function(event) {
   event.preventDefault();
   document.getElementById('search-input').value = '';
+});
+
+
+/*
+ * Following is the cluster of codes for favorite bar feature.
+ */
+let popularItems = [];
+
+
+// Function to render popular items
+function renderPopularItems() {
+  const listItemContainer = document.querySelector('.list-items-container');
+
+  // Remove all child elements except the first one
+  while (listItemContainer.children.length > 1) {
+    listItemContainer.removeChild(listItemContainer.lastChild);
+  }
+
+  // Append popular items
+  popularItems.forEach((item) => {
+    const itemAddButton = document.createElement('div');
+    itemAddButton.classList.add('item-add-button');
+    itemAddButton.setAttribute('data-item-name', item); // Adding data attribute for event delegation
+    itemAddButton.innerHTML = `
+      <img src='./images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
+      ${item}
+    `;
+
+    listItemContainer.appendChild(itemAddButton);
+  });
+}
+
+// Fetch the popular items JSON file
+fetch('popular-items.json')
+  .then(response => response.json())
+  .then(data => {
+    popularItems = data;
+    renderPopularItems();
+  })
+  .catch(error => console.error('Error loading popular items:', error));
+
+
+const favoritePopularBar = document.querySelector('.favorite-tab-popular');
+const favoriteRecentBar = document.querySelector('.favorite-tab-recent');
+
+favoriteRecentBar.addEventListener('click', () => {
+  favoritePopularBar.style.backgroundColor = '#E5E7EB';
+  favoritePopularBar.style.color = '#9CA3AF';
+  favoriteRecentBar.style.backgroundColor ='#D1D5DB';
+  favoriteRecentBar.style.color = '#030712';
+
+  const listItemContainer = document.querySelector('.list-items-container');
+
+  // Remove all child elements except the first one
+  while (listItemContainer.children.length > 1) {
+    listItemContainer.removeChild(listItemContainer.lastChild);
+  }
+})
+
+favoritePopularBar.addEventListener('click', () => {
+  favoritePopularBar.style.backgroundColor = '';
+  favoritePopularBar.style.color = '';
+  favoriteRecentBar.style.backgroundColor ='';
+  favoriteRecentBar.style.color = '';
+
+  renderPopularItems();
+})
+
+/*
+ * Event Delegation for 'Add Item' Buttons
+ */
+listItemContainer.addEventListener('click', function(event) {
+  const itemButton = event.target.closest('.item-add-button');
+
+  if (itemButton && listItemContainer.contains(itemButton)) {
+    const itemName = itemButton.getAttribute('data-item-name');
+    if (itemName) {
+      addItemToFirestore(itemName);
+    } else {
+      console.log('No item name found for this button.');
+    }
+  }
 });
