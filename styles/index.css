@@ -238,6 +238,10 @@ header img {
     z-index: 2; /* Ensures the image stays above the #bottom div */
 }
 
+.profile {
+    cursor: pointer;
+}
+
 .add {
     width: 70%;
 }

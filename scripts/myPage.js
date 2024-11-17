@@ -11,12 +11,16 @@ function populateUserInfo() {
                 .then(userDoc => {
                     //get the data fields of the user
                     let userName = userDoc.data().name;
+                    let userEmail = userDoc.data().email;
                     let userAddress = userDoc.data().address;
                     let userMarket = userDoc.data().preferredMarket;
 
                     //if the data fields are not empty, then write them in to the form.
                     if (userName != null) {
                         document.getElementById("nameInput").value = userName;
+                    }
+                    if (userName != null) {
+                        document.getElementById("emailInput").value = userEmail;
                     }
                     if (userAddress != null) {  // Corrected from userSchool to userAddress
                         document.getElementById("addressInput").value = userAddress;
@@ -36,15 +40,21 @@ function populateUserInfo() {
 //call the function to run it 
 populateUserInfo();
 
+document.getElementById('edit-button').addEventListener('click', function () {
+    document.getElementById('userInfoFields').disabled = false;
+});
+
 document.getElementById('save-button').addEventListener('click', function () {
     //a) get user entered values
-    userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-    userAddress = document.getElementById('addressInput').value;     //get the value of the field with id="schoolInput"
-    userMarket = document.getElementById('marketInput').value;       //get the value of the field with id="cityInput"
+    userName = document.getElementById('nameInput').value;   
+    userEmail = document.getElementById('emailInput').value;    
+    userAddress = document.getElementById('addressInput').value;     
+    userMarket = document.getElementById('marketInput').value;      
 
     //b) update user's document in Firestore
     currentUser.update({
         name: userName,
+        email: userEmail,
         address: userAddress,
         preferredMarket: userMarket
     })
@@ -55,10 +65,6 @@ document.getElementById('save-button').addEventListener('click', function () {
     //c) disable edit 
     document.getElementById('userInfoFields').disabled = true;
     // This locks the form.
-});
-
-document.getElementById('edit-button').addEventListener('click', function () {
-    document.getElementById('userInfoFields').disabled = false;
 });
 
 document.getElementById('logout').addEventListener('click', function () {
