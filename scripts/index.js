@@ -72,6 +72,18 @@ function displayListItems() {
 
 // Function to fetch lists from Firestore and display them
 function fetchAndDisplayLists(userId) {
+  // code snippet for spinner
+  const spinner = document.querySelector('.spinner-border');
+  const shoppingListDiv = document.querySelector('.shoppingList');
+
+  // Show the spinner and clear the shopping list div
+  if (spinner) {
+    spinner.style.display = 'block';
+  }
+  if (shoppingListDiv) {
+    shoppingListDiv.innerHTML = '';
+  }
+
   db.collection('lists').where('userID', '==', userId).get().then((querySnapshot) => {
     itemsList = [];
     querySnapshot.forEach((doc) => {
@@ -84,7 +96,20 @@ function fetchAndDisplayLists(userId) {
         createdAt: data.createdAt.toDate()
       });
     });
+
+    // Hide the spinner after fetching is done
+    if (spinner) {
+      spinner.style.display = 'none';
+    }
+
     displayListItems();
+  }).catch((error) => {
+    console.error('Error fetching lists: ', error);
+
+    // Hide the spinner even if an error occurs
+    if (spinner) {
+      spinner.style.display = 'none';
+    }
   });
 }
 
