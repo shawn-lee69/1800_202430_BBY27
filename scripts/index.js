@@ -1,9 +1,9 @@
 // Change this value based on user's login status
 var isLoggedIn = true;
+let userId = null;
 
 function getQueryParameter(name) {
   const urlParams = new URLSearchParams(window.location.search);
-
   return urlParams.get(name);
 }
 
@@ -12,10 +12,19 @@ if (getQueryParameter('isLoggedIn') === 'false') {
   isLoggedIn = false;
 }
 
+// add navigations for nav bottom buttons by selecting all elements that should navigate to "myPage.html"
+const profileElements = document.querySelectorAll('.profile, .profile-span');
+profileElements.forEach(element => {
+  element.addEventListener("click", () => {
+    window.location.href = "myPage.html";
+  });
+});
+
 function renderContent() {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
       const userID = user.uid;
+      userId = user.uid;
       document.getElementById('listContent').style.display = 'block';
       fetchAndDisplayLists(userID);
     } else {
@@ -73,7 +82,7 @@ function displayListItems() {
   itemsList.forEach((item) => {
     const semanticTime = formatSemanticTime(item.createdAt);
     const itemAnchor = document.createElement('a');
-    itemAnchor.href = `${basePath}/create-list.html?id=${item.id}`;
+    itemAnchor.href = `${basePath}/create-list.html?id=${item.id}&uid=${userId}`;
     itemAnchor.classList.add('list-item-wrapper');
 
     // determine if the CSS for completed items should be applied
@@ -164,7 +173,7 @@ function addListToFirestore() {
         db.collection('lists').add(newList)
           .then((docRef) => {
             // Navigate to create-list.html with the new list ID
-            window.location.href = `create-list.html?id=${docRef.id}`;
+            window.location.href = `create-list.html?id=${docRef.id}&uid=${userID}`;
           })
           .catch((error) => {
             console.error('Error adding list: ', error);
@@ -181,20 +190,15 @@ function addListToFirestore() {
 
 // Function to set up the 'add' button event listener
 function setupAddListButton() {
-  // Select the anchor tag that wraps the 'add' image
-  const addLink = document.querySelector('.bottom a');
+  // navigate users when they either click the image area or text
+  const addElements = document.querySelectorAll('.create-list-link, .add-span');
 
-  if (addLink) {
-    addLink.addEventListener('click', function (event) {
-      event.preventDefault(); // Prevent default navigation
-      addListToFirestore();   // Call the function to add the list and navigate
+  addElements.forEach(element => {
+    element.addEventListener('click', () => {
+      addListToFirestore();
     });
-  }
+  });
 }
 
 renderContent();
 setupAddListButton();
-
-document.querySelector('.profile').addEventListener('click', function () {
-      window.location.href = "myPage.html";
-});

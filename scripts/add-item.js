@@ -8,7 +8,8 @@ function getQueryParam(param) {
 }
 
 const listId = getQueryParam('id');
-
+const userId = getQueryParam('uid') || '';
+const userRef = userId ? db.collection("users").doc(userId) : null;
 
 /*
  * Following cluster of codes is for "go back" button navigation feature.
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function goBackToTheList() {
   const linkAnchor = document.createElement('a');
   const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-  linkAnchor.href = `${basePath}/create-list.html?id=${listId}`;
+  linkAnchor.href = `${basePath}/create-list.html?id=${listId}&uid=${userId}`;
   linkAnchor.innerHTML = `
       <img src='/images/create-list/back-arrow.png' alt='arrow image for moving back'/>
     `;
@@ -55,7 +56,35 @@ function addItemToFirestore(itemName) {
               db.collection('lists').doc(listId).update({
                 totalNumberOfItems: currentTotalNumberOfItems + 1
               });
-              window.location.href = `create-list.html?id=${listId}`;
+
+              // Add the item to user's history
+              userRef.get().then((doc) => {
+                if (doc.exists) {
+                  let userData = doc.data();
+                  if (!userData.hasOwnProperty('recentItems')) {
+                    // Initialize the field if it doesn't exist
+                    userRef.update({ recentItems: [] }).then(() => {
+                      console.log("Initialized 'recentItems' field for the user.");
+                    }).catch((error) => {
+                      console.error("Error initializing 'recentItems': ", error);
+                    });
+                  } else {
+                    let recentItems = userData.recentItems || [];
+                    recentItems.unshift(newItem); // Add new item to the start
+                    if (recentItems.length > 5) {
+                      recentItems = recentItems.slice(0, 5); // Keep only the last 5 items
+                    }
+                    return userRef.update({ recentItems });
+                  }
+                } else {
+                  console.log("User document not found!");
+                }
+              }).catch((error) => {
+                console.error("Error updating recent items: ", error);
+              });
+
+              // Navigate user back to create-list page
+              window.location.href = `create-list.html?id=${listId}&uid=${userId}`;
             })
             .catch((error) => {
               console.log('Failed to add item: ', error);
@@ -203,7 +232,24 @@ document.getElementById('cancel-button').addEventListener('click', function(even
  * Following is the cluster of codes for favorite bar feature.
  */
 let popularItems = [];
+let recentItems = [];
 
+
+// Function to render popular items
+function renderRecentItems() {
+  // Append recent items
+  recentItems.forEach((item) => {
+    const itemAddButton = document.createElement('div');
+    itemAddButton.classList.add('item-add-button');
+    itemAddButton.setAttribute('data-item-name', item.name); // Adding data attribute for event delegation
+    itemAddButton.innerHTML = `
+      <img src='./images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
+      ${item.name}
+    `;
+
+    listItemContainer.appendChild(itemAddButton);
+  });
+}
 
 // Function to render popular items
 function renderPopularItems() {
@@ -247,12 +293,26 @@ favoriteRecentBar.addEventListener('click', () => {
   favoriteRecentBar.style.backgroundColor ='#D1D5DB';
   favoriteRecentBar.style.color = '#030712';
 
-  const listItemContainer = document.querySelector('.list-items-container');
+  // Fetch recent items ahead
+  userRef.get()
+    .then((user) => {
+      if (user.exists) {
+        recentItems = user.data().recentItems || [];
 
-  // Remove all child elements except the first one
-  while (listItemContainer.children.length > 1) {
-    listItemContainer.removeChild(listItemContainer.lastChild);
-  }
+        // Clear and render recent items only after data is fetched
+        const listItemContainer = document.querySelector('.list-items-container');
+        while (listItemContainer.children.length > 1) {
+          listItemContainer.removeChild(listItemContainer.lastChild);
+        }
+
+        renderRecentItems();
+      } else {
+        console.log('No user document found.');
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching user document:', error);
+    });
 })
 
 favoritePopularBar.addEventListener('click', () => {

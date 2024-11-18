@@ -256,7 +256,7 @@ header img {
     z-index: 1;
 }
 
-.bottom a {
+.create-list-link {
     grid-column: 2 / 3;
     position: absolute;
     cursor: pointer;
@@ -279,6 +279,7 @@ header img {
     font-weight: 400;
     align-self: center;
     margin-bottom: 12px;
+    cursor: pointer;
 }
 
 .tag {
@@ -287,6 +288,7 @@ header img {
     align-self: center;
     margin-top: 12px;
     width: 35.5%;
+    cursor: pointer;
 }
 
 .tag-span {
@@ -296,6 +298,7 @@ header img {
     font-weight: 400;
     align-self: center;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .profile {
@@ -313,6 +316,7 @@ header img {
     font-weight: 400;
     align-self: center;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 #center {

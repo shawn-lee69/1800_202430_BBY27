@@ -14,6 +14,7 @@ function getQueryParam(param) {
 }
 
 const listId = getQueryParam('id');
+const userId = getQueryParam('uid') || '';
 
 /*
  * This is a utility function for fetching data from Firestore
@@ -142,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
  * Following snippet of code navigates user to add-item page when add item button is clicked.
  */
 document.getElementById('item-add-button').addEventListener('click', function(event) {
-  window.location.href = `add-item.html?id=${listId}`;
+  window.location.href = `add-item.html?id=${listId}&uid=${userId}`;
 });
 
 

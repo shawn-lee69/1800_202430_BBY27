@@ -13,8 +13,8 @@ var uiConfig = {
                     address: "",
                     preferredMarket: "Walmart",
                     completedList: null,
-                    notificationSettings: true
-
+                    notificationSettings: true,
+                    recentItems: []
                 }).then(function () {
                     console.log("New user added to firestore");
                     window.location.assign("index.html");
