@@ -301,6 +301,9 @@ header img {
     cursor: pointer;
 }
 
+a {
+    grid-column: 3 /4;
+}
 .profile {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
