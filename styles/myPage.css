@@ -5,159 +5,161 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: #F3F4F6; 
+    background-color: #F3F4F6;
     margin: 0;
-    padding: 0;
+    font-family: 'Crimson Text', serif; 
 }
 
 .main {
     display: flex;
     flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
-    position: relative; 
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
     width: 100%;
-    max-width: 440px; 
+    max-width: 400px; 
     height: 100%;
-    background-color: #ffffff; 
-    margin: 0 auto; 
-    padding: 0;
+    background-color: #ffffff;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 12px; 
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); 
 }
+
 
 .top-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    align-self: stretch;
-    flex-shrink: 0;
-    padding: 24px 130px 100px 20px;
+    justify-content: space-between; 
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+    padding: 0 20px; 
 }
 
 #back-arrow {
     width: 16px;
     font-weight: 600;
+    position: absolute;
+    left: 20px; 
+    top: 50%; 
+    transform: translateY(-50%);
 }
 
 img {
-    width: 180px;
+    width: 160px; 
+    margin: 0 auto; 
+    display: block; 
 }
 
 #userProfile {
-    width: 80%;
+    width: 90%; 
+    padding-top: 80px;
 }
 
 .userInfo {
-    width: auto;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
+    gap: 16px; 
 }
 
 .form-group {
     display: flex;
-    flex-direction: column; 
-    margin-bottom: 16px; 
+    flex-direction: column;
 }
 
 .form-group label {
-    font-weight: bold; 
-    margin-bottom: 8px; 
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333333;
 }
 
 .form-control {
-    padding: 8px; 
+    padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
 }
 
-#bottom {
-    display: flex;
-    justify-content: center; 
-    align-items: flex-end; 
-    width: 100%;
-    height: 100%; 
-    position: absolute; 
-    bottom: 0; 
-    padding-bottom: 20px; 
+.form-control:focus {
+    border-color: #4a873e; 
+    outline: none;
 }
 
-.logout-button {
-    padding: 15px 70px; 
-    font-size: 18px; 
-    border-radius: 30px; 
-    background-color: #4a873e; 
-    color: white; 
-    border: none; 
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
-}
-
-.logout-button:hover {
-    background-color: #ff4d4f; 
-    transform: scale(1.05); 
-}
-
-.logout-button:active {
-    transform: scale(0.95); 
-}
-
-/* CSS styling for edit and save button */
 .form-buttons {
     display: flex;
-    justify-content: center; 
-    margin-top: 20px; 
+    justify-content: flex-end; 
     gap: 10px; 
+    margin-top: 20px; 
 }
 
 #edit-button, #save-button {
-    padding: 12px 20px; /* Add padding for comfortable click area */
-    font-size: 16px; /* Text size */
-    font-weight: bold; /* Bold text */
-    border-radius: 5px; /* Rounded corners */
-    border: none; /* No border */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: all 0.3s ease; /* Smooth hover and active effects */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #edit-button {
-    background-color: #007BFF; 
-    color: white; 
+    background-color: #007BFF;
+    color: white;
 }
 
 #edit-button:hover {
-    background-color: #0056b3; 
+    background-color: #0056b3;
     transform: scale(1.05);
 }
 
 #edit-button:active {
-    transform: scale(0.95); 
+    transform: scale(0.95);
 }
 
 #save-button {
-    background-color: #28a745; 
-    color: white; 
+    background-color: #28a745;
+    color: white;
 }
 
 #save-button:hover {
-    background-color: #1e7e34; 
-    transform: scale(1.05); 
+    background-color: #1e7e34;
+    transform: scale(1.05);
 }
 
 #save-button:active {
-    transform: scale(0.95); 
+    transform: scale(0.95);
 }
 
+/* Logout Button */
+#bottom {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    margin-top: 100px;
+}
 
-@media screen and (min-width: 440px) {
-    .main {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        width: 100%;
-        max-width: 440px;
-        height: 100vh;
-        background-color: #ffffff;
-    }
+.logout-button {
+    padding: 15px 70px;
+    font-size: 18px;
+    border-radius: 30px;
+    background-color: #4a873e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button:hover {
+    background-color: #ff4d4f;
+    transform: scale(1.05);
+}
+
+.logout-button:active {
+    transform: scale(0.95);
 }
