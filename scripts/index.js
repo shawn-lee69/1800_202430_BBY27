@@ -182,6 +182,7 @@ function addListToFirestore() {
         console.log('No list created.');
       }
     } else {
+      window.location.href = "create-list.html";
       console.error("User is not authenticated. Please log in first.");
     }
   });
