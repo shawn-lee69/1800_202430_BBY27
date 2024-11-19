@@ -1,6 +1,59 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 900;
+    src: local('Pretendard Black'),  url('/assets/fonts/Pretendard-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 800;
+    src: local('Pretendard ExtraBold'), url('/assets/fonts/Pretendard-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    src: local('Pretendard Bold'), url('/assets/fonts/Pretendard-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    src: local('Pretendard SemiBold'), url('/assets/fonts/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    src: local('Pretendard Medium'), url('/assets/fonts/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: local('Pretendard Regular'), url('/assets/fonts/Pretendard-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    src: local('Pretendard Light'), url('/assets/fonts/Pretendard-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 200;
+    src: local('Pretendard ExtraLight'), url('/assets/fonts/Pretendard-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 100;
+    src: local('Pretendard Thin'), url('/assets/fonts/Pretendard-Thin.woff') format('woff');
+}
 
 html {
-    font-family: "Crimson Text", serif;
+    font-family: "Pretendard", serif;
 }
 
 
@@ -85,10 +138,10 @@ body {
 }
 
 .cancel-button {
-    margin-left: 5%;
+    margin-left: 4%;
     color: #888;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 0.8rem;
     text-decoration: none;
 }
 
@@ -101,14 +154,42 @@ body {
 
 .favorite-tab {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    width: calc(100% - 80px);
+    height: 32px;
+    min-height: 32px;
+    background-color: #E5E7EB;
+    border-radius: 8px;
+    margin-top: 32px;
 }
 
-.favorite-tab-image {
-    width: calc(100% - 40px);
-    height: 32px;
-    margin-top: 32px;
+.favorite-tab-popular {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 85%;
+    margin-left: 2px;
+    background-color: #D1D5DB;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #030712;
+    cursor: pointer;
+}
+
+.favorite-tab-recent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 85%;
+    margin-left: 2px;
+    background-color: #E5E7EB;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    cursor: pointer;
 }
 
 .list-items-container {
@@ -118,7 +199,11 @@ body {
     justify-content: center;
     margin-top: 28px;
     width: calc(100% - 40px);
-    gap: 16px;
+    gap: 12px;
+}
+
+.selected-items-container {
+    border: 1px solid black;
 }
 
 .item-add-button {

@@ -1,6 +1,59 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 900;
+    src: local('Pretendard Black'),  url('/assets/fonts/Pretendard-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 800;
+    src: local('Pretendard ExtraBold'), url('/assets/fonts/Pretendard-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    src: local('Pretendard Bold'), url('/assets/fonts/Pretendard-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    src: local('Pretendard SemiBold'), url('/assets/fonts/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    src: local('Pretendard Medium'), url('/assets/fonts/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: local('Pretendard Regular'), url('/assets/fonts/Pretendard-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    src: local('Pretendard Light'), url('/assets/fonts/Pretendard-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 200;
+    src: local('Pretendard ExtraLight'), url('/assets/fonts/Pretendard-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 100;
+    src: local('Pretendard Thin'), url('/assets/fonts/Pretendard-Thin.woff') format('woff');
+}
 
 html {
-    font-family: "Crimson Text", serif;
+    font-family: "Pretendard", serif;
 }
 
 
@@ -35,6 +88,13 @@ body {
     padding: 24px 20px 18px 20px;
 }
 
+.name-arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
 .back-arrow img {
     width: 16px;
     font-weight: 600;
@@ -42,7 +102,7 @@ body {
 
 .list-name {
     font-size: 2rem;
-
+    margin-bottom: 4px;
 }
 
 .top-right-menu-icons {
@@ -58,6 +118,7 @@ body {
 
 #edit-button {
     width: 24px;
+    cursor: pointer;
 }
 
 #delete-list-button {
@@ -93,7 +154,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 40px);
+    width: calc(100% - 8px);
     padding: 16px 18px;
     border-radius: 8px;
     box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
@@ -163,6 +224,10 @@ body {
     display: none;
 }
 
+.share-icon {
+    width: 180%;
+}
+
 .share-container {
     background-color: #ffffff;
     padding: 20px;
@@ -187,7 +252,7 @@ body {
 }
 
 .share-options button {
-    background-color: #347928;
+    background-color: rgba(192, 235, 166, 1);
     color: white;
     border: none;
     border-radius: 8px;
@@ -204,7 +269,7 @@ body {
 }
 
 .share-options button:hover {
-    background-color: #285a1e;
+    background-color: #4a873e;
 }
 
 .close-overlay {
