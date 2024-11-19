@@ -3,7 +3,7 @@
     <head>
         <title>BBY-27 Project</title>
         <meta name="comp1800 template" content="My 1800 App">
-        <link rel="stylesheet" href="salesinfo.css">
+        <link rel="stylesheet" href="styles/sales-info.css">
         
 
         <!--Firebase Libraries-->
@@ -23,12 +23,14 @@
     </head>
     <body>
         <div id="main">
+            <!--Top bar of page-->
             <header>
                 <img src="SamePage.png" alt="main logo">
             </header>
             <div id="salesinformation">
                 <img src="sale-information.png" alt="sales information">
             </div>
+            <div id="divider" class="divider"></div>
             <!--Inputs forms and labels-->
             <form class="sale-information-form">
             <div id="info">
@@ -39,7 +41,7 @@
                 <label for="store">Store:</label>
                 <input type="text" id="store" class="store" placeholder="Store" /><br><br>
                 <label for="saledate">Sale Date:</label>
-                <input type="text" id="saledate" class="sale-date" placeholder="Date" />
+                <input type="date" id="saledate" class="sale-date" placeholder="Date (yyyy/mm/dd)" />
             </div>
             </form>
 

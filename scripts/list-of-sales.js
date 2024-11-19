@@ -1,19 +1,7 @@
-// Reference to Firestore collection
-/* const SalesInformationCollection = db.collection("Sales-Information");
-
-// Fetch data from Firestore
-SalesInformationCollection.get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-        // Each `doc` represents a document in Firestore
-        console.log(doc.id, "=>", doc.data());
-        displayUser(doc.data());
-    });
-}).catch((error) => {
-    console.error("Error fetching documents: ", error);
-}); */
+// This function grabs retrieves documents in the Sale-Information collection
 
 function GetSalesData() {
-    db.collection("Sale-Information").get().then((querySnapshot)=>{
+    db.collection("Sale-Information").orderBy("saleDate", "desc").get().then((querySnapshot)=>{
         var SaleInformation = [];
         querySnapshot.forEach(doc => {
             SaleInformation.push(doc.data());
@@ -22,20 +10,26 @@ function GetSalesData() {
         AddAllDataToTable(SaleInformation);
     });
 }
+
+
+// This function uses firebases onsnapshot method to listen to real time updates
+// in the Sale-Information collection
 
 function GetSaleDataRealtime() {
-    db.collection("Sale-Information").onSnapshot((querySnapshot)=>{
+    db.collection("Sale-Information").orderBy("saleDate", "desc").onSnapshot((querySnapshot)=>{
         var SaleInformation = [];
         querySnapshot.forEach(doc => {
             SaleInformation.push(doc.data());
         });
         AddAllDataToTable(SaleInformation);
     });
-}
+} 
+    
 
 
 
-// Filling the Table
+// Recieves an item's details (name, price, date, store) and creates a table row with 
+// these details
 var itemNo=0;
 var tbody = document.getElementById('tbody1');
 
@@ -61,12 +55,24 @@ function AddDataToTable(Item,Price,Date,Store){
 
 }
 
+// Clears the table body to prevent duplicates
+// Loops over each item in the SaleInformationDocList array and calls
+// AddDataToTable to add each item as a row in the table
 function AddAllDataToTable(SalesInformationDocList){
     itemNo=0;
     tbody.innerHTML="";
     SalesInformationDocList.forEach(element => {
-        AddDataToTable(element.itemName, element.itemPrice, element.saleDate, element.store)
+        var today = new Date();
+        today.setDate(today.getDate()-7);
+        var sDate = new Date(element.saleDate);
+        if (sDate >= today) {
+          AddDataToTable(element.itemName, element.itemPrice, element.saleDate, element.store);
+        }
     });
 }
+
+
+
+
 
 window.onload = GetSalesData;
