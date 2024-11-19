@@ -16,7 +16,7 @@ function populateUserInfo() {
                     }
                     if (userName != null) {
                         document.getElementById("emailInput").value = userEmail;
-                    }
+                    }   
                     if (userAddress != null) {  
                         document.getElementById("addressInput").value = userAddress;
                     }
