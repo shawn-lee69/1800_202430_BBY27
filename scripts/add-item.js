@@ -65,7 +65,15 @@ function addItemToFirestore(itemName) {
               if (doc.exists) {
                 let userData = doc.data();
                 let recentItems = userData.recentItems || [];
-                recentItems.unshift(newItem); // Add new item to the start
+                recentItems.unshift(newItem); // Add new item to the startj
+
+                // Remove duplicates based on item.name
+                recentItems = recentItems.filter((item, index, self) =>
+                    index === self.findIndex((t) => (
+                      t.name === item.name
+                    ))
+                );
+
                 if (recentItems.length > 5) {
                   recentItems = recentItems.slice(0, 5); // Keep only the first 5 items
                 }
