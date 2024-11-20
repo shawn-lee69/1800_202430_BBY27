@@ -50,51 +50,48 @@ function addItemToFirestore(itemName) {
         if (doc.exists) {
           let currentTotalNumberOfItems = doc.data().totalNumberOfItems || 0;
           // Add the new item to the 'items' subcollection
-          db.collection('lists').doc(listId).collection('items').add(newItem)
+          return db.collection('lists').doc(listId).collection('items').add(newItem)
             .then(() => {
               // Increment the total number of items in the main document
               db.collection('lists').doc(listId).update({
                 totalNumberOfItems: currentTotalNumberOfItems + 1
               });
-
+            })
+            .then(() => {
               // Add the item to user's history
-              userRef.get().then((doc) => {
-                if (doc.exists) {
-                  let userData = doc.data();
-                  if (!userData.hasOwnProperty('recentItems')) {
-                    // Initialize the field if it doesn't exist
-                    userRef.update({ recentItems: [] }).then(() => {
-                      console.log("Initialized 'recentItems' field for the user.");
-                    }).catch((error) => {
-                      console.error("Error initializing 'recentItems': ", error);
-                    });
-                  } else {
-                    let recentItems = userData.recentItems || [];
-                    recentItems.unshift(newItem); // Add new item to the start
-                    if (recentItems.length > 5) {
-                      recentItems = recentItems.slice(0, 5); // Keep only the last 5 items
-                    }
-                    return userRef.update({ recentItems });
-                  }
-                } else {
-                  console.log("User document not found!");
-                }
-              }).catch((error) => {
-                console.error("Error updating recent items: ", error);
-              });
+              return userRef.get();
+            })
+            .then((doc) => {
+              if (doc.exists) {
+                let userData = doc.data();
+                let recentItems = userData.recentItems || [];
+                recentItems.unshift(newItem); // Add new item to the startj
 
+                // Remove duplicates based on item.name
+                recentItems = recentItems.filter((item, index, self) =>
+                    index === self.findIndex((t) => (
+                      t.name === item.name
+                    ))
+                );
+
+                if (recentItems.length > 5) {
+                  recentItems = recentItems.slice(0, 5); // Keep only the first 5 items
+                }
+                return userRef.update({ recentItems });
+              } else {
+                console.log("User document not found!");
+              }
+            })
+            .then(() => {
               // Navigate user back to create-list page
               window.location.href = `create-list.html?id=${listId}&uid=${userId}`;
-            })
-            .catch((error) => {
-              console.log('Failed to add item: ', error);
             });
         } else {
           console.log('Document does not exist');
         }
       })
       .catch((error) => {
-        console.log('Error fetching document:', error);
+        console.log('Failed to add item: ', error);
       });
   } else {
     console.log('No item added.');

@@ -75,7 +75,8 @@ body {
     justify-content: flex-start;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     background-color: #ffffff;
 }
 
@@ -102,7 +103,6 @@ body {
 
 .list-name {
     font-size: 2rem;
-    margin-bottom: 4px;
 }
 
 .top-right-menu-icons {
@@ -137,8 +137,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 28px;
     gap: 16px;
+    background-color: #ffffff;
 }
 
 .selected-items-container {
@@ -148,6 +148,7 @@ body {
     align-items: center;
     width: calc(100% - 40px);
     gap: 16px;
+    margin-bottom: 80px;
 }
 
 .shopping-item {
@@ -388,7 +389,8 @@ body {
         justify-content: flex-start;
         width: 100%;
         max-width: 440px;
-        height: 100vh;
+        min-height: 100vh;
+        height: auto;
         background-color: #ffffff;
     }
 }

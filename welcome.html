@@ -23,21 +23,23 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" href="welcome.css">
+    <link rel="stylesheet" href='styles/welcome.css'>
 
 </head>
 
 <body>
     <div class="main">
         <div class="welcome">
-            <div class="overflow-hidden">
+            <div id="logo">
                 <img class="responsive" src="SamePage.png" alt="">
             </div>
-            <h1 id="sentence">Welcome to SamePage!</h1>
+            <div id="catch-phrase">Share your <br />
+                grocery list, <br />
+                Get on SamePage!</div>
             <div class="overflow-hidden">
                 <img class="logo" src="./images/index/logo.png" alt="">
             </div>
-            <a href="login.html" class="btn btn-warning" role="button">Log in</a>
+            <a href="login.html" class="btn btn-success" role="button">Log in</a>
         </div>
 
         <script src="./scripts/firebase.js"></script>
