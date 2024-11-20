@@ -454,3 +454,10 @@ async function removeListFromFirestore(listId) {
     console.log('Failed to remove list: ', error);
   }
 }
+// function to bring user to the list of sales page
+const profileElements = document.querySelectorAll('.btn, #sale-button');
+profileElements.forEach(element => {
+  element.addEventListener("click", () => {
+    window.location.href = "list-of-sales.html";
+  });
+});

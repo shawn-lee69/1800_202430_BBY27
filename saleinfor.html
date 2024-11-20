@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>BBY-27 Project</title>
+        <title>Sale Information</title>
         <meta name="comp1800 template" content="My 1800 App">
         <link rel="stylesheet" href="styles/sales-info.css">
         
@@ -25,6 +25,7 @@
         <div id="main">
             <!--Top bar of page-->
             <header>
+                <img src="./images/create-list/back-arrow.png" alt="back-button" id="back-button">
                 <img src="SamePage.png" alt="main logo">
             </header>
             <div id="salesinformation">
@@ -35,13 +36,13 @@
             <form class="sale-information-form">
             <div id="info">
                 <label for="itemname" id="itemlabel">Item:</label>
-                <input type="text" id="itemname" class="item-name" placeholder="Item" /><br><br>
+                <input type="text" id="itemname" class="item-name" placeholder="Item" required /><br><br>
                 <label for="itemprice">Price:</label>
-                <input type="text" id="itemprice" class="item-price" placeholder="Price"><br><br>
+                <input type="text" id="itemprice" class="item-price" placeholder="Price" required><br><br>
                 <label for="store">Store:</label>
-                <input type="text" id="store" class="store" placeholder="Store" /><br><br>
+                <input type="text" id="store" class="store" placeholder="Store" required /><br><br>
                 <label for="saledate">Sale Date:</label>
-                <input type="date" id="saledate" class="sale-date" placeholder="Date (yyyy/mm/dd)" />
+                <input type="date" id="saledate" class="sale-date" placeholder="Date (yyyy/mm/dd)" required />
             </div>
             </form>
 

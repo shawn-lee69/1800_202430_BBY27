@@ -71,8 +71,11 @@ function AddAllDataToTable(SalesInformationDocList){
     });
 }
 
-
-
-
-
 window.onload = GetSalesData;
+
+const profileElements = document.querySelectorAll('#back-btn');
+profileElements.forEach(element => {
+  element.addEventListener("click", () => {
+    window.location.href = "create-list.html";
+  });
+});
