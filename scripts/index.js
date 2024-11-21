@@ -27,8 +27,6 @@ profileElement.forEach(element => {
   });
 });
 
-
-
 function renderContent() {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
@@ -98,11 +96,19 @@ function displayListItems() {
     const isCompleted = item.totalNumberOfItems === item.checkedNumberOfItems;
     const listItemClass = isCompleted ? 'list-item completed' : 'list-item';
 
+    // determine the text to display in the counter
+    let itemCounterText;
+    if (item.totalNumberOfItems === 0 && item.checkedNumberOfItems === 0) {
+      itemCounterText = 'empty';
+    } else {
+      itemCounterText = `${item.checkedNumberOfItems} / ${item.totalNumberOfItems}`;
+    }
+
     itemAnchor.innerHTML = `
       <div class='${listItemClass}'>
         <div class='list-item-content-header'>
           <div class='list-name'>${item.name}</div>
-          <div class='list-item-number-counter'>${item.checkedNumberOfItems} / ${item.totalNumberOfItems}</div>
+          <div class='list-item-number-counter'>${itemCounterText}</div>
         </div>
         <div class='list-item-content-bottom'>
           <div class='list-item-time-stamp'>${semanticTime}</div>
@@ -111,7 +117,17 @@ function displayListItems() {
     `;
     shoppingListDiv.appendChild(itemAnchor);
   });
-}
+
+  document.querySelectorAll('.list-item-number-counter').forEach(counter => {
+    if (counter.textContent.trim() === 'empty') {
+      counter.style.color = 'rgba(119,119,119,0.45)';
+      counter.style.fontWeight = 'bold';
+      counter.style.fontSize = '1rem';
+    }
+  });
+
+
+  }
 
 // Function to fetch lists from Firestore and display them
 function fetchAndDisplayLists(userId) {
@@ -138,6 +154,21 @@ function fetchAndDisplayLists(userId) {
         checkedNumberOfItems: data.checkedNumberOfItems,
         createdAt: data.createdAt.toDate()
       });
+    });
+
+    // sort the itemsList so that incomplete lists come first
+    itemsList.sort((a, b) => {
+      const aIsComplete = a.totalNumberOfItems === a.checkedNumberOfItems;
+      const bIsComplete = b.totalNumberOfItems === b.checkedNumberOfItems;
+
+      if (aIsComplete && !bIsComplete) {
+        return 1; // a is complete, b is not; b comes first
+      } else if (!aIsComplete && bIsComplete) {
+        return -1; // a is not complete, b is; a comes first
+      } else {
+        // Both are either complete or incomplete; sort by createdAt descending
+        return b.createdAt - a.createdAt;
+      }
     });
 
     // Hide the spinner after fetching is done
