@@ -20,6 +20,15 @@ profileElements.forEach(element => {
   });
 });
 
+const profileElement = document.querySelectorAll('.tag, .tag-span');
+profileElement.forEach(element => {
+  element.addEventListener("click", () => {
+    window.location.href = "saleinfor.html";
+  });
+});
+
+
+
 function renderContent() {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {

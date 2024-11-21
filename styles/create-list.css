@@ -184,6 +184,23 @@ body {
     cursor: pointer;
 }
 
+#sale-button {
+    background-color: #FCCD2A;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 350px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#sale-button:hover {
+    background-color: #f8c50a;
+}
+
+#sale-button:active {
+    transform: scale(0.98);
+}
+
 
 /* added some checkbox animation for an emphasis */
 .checkbox {

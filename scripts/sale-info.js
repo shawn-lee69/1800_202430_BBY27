@@ -30,3 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// add navigations for nav bottom buttons by selecting all elements that should navigate to "myPage.html"
+const profileElements = document.querySelectorAll('#back-button');
+profileElements.forEach(element => {
+  element.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+});
