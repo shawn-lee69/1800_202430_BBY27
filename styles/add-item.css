@@ -202,9 +202,6 @@ body {
     gap: 12px;
 }
 
-.selected-items-container {
-    border: 1px solid black;
-}
 
 .item-add-button {
     display: flex;
@@ -217,6 +214,12 @@ body {
     border-radius: 8px;
     cursor: pointer;
 }
+
+#first-item-add-button {
+    margin-top: 20px;
+    width: 82%;
+}
+
 
 .item-add-button img {
     width: 32px;
