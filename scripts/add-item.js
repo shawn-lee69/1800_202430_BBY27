@@ -181,7 +181,7 @@ searchInput.addEventListener('input', event => {
   if (!query) {
     resultsContainer.innerHTML = '';
     resultsContainer.style.display = 'none';
-    updateAddItemButton('');
+    updateFirstAddItemButton('');
     return;
   }
 
@@ -191,7 +191,7 @@ searchInput.addEventListener('input', event => {
   displaySearchResults(results);
 
   // Update the 'add item' button
-  updateAddItemButton(query);
+  updateFirstAddItemButton(query);
 
   // Create and update the add button with the search query
   itemAddButton.innerHTML = ''; // Clear existing content
@@ -203,6 +203,39 @@ searchInput.addEventListener('input', event => {
   itemAddButton.appendChild(addIcon);
   itemAddButton.appendChild(document.createTextNode(` ${query || ' '}`));
 });
+
+
+// Reference to the first item-add-button
+const firstItemAddButton = document.getElementById('first-item-add-button');
+
+// Update the add button with the default or current query
+function updateFirstAddItemButton(query) {
+  firstItemAddButton.innerHTML = ''; // Clear existing content
+
+  const addIcon = document.createElement('img');
+  addIcon.src = './images/add-item/add-circle-green.png';
+  addIcon.alt = 'Add item button';
+
+  firstItemAddButton.appendChild(addIcon);
+  firstItemAddButton.appendChild(document.createTextNode(` ${query || ' '}`));
+
+  // Set data attribute for event delegation
+  firstItemAddButton.setAttribute('data-item-name', query);
+}
+
+// Initialize the first add button
+updateFirstAddItemButton('');
+
+// Add event listener to the first item-add-button
+firstItemAddButton.addEventListener('click', function(event) {
+  const itemName = firstItemAddButton.getAttribute('data-item-name');
+  if (itemName) {
+    addItemToFirestore(itemName);
+  } else {
+    console.log('No item name found for this button.');
+  }
+});
+
 
 function updateAddItemButton(query) {
   itemAddButton.innerHTML = ''; // Clear existing content
@@ -252,10 +285,8 @@ function renderRecentItems() {
 function renderPopularItems() {
   const listItemContainer = document.querySelector('.list-items-container');
 
-  // Remove all child elements except the first one
-  while (listItemContainer.children.length > 1) {
-    listItemContainer.removeChild(listItemContainer.lastChild);
-  }
+  // Remove all child elements in the listItemContainer
+  listItemContainer.innerHTML = '';
 
   // Append popular items
   popularItems.forEach((item) => {
