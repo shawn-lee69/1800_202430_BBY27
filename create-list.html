@@ -56,14 +56,17 @@
       <button type="submit" id="sale-button" class="btn">Check Current Sales</button>
     </div>
   </div>
-  <div id="editModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Edit List Name</h2>
-      <input type="text" id="listNameInput" placeholder="Enter new list name" maxlength="15"/>
-      <button id="saveButton">Save</button>
-    </div>
-  </div>
+  <!-- Overlay -->
+<div id="editModal-1-overlay"></div>
+
+<!-- Modal -->
+<div id="editModal-1">
+    <button class="close">&times;</button>
+    <h2>Edit List</h2>
+    <input type="text" id="listNameInput-1" placeholder="Enter new list name">
+    <button id="saveButton-1">Save</button>
+</div>
+
   
   <!-- Overlay container after clicking share button -->
   <div id="share-overlay" class="overlay hidden">

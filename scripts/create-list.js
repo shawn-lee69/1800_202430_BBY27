@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchAndDisplayItems(listId);
   } else {
     console.log('No list ID provided in the URL.');
-      listNameElement.innerText = DEFAULT_LIST_NAME;
+    listNameElement.innerText = DEFAULT_LIST_NAME;
   }
 });
 
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
 /*
  * Following snippet of code navigates user to add-item page when add item button is clicked.
  */
-document.getElementById('item-add-button').addEventListener('click', function(event) {
+document.getElementById('item-add-button').addEventListener('click', function (event) {
   window.location.href = `add-item.html?id=${listId}&uid=${userId}`;
 });
 
@@ -195,74 +195,6 @@ function removeItemFromFirestore(itemId) {
     console.error("Transaction failed: ", error);
   });
 }
-
-// Start of the code for editing list name
-const editModal = document.getElementById('editModal');
-const closeModalButton = editModal.querySelector('.close');
-const saveButton = document.getElementById('saveButton');
-const listNameInput = document.getElementById('listNameInput');
-
-// Open the modal and populate the current list name
-document.getElementById('edit-button').addEventListener('click', function () {
-  if (listId) {
-    const docRef = db.collection('lists').doc(listId);
-
-    // Fetch the current list name from Firestore
-    docRef.get().then((doc) => {
-      if (doc.exists) {
-        // Set the current name in the input field
-        listNameInput.value = doc.data().name || "New List";
-        // Show the modal
-        editModal.style.display = 'block';
-      } else {
-        console.log("No such document!");
-      }
-    }).catch((error) => {
-      console.error("Error fetching document:", error);
-    });
-  } else {
-    console.error("Error: listId is empty or undefined.");
-  }
-});
-
-// Close the modal
-closeModalButton.addEventListener('click', function () {
-  editModal.style.display = 'none';
-});
-
-// Save the new list name to Firestore
-saveButton.addEventListener('click', function () {
-  const newListName = listNameInput.value.trim();
-
-  if (newListName && listId) {
-    const docRef = db.collection('lists').doc(listId);
-
-    // Update the list name in Firestore
-    docRef.update({
-      name: newListName,
-      updatedAt: firebase.firestore.Timestamp.fromDate(new Date())
-    })
-    .then(() => {
-      console.log("List name updated successfully!");
-      // Update the list name in the UI
-      document.querySelector('.list-name').innerText = newListName;
-      // Close the modal
-      editModal.style.display = 'none';
-    })
-    .catch((error) => {
-      console.error("Error updating list name:", error);
-    });
-  } else {
-    console.log("Please enter a valid list name.");
-  }
-});
-
-// Close the modal when clicking outside of it
-window.addEventListener('click', function (event) {
-  if (event.target === editModal) {
-    editModal.style.display = 'none';
-  }
-});
 
 /*
  * Following cluster of codes is for list sharing feature
@@ -378,6 +310,81 @@ async function toggleIsChecked(itemId) {
   }
 }
 
+// Start of the code for editing list name
+const editModal = document.getElementById('editModal-1');
+const closeModalButton = editModal.querySelector('.close');
+const saveButton = document.getElementById('saveButton-1');
+const listNameInput = document.getElementById('listNameInput-1');
+const modalOverlay = document.getElementById('editModal-1-overlay');
+
+
+
+// Open the modal and populate the current list name
+document.getElementById('edit-button').addEventListener('click', function () {
+  if (listId) {
+    const docRef = db.collection('lists').doc(listId);
+
+    // Fetch the current list name from Firestore
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        // Set the current name in the input field
+        listNameInput.value = doc.data().name || "New List";
+        // Show the modal
+        editModal.style.display = 'block';
+        modalOverlay.style.display = 'block';
+
+        // Close modal
+        closeModalButton.addEventListener('click', () => {
+          editModal.style.display = 'none';
+          modalOverlay.style.display = 'none';
+        });
+
+        saveButton.addEventListener('click', () => {
+          editModal.style.display = 'none';
+          modalOverlay.style.display = 'none';
+        })
+      } else {
+        console.log("No such document!");
+      }
+    }).catch((error) => {
+      console.error("Error fetching document:", error);
+    });
+  } else {
+    console.error("Error: listId is empty or undefined.");
+  }
+});
+
+// Close the modal
+closeModalButton.addEventListener('click', function () {
+  editModal.style.display = 'none';
+});
+
+// Save the new list name to Firestore
+saveButton.addEventListener('click', function () {
+  const newListName = listNameInput.value.trim();
+
+  if (newListName && listId) {
+    const docRef = db.collection('lists').doc(listId);
+
+    // Update the list name in Firestore
+    docRef.update({
+      name: newListName,
+      updatedAt: firebase.firestore.Timestamp.fromDate(new Date())
+    })
+      .then(() => {
+        console.log("List name updated successfully!");
+        // Update the list name in the UI
+        document.querySelector('.list-name').innerText = newListName;
+        // Close the modal
+        editModal.style.display = 'none';
+      })
+      .catch((error) => {
+        console.error("Error updating list name:", error);
+      });
+  } else {
+    console.log("Please enter a valid list name.");
+  }
+});
 
 /*
  * Following cluster of codes is for list deletion function.
