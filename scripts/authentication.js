@@ -11,7 +11,7 @@ var uiConfig = {
                     name: user.displayName,
                     email: user.email,
                     address: "",
-                    preferredMarket: "Walmart",
+                    preferredMarket: "",
                     completedList: null,
                     notificationSettings: true,
                     recentItems: []

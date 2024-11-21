@@ -52,6 +52,7 @@ function saveUserInfo() {
         .then(() => {
             console.log("Document successfully updated!");
             document.getElementById('userInfoFields').disabled = true;
+            // document.querySelector('.form-control').style.fontWeight = bold;
         })
         .catch((error) => {
             console.error("Error updating document: ", error);
