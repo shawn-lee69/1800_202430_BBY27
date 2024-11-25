@@ -257,7 +257,13 @@ body {
 }
 
 .custom-rounded-popup {
-    border-radius: 12px;
+    background-color: #ffffff;
+    padding: 24px 20px 24px 20px;
+    border-radius: 8px;
+    width: 40%;
+    max-width: 300px;
+    margin: 15% auto;
+    text-align: center;
 }
 
 .custom-title {

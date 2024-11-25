@@ -455,6 +455,20 @@ body {
     color: #000;
 }
 
+.custom-rounded-popup {
+    background-color: #ffffff;
+    padding: 24px 20px 24px 20px;
+    border-radius: 8px;
+    width: 40%;
+    max-width: 300px;
+    margin: 15% auto;
+    text-align: center;
+}
+
+.custom-title {
+    font-size: 1.6rem;
+    color: #4B5563;
+}
 
 @media screen and (min-width: 440px) {
     .main {

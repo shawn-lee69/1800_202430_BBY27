@@ -190,6 +190,19 @@ function removeItemFromFirestore(itemId) {
     transaction.delete(itemRef);
   }).then(() => {
     itemsList = itemsList.filter(item => item.id !== itemId);
+    Swal.fire({
+      title: "Item Successfully\n Deleted!",
+      showConfirmButton: false,
+      timer: 1000,
+      imageUrl: "./images/create-list/success.png",
+      imageWidth: 100,
+      imageHeight: 'auto',
+      imageAlt: "successfully added item",
+      customClass: {
+        popup: 'custom-rounded-popup',
+        title: 'custom-title',
+      }
+    })
     displayItems();
   }).catch((error) => {
     console.error("Transaction failed: ", error);
