@@ -246,6 +246,25 @@ body {
     background-color: #f3f4f6;
 }
 
+.custom-confirm-button {
+    border: none;
+    border-radius: 8px;
+}
+
+.custom-deny-button {
+    color: #111827;
+    border-radius: 8px;
+}
+
+.custom-rounded-popup {
+    border-radius: 12px;
+}
+
+.custom-title {
+    font-size: 1.6rem;
+    color: #4B5563;
+}
+
 @media screen and (min-width: 440px) {
     .main {
         display: flex;

@@ -56,6 +56,30 @@ function addItemToFirestore(itemName) {
               db.collection('lists').doc(listId).update({
                 totalNumberOfItems: currentTotalNumberOfItems + 1
               });
+              Swal.fire({
+                title: "Item Successfully\n Added!",
+                showDenyButton: true,
+                confirmButtonText: "Go Back to List",
+                confirmButtonColor: "#347928",
+                denyButtonText: `Add more items`,
+                denyButtonColor: "#F3F4F6",
+                imageUrl: "./images/create-list/success.png",
+                imageWidth: 100,
+                imageHeight: 'auto',
+                imageAlt: "successfully added item",
+                customClass: {
+                  confirmButton: 'custom-confirm-button',
+                  denyButton: 'custom-deny-button',
+                  popup: 'custom-rounded-popup',
+                  title: 'custom-title',
+                }
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  // Navigate user back to create-list page
+                  window.location.href = `create-list.html?id=${listId}&uid=${userId}`;
+                } else if (result.isDenied) {
+                }
+              });
             })
             .then(() => {
               // Add the item to user's history
@@ -82,10 +106,6 @@ function addItemToFirestore(itemName) {
                 console.log("User document not found!");
               }
             })
-            .then(() => {
-              // Navigate user back to create-list page
-              window.location.href = `create-list.html?id=${listId}&uid=${userId}`;
-            });
         } else {
           console.log('Document does not exist');
         }
