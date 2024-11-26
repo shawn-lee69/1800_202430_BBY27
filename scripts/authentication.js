@@ -14,7 +14,8 @@ var uiConfig = {
                     preferredMarket: "",
                     completedList: null,
                     notificationSettings: true,
-                    recentItems: []
+                    recentItems: [],
+                    sharedLists: [],
                 }).then(function () {
                     console.log("New user added to firestore");
                     window.location.assign("index.html");

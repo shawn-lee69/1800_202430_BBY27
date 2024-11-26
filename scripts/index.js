@@ -207,6 +207,7 @@ function addListToFirestore() {
           userID: userID,  // Store the user ID in the list document
           totalNumberOfItems: 0, // At first there is no item in the list
           checkedNumberOfItems: 0, // At first no item is crossed off
+          isSharedWithOthers: false,
         };
 
         // Add the new list document to Firestore
