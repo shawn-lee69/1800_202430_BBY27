@@ -481,3 +481,58 @@ profileElements.forEach(element => {
     window.location.href = "list-of-sales.html";
   });
 });
+
+function shareListButton() {
+  const recipientInput = document.getElementById('recipient-input').value.trim();
+  db.collection("users").where("email", "==", recipientInput).get()
+    .then((querySnapshot) => {
+      if (querySnapshot.empty) {
+        Swal.fire({
+          title: "Sorry, we could not find the user",
+          showConfirmButton: false,
+          timer: 5000,
+          customClass: {
+            popup: 'custom-rounded-popup-no-img',
+            title: 'custom-title',
+          }
+        })
+      } else {
+        querySnapshot.forEach((doc) => {
+          let sharedLists = doc.data().sharedLists;
+          sharedLists.unshift(listId);
+
+          db.collection("users").doc(doc.id).update({ sharedLists })
+            .then(() => {
+              Swal.fire({
+                title: "List Successfully\n Shared!",
+                showConfirmButton: false,
+                timer: 1000,
+                imageUrl: "./images/create-list/success.png",
+                imageWidth: 100,
+                imageHeight: 'auto',
+                imageAlt: "successfully added item",
+                customClass: {
+                  popup: 'custom-rounded-popup',
+                  title: 'custom-title',
+                }
+              })
+              closeShareOverlay();
+            })
+            .catch((error) => {
+              Swal.fire({
+                title: "Sorry, something went wrong",
+                showConfirmButton: false,
+                timer: 1000,
+                customClass: {
+                  popup: 'custom-rounded-popup-no-img',
+                  title: 'custom-title',
+                }
+              })
+            });
+        })
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching user:", error);
+    });
+}

@@ -458,6 +458,16 @@ body {
     text-align: center;
 }
 
+.custom-rounded-popup-no-img {
+    background-color: #ffffff;
+    padding: 4px 20px 24px 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 300px;
+    margin: 15% auto;
+    text-align: center;
+}
+
 .custom-title {
     font-size: 1.6rem;
     color: #4B5563;
