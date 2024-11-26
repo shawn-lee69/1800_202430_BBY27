@@ -469,7 +469,7 @@ async function removeListFromFirestore(listId) {
   try {
     await db.collection('lists').doc(listId).delete();
     await pause(1000); // Wait for 1 second (1000 milliseconds)
-    window.location.href = 'index.html';
+    window.location.href = 'dashboard.html';
   } catch (error) {
     console.log('Failed to remove list: ', error);
   }

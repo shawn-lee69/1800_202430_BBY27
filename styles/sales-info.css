@@ -98,7 +98,7 @@ label { position: relative;
     top: 720px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 3;
+    z-dashboard: 3;
 }
 
 .tooltip img {
@@ -115,7 +115,7 @@ label { position: relative;
     text-align: center;
     position: relative;
     background-color: rgb(223, 21, 21);
-    z-index: 1;
+    z-dashboard: 1;
 }
 
 #saledate {

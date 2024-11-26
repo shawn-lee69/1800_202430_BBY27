@@ -108,7 +108,7 @@ function displayListItems() {
 
     // Check if the list is shared
     const sharedIconHTML = item.isSharedWithOthers ? `
-      <img src="./images/index/shared-button.png" alt="this list is shared list">
+      <img src="./images/dashboard/shared-button.png" alt="this list is shared list">
     ` : '';
 
     itemAnchor.innerHTML = `

@@ -18,13 +18,13 @@ var uiConfig = {
                     sharedLists: [],
                 }).then(function () {
                     console.log("New user added to firestore");
-                    window.location.assign("index.html");
+                    window.location.assign("dashboard.html");
                     
                 }).catch(function (error) {
                     console.log("Error adding new user: " + error);
                 });
             } else {
-                window.location.assign("index.html");
+                window.location.assign("dashboard.html");
                 
                 return true;
             }
@@ -36,7 +36,7 @@ var uiConfig = {
 
 
     signInFlow: 'popup',
-    signInSuccessUrl: "index.html",
+    signInSuccessUrl: "dashboard.html",
     signInOptions: [
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
@@ -49,7 +49,7 @@ const guestLoginButton = document.getElementById('guestLogin');
 
 guestLoginButton.addEventListener('click', (e) => {
     // window.location.href = window.location.pathname + "?isLoggedIn=false";
-    window.location.href = `/index.html?isLoggedIn=false`;
+    window.location.href = `/dashboard.html?isLoggedIn=false`;
 
 });
 

@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById('back-arrow').addEventListener('click', function () {
-        window.location.href = "index.html";
+        window.location.href = "dashboard.html";
     });
 });
 
