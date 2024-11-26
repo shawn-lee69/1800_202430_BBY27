@@ -48,7 +48,6 @@ var uiConfig = {
 const guestLoginButton = document.getElementById('guestLogin');
 
 guestLoginButton.addEventListener('click', (e) => {
-    console.log(window.location.pathname);
     // window.location.href = window.location.pathname + "?isLoggedIn=false";
     window.location.href = `/index.html?isLoggedIn=false`;
 
