@@ -146,7 +146,7 @@ function displaySharedListItems() {
     // Create a message element
     const sharedListSectionTitle = document.createElement('div');
     sharedListSectionTitle.classList.add('listContainerTitle');
-    sharedListSectionTitle.textContent = 'Shared Lists';
+    sharedListSectionTitle.textContent = 'Shared with Me';
 
     // Append the title to the shopping list div
     document.querySelector('.listContainer').insertBefore(sharedListSectionTitle, sharedShoppingListDiv);
