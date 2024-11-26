@@ -254,18 +254,11 @@ body {
     background-color: #ffffff;
     padding: 20px;
     width: 90%;
-    max-width: 300px; 
+    max-width: 320px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     z-index: 1000; 
     text-align: center;
-}
-
-.share-container h3 {
-    font-size: 1.2em;
-    color: #333;
-    margin-bottom: 40px;
-    font-family: "Crimson Text", serif;
 }
 
 .share-options {
@@ -468,6 +461,42 @@ body {
 .custom-title {
     font-size: 1.6rem;
     color: #4B5563;
+}
+
+.share-list-with-user-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#recipient-input {
+    width: 100%;
+}
+
+#recipient-input-label {
+    font-size: 0.8rem;
+    margin: 0;
+    color: #6B7280;
+}
+
+.share-option-title {
+    display: flex;
+    justify-content: flex-start;
+    margin: 12px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #4B5563;
+}
+
+.share-button {
+    border-radius: 8px;
+    border: none;
+    margin: 12px 0;
+    width: 50%;
+    min-width: 120px;
+    background-color: #007BFF;
+    padding: 8px 20px;
+    color: #F3F4F6;
 }
 
 @media screen and (min-width: 440px) {

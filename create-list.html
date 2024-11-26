@@ -71,7 +71,13 @@
   <!-- Overlay container after clicking share button -->
   <div id="share-overlay" class="overlay hidden">
     <div class="share-container">
-      <h3>Share your list!</h3>
+      <div class="share-option-title">Share with a SamePage user</div>
+      <div class="share-list-with-user-wrapper">
+        <label id="recipient-input-label" for="recipient-input" >username</label>
+        <input type="text" id="recipient-input" placeholder="recipient@gmail.com">
+      </div>
+      <button class="share-button" onclick="">Share</button>
+      <div class="share-option-title">Other ways to share</div>
       <div class="share-options">
         <button onclick="copyLink()"><img class="share-icon" src='./images/create-list/Copy Link.png' alt='button for Copy Link'></button>
         <button onclick="shareOnWhatsApp()"><img class="share-icon" src='./images/create-list/Group.png' alt='button for WhatsApp'></button>
