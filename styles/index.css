@@ -117,6 +117,32 @@ header img {
     padding: 0 20px 0 24px;
 }
 
+.shared-shopping-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    gap: 20px;
+}
+
+.shared-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background-color: #91e3ff;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.shared-list-item-number-counter {
+    display: flex;
+    font-size: 1.75rem;
+    color: #3575ff;
+}
+
 .shoppingList {
     display: flex;
     flex-direction: column;
