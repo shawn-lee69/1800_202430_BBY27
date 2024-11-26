@@ -193,16 +193,25 @@ header img {
 
 .list-item-number-counter {
     display: flex;
+    min-width: 56px;
     font-size: 1.75rem;
     color: #347928;
 }
 
 .list-item-content-bottom {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
     width: 100%;
     margin-top: 12px;
+    justify-content: flex-end;
+}
+
+.list-item-content-bottom:has(img) {
+    justify-content: space-between;
+}
+
+.list-item-content-bottom img {
+    width: 24px;
 }
 
 .list-item-time-stamp {

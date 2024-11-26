@@ -106,6 +106,11 @@ function displayListItems() {
       itemCounterText = `${item.checkedNumberOfItems} / ${item.totalNumberOfItems}`;
     }
 
+    // Check if the list is shared
+    const sharedIconHTML = item.isSharedWithOthers ? `
+      <img src="./images/index/shared-button.png" alt="this list is shared list">
+    ` : '';
+
     itemAnchor.innerHTML = `
       <div class='${listItemClass}'>
         <div class='list-item-content-header'>
@@ -113,6 +118,7 @@ function displayListItems() {
           <div class='list-item-number-counter'>${itemCounterText}</div>
         </div>
         <div class='list-item-content-bottom'>
+          ${sharedIconHTML}
           <div class='list-item-time-stamp'>${semanticTime}</div>
         </div>
       </div>
@@ -214,7 +220,8 @@ function fetchAndDisplayLists(userId) {
         name: data.name,
         totalNumberOfItems: data.totalNumberOfItems,
         checkedNumberOfItems: data.checkedNumberOfItems,
-        createdAt: data.createdAt.toDate()
+        createdAt: data.createdAt.toDate(),
+        isSharedWithOthers: data.isSharedWithOthers || false
       });
     });
 
@@ -258,7 +265,7 @@ function fetchAndDisplayLists(userId) {
     // Safely fetch sharedLists
     const sharedLists = userDoc.data().sharedLists || [];
     if (Array.isArray(sharedLists) && sharedLists.length > 0) {
-      const fetchPromises = sharedLists.map((id) =>
+      const fetchPromises = sharedLists.filter(id => id).map((id) =>
         db.collection('lists').doc(id).get().then((doc) => {
           if (doc.exists) {
             const data = doc.data();
