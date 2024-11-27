@@ -20,8 +20,23 @@ document.addEventListener('DOMContentLoaded', () => {
         store: store.value,
         saleDate: saleDate.value,
       }).then(() => {
+        Swal.fire({
+          title: "Post Successfully added to \n community flyer",
+          icon: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#45a049",
+          cancelButtonColor: "#FCCD2A",
+          confirmButtonText: "Return to Lists",
+          cancelButtonText: "Add Another Sale"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.assign("create-list.html");
+          }
+        });
+
       saleInformationForm.reset();
     });
+  
 
     confirmButton.addEventListener('click', (e) => {
       console.log("Button clicked");
@@ -38,3 +53,12 @@ profileElements.forEach(element => {
     window.location.href = "dashboard.html";
   });
 });
+
+// function to bring user to the list of sales page
+const community = document.querySelectorAll('#community-btn');
+community.forEach(element => {
+  element.addEventListener("click", () => {
+    window.location.href = "list-of-sales.html";
+  });
+});
+
