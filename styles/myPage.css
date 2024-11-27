@@ -19,11 +19,10 @@ body {
 .main {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    /* position: relative; */
     width: 100%;
-    /* max-width: 400px;  */
+    max-width: 440px; 
     min-height: 100vh;
     background-color: #ffffff;
     padding: 20px;
@@ -60,14 +59,19 @@ img {
 
 #userProfile {
     width: 90%; 
-    padding-top: 80px;
+    height: 90%;
 }
 
 .userInfo {
     display: flex;
     flex-direction: column;
-    gap: 16px; 
-    padding: 20px;
+    gap: 16px;
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff, #f9f9f9);
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -101,7 +105,7 @@ img {
     display: flex;
     justify-content: flex-end; 
     gap: 10px; 
-    margin-top: 20px; 
+    margin-top: 10px; 
 }
 
 #edit-button, #save-button {
@@ -122,11 +126,6 @@ img {
 
 #edit-button:hover {
     background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-#edit-button:active {
-    transform: scale(0.95);
 }
 
 #save-button {
@@ -136,7 +135,6 @@ img {
 
 #save-button:hover {
     background-color: #1e7e34;
-    transform: scale(1.05);
 }
 
 #save-button:active {
@@ -149,7 +147,7 @@ img {
     justify-content: center;
     align-items: flex-end;
     width: 100%;
-    margin-top: 100px;
+    margin-bottom: 35%;
 }
 
 .logout-button {
@@ -166,7 +164,6 @@ img {
 
 .logout-button:hover {
     background-color: #ff4d4f;
-    transform: scale(1.05);
 }
 
 .logout-button:active {
@@ -175,7 +172,12 @@ img {
 
 @media screen and (min-width: 440px) {
     .main {
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
         max-width: 440px;
-        height: 100vh; /* Enforce consistent height */
+        min-height: 100vh;
+        height: auto;
+        background-color: #ffffff;
     }
 }
