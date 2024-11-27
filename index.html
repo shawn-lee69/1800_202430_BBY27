@@ -2,21 +2,19 @@
 <html lang="en">
 
 <head>
-    <title>BBY-27 Project</title>
-    <meta name="comp1800 template" content="My 1800 App">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href='styles/index.css'>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
-        rel="stylesheet">
+    <title>SamePage</title>
+    <meta name="comp1800 project" content="SamePage App">
 
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Firebase SDKs -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -24,73 +22,33 @@
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-
-    <!-- Firebase initialization script -->
-    <script src="./scripts/firebase.js"></script>
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel="stylesheet" href='styles/index.css'>
 
 </head>
 
 <body>
-    <div class='content-wrapper'>
-        <!-- Content for logged-in users -->
-        <div id="listContent" style="display: none;">
-            <div class="main">
-                <header>
-                    <img src="SamePage.png" alt="main logo">
-                </header>
-                <div class='listContainer'>
-                    <div class='listContainerTitle'>My Lists</div>
-                    <div class="d-flex justify-content-center">
-                        <div class="spinner-border text-success m-5" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                    <div class="shoppingList">
-                        <!-- grocery lists will appear here dynamically -->
-                    </div>
-                </div>
+    <div class="main">
+        <div class="welcome">
+            <div id="logo">
+                <img class="responsive" src="SamePage.png" alt="">
             </div>
-            <div class="bottom">
-                <div class="create-list-link">
-                    <img class="add" src="./images/index/add-list.png" alt="add">
-                </div>
-                <img class="tag" src="tag.png" alt="tag">
-                <img class="profile" src='images/index/profile.png' alt="profile">
-                <span class="add-span">Create List</span>
-                <span class="tag-span">Add Sale</span>
-                <span class="profile-span">My Page</span>
+            <div id="catch-phrase">Share your <br />
+                grocery list, <br />
+                Get on SamePage!</div>
+            <div class="overflow-hidden">
+                <img class="logo" src='images/dashboard/logo.png' alt="">
             </div>
+            <a href="login.html" class="btn btn-success" role="button">Log in</a>
         </div>
 
-        <!-- Content for logged-out users -->
-        <div id="emptyListContent" style="display: none;">
-            <div class="main">
-                <header>
-                    <img src="SamePage.png" alt="main logo">
-                </header>
-                <div class="welcome">
-                    <span>Share your list, <br> Get on the SamePage</span>
-                    <img class="logo" src="./images/index/logo.png" alt='Same Page logo'>
-                </div>
-            </div>
-            <div class="tooltip">
-                <img src="./images/index/tooltip.png" alt="tooltip">
-            </div>
-            <div class="bottom">
-                <div class="create-list-link">
-                    <img class="add" src="./images/index/add-list.png" alt="add">
-                </div>
-                <img class="tag" src="tag.png" alt="tag">
-                <a href='myPage.html'>
-                    <img class="profile" src="./images/index/profile.png" alt="profile">
-                </a>
-                <span class="add-span">Create List</span>
-                <span class="tag-span">Add Sale</span>
-                <span class="profile-span">My Page</span>
-            </div>
-        </div>
+        <script src="./scripts/firebase.js"></script>
+        <script src="./scripts/skeleton.js"></script>
+        <script src="./scripts/script.js"></script>
+        <script>
+            logout();       
+        </script>
     </div>
-    <script src="./scripts/index.js" defer></script>
 </body>
 
 </html>

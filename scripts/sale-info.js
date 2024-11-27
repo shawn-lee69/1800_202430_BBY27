@@ -35,6 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
 const profileElements = document.querySelectorAll('#back-button');
 profileElements.forEach(element => {
   element.addEventListener("click", () => {
-    window.location.href = "index.html";
+    window.location.href = "dashboard.html";
   });
 });

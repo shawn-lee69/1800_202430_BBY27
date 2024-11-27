@@ -25,7 +25,7 @@
     <div class='top-navbar'>
       <div class='name-arrow-wrapper'>
         <div class='back-arrow'>
-          <a href='index.html'>
+          <a href='dashboard.html'>
             <img src='images/create-list/back-arrow.png' alt='arrow image for moving back' />
           </a>
         </div>
@@ -52,23 +52,32 @@
         <!-- grocery items will appear here dynamically -->
       </div>
     </div>
-    <div id="sale-button">
+    <div>
       <button type="submit" id="sale-button" class="btn">Check Current Sales</button>
     </div>
   </div>
-  <div id="editModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Edit List Name</h2>
-      <input type="text" id="listNameInput" placeholder="Enter new list name" maxlength="15"/>
-      <button id="saveButton">Save</button>
-    </div>
-  </div>
+  <!-- Overlay -->
+<div id="editModal-1-overlay"></div>
+
+<!-- Modal -->
+<div id="editModal-1">
+    <button class="close">&times;</button>
+    <h2>Edit List</h2>
+    <input type="text" id="listNameInput-1" placeholder="Enter new list name">
+    <button id="saveButton-1">Save</button>
+</div>
+
   
   <!-- Overlay container after clicking share button -->
   <div id="share-overlay" class="overlay hidden">
     <div class="share-container">
-      <h3>Share your list!</h3>
+      <div class="share-option-title">Share with a SamePage user</div>
+      <div class="share-list-with-user-wrapper">
+        <label id="recipient-input-label" for="recipient-input" >username</label>
+        <input type="text" id="recipient-input" placeholder="recipient@gmail.com">
+      </div>
+      <button class="share-button" onclick="shareListButton()">Share</button>
+      <div class="share-option-title">Other ways to share</div>
       <div class="share-options">
         <button onclick="copyLink()"><img class="share-icon" src='./images/create-list/Copy Link.png' alt='button for Copy Link'></button>
         <button onclick="shareOnWhatsApp()"><img class="share-icon" src='./images/create-list/Group.png' alt='button for WhatsApp'></button>
@@ -95,6 +104,7 @@
     </div>
   </div>
   <script src="./scripts/create-list.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

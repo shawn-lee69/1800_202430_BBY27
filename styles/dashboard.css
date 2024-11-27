@@ -1,0 +1,428 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 900;
+    src: local('Pretendard Black'),  url('/assets/fonts/Pretendard-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 800;
+    src: local('Pretendard ExtraBold'), url('/assets/fonts/Pretendard-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    src: local('Pretendard Bold'), url('/assets/fonts/Pretendard-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    src: local('Pretendard SemiBold'), url('/assets/fonts/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    src: local('Pretendard Medium'), url('/assets/fonts/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: local('Pretendard Regular'), url('/assets/fonts/Pretendard-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    src: local('Pretendard Light'), url('/assets/fonts/Pretendard-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 200;
+    src: local('Pretendard ExtraLight'), url('/assets/fonts/Pretendard-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 100;
+    src: local('Pretendard Thin'), url('/assets/fonts/Pretendard-Thin.woff') format('woff');
+}
+
+html {
+    font-family: "Pretendard", serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F3F4F6;
+    margin: 0;
+    padding: 0;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: calc(100vh - 100px);
+    background-color: #ffffff;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+header {
+    grid-row: 1 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+}
+
+header img {
+    width: 180px;
+    margin: 12px 0 12px 0;
+}
+
+/* when a user logs in and there is at least one list */
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: auto;
+}
+
+.listContainerTitle {
+    color: #111827;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 28px 0 12px 0;
+    padding: 0 20px 0 24px;
+}
+
+.shared-shopping-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    gap: 20px;
+}
+
+.shared-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background-color: #91e3ff;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.shared-list-item-number-counter {
+    display: flex;
+    font-size: 1.75rem;
+    color: #3575ff;
+}
+
+.shoppingList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    gap: 20px;
+}
+
+.list-item-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 58px);
+    color: inherit;
+    text-decoration: none;
+}
+
+.list-item-wrapper:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background-color: #C0EBA6;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.list-item-content-header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list-name {
+    font-size: 2rem;
+    font-weight: normal;
+    color: #000000;
+}
+
+.list-item-number-counter {
+    display: flex;
+    min-width: 56px;
+    font-size: 1.75rem;
+    color: #347928;
+}
+
+.list-item-content-bottom {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 12px;
+    justify-content: flex-end;
+}
+
+.list-item-content-bottom:has(img) {
+    justify-content: space-between;
+}
+
+.list-item-content-bottom img {
+    width: 24px;
+}
+
+.list-item-time-stamp {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #6B7280;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.list-item.completed {
+    background-color: #E5E7EB;
+}
+
+.list-item.completed .list-name {
+    color: #6B7280;
+}
+
+.list-item.completed .list-item-number-counter {
+    color: #6B7280;
+}
+
+.list-item.completed .list-item-time-stamp {
+    color: #9CA3AF;
+}
+
+.empty-message {
+    margin-top: 30%;
+    color: #9CA3AF;
+}
+
+/* welcome deals with empty list or not logged in user */
+.welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome span {
+    margin-top: 40px;
+    font-size: 36px;
+    text-align: center;
+}
+
+.welcome img {
+    width: 40%;
+    margin-top: 40px;
+}
+
+/* this deals with tooltip image floating over the button */
+.tooltip {
+    position: fixed;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.tooltip img {
+    width: 160px;
+}
+
+.bottom {
+    position: fixed;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4fr 1fr;
+    max-width: 440px;
+    width: 100%;
+    height: 100px;
+    justify-items: center;
+    text-align: center;
+    background-color: #E5E7EB;
+    z-index: 1;
+}
+
+.create-list-link {
+    grid-column: 2 / 3;
+    position: absolute;
+    cursor: pointer;
+    top: -40px; /* Moves the image up over the #bottom div */
+    z-index: 2; /* Ensures the image stays above the #bottom div */
+}
+
+.profile {
+    cursor: pointer;
+}
+
+.add {
+    width: 70%;
+}
+
+.add-span {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    font-size: 20px;
+    font-weight: 400;
+    align-self: center;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.tag {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    align-self: center;
+    margin-top: 12px;
+    width: 35.5%;
+    cursor: pointer;
+}
+
+.tag-span {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    font-size: 16px;
+    font-weight: 400;
+    align-self: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+a {
+    grid-column: 3 /4;
+}
+.profile {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    align-self: center;
+    margin-top: 12px;
+    width: 43.6%;
+}
+
+.profile-span {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    font-size: 16px;
+    font-weight: 400;
+    align-self: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#center {
+    display: grid;
+    width: 440px;
+    height: 813px;
+}
+
+
+@media screen and (min-width: 440px) {
+
+    .main {
+        width: 100vw;
+        height: calc(100vh - 116px);
+        overflow-y: auto;
+        max-width: 440px;
+    }
+
+    header img {
+        width: 40%;
+        margin: 24px 0 12px 0;
+    }
+
+    .welcome span {
+        margin-top: 80px;
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 440px;
+        height: 100vh;
+        background-color: #ffffff;
+    }
+
+    .tooltip {
+        bottom: 160px;
+    }
+
+    .bottom {
+        max-width: 440px;
+        height: 116px;
+        justify-items: center;
+        text-align: center;
+        background-color: #E5E7EB;
+    }
+
+    .add-span {
+        font-size: 1.5rem;
+    }
+
+    .tag {
+        width: 30%;
+    }
+
+    .tag-span {
+        font-size: 1.5rem;
+    }
+
+    .profile {
+        width: 36%;
+    }
+
+    .profile-span {
+        font-size: 1.5rem;
+    }
+}

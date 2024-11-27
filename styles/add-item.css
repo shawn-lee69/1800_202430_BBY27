@@ -202,9 +202,6 @@ body {
     gap: 12px;
 }
 
-.selected-items-container {
-    border: 1px solid black;
-}
 
 .item-add-button {
     display: flex;
@@ -217,6 +214,12 @@ body {
     border-radius: 8px;
     cursor: pointer;
 }
+
+#first-item-add-button {
+    margin-top: 20px;
+    width: 82%;
+}
+
 
 .item-add-button img {
     width: 32px;
@@ -241,6 +244,31 @@ body {
 
 .results-container div:hover {
     background-color: #f3f4f6;
+}
+
+.custom-confirm-button {
+    border: none;
+    border-radius: 8px;
+}
+
+.custom-deny-button {
+    color: #111827;
+    border-radius: 8px;
+}
+
+.custom-rounded-popup {
+    background-color: #ffffff;
+    padding: 24px 20px 24px 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 300px;
+    margin: 15% auto;
+    text-align: center;
+}
+
+.custom-title {
+    font-size: 1.6rem;
+    color: #4B5563;
 }
 
 @media screen and (min-width: 440px) {

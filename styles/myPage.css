@@ -88,6 +88,8 @@ img {
     border-radius: 4px;
     background-color: #f9f9f9;
     transition: border-color 0.3s ease;
+    border: none; 
+    /* To remove the border of the input */
 }
 
 .form-control:focus {

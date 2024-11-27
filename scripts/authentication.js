@@ -11,19 +11,20 @@ var uiConfig = {
                     name: user.displayName,
                     email: user.email,
                     address: "",
-                    preferredMarket: "Walmart",
+                    preferredMarket: "",
                     completedList: null,
                     notificationSettings: true,
-                    recentItems: []
+                    recentItems: [],
+                    sharedLists: [],
                 }).then(function () {
                     console.log("New user added to firestore");
-                    window.location.assign("index.html");
+                    window.location.assign("dashboard.html");
                     
                 }).catch(function (error) {
                     console.log("Error adding new user: " + error);
                 });
             } else {
-                window.location.assign("index.html");
+                window.location.assign("dashboard.html");
                 
                 return true;
             }
@@ -35,7 +36,7 @@ var uiConfig = {
 
 
     signInFlow: 'popup',
-    signInSuccessUrl: "index.html",
+    signInSuccessUrl: "dashboard.html",
     signInOptions: [
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
@@ -47,9 +48,8 @@ var uiConfig = {
 const guestLoginButton = document.getElementById('guestLogin');
 
 guestLoginButton.addEventListener('click', (e) => {
-    console.log(window.location.pathname);
     // window.location.href = window.location.pathname + "?isLoggedIn=false";
-    window.location.href = `/index.html?isLoggedIn=false`;
+    window.location.href = `/dashboard.html?isLoggedIn=false`;
 
 });
 
