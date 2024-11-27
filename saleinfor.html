@@ -3,6 +3,7 @@
     <head>
         <title>Sale Information</title>
         <meta name="comp1800 template" content="My 1800 App">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/sales-info.css">
         
 
@@ -22,38 +23,40 @@
         
     </head>
     <body>
-        <div id="main">
-            <!--Top bar of page-->
-            <header>
-                <img src="./images/create-list/back-arrow.png" alt="back-button" id="back-button">
-                <img src="SamePage.png" alt="main logo">
-            </header>
-            <div id="salesinformation">
-                <img src="sale-information.png" alt="sales information">
+        <div id="content-wrapper">
+            <div id="main">
+                <!--Top bar of page-->
+                <header>
+                    <img src="./images/create-list/back-arrow.png" alt="back-button" id="back-button">
+                    <img src="SamePage.png" alt="main logo">
+                </header>
+                <div id="divider" class="divider"></div>
+                <div id="salesinformation">
+                    <img src="sale-information.png" alt="sales information">
+                </div>
+                <!--Inputs forms and labels-->
+                <form class="sale-information-form">
+                <div id="info">
+                    <label for="itemname" id="itemlabel">Item:</label>
+                    <input type="text" id="itemname" class="item-name" placeholder="Item" required /><br><br>
+                    <label for="itemprice">Price:</label>
+                    <input type="text" id="itemprice" class="item-price" placeholder="Price" required><br><br>
+                    <label for="store">Store:</label>
+                    <input type="text" id="store" class="store" placeholder="Store" required /><br><br>
+                    <label for="saledate">Sale Date:</label>
+                    <input type="date" id="saledate" class="sale-date" placeholder="Date (yyyy/mm/dd)" required />
+                    Swal.fire({})
+                </div>
+                </form>
+                <div class="button-wrapper">
+                    <button type="submit" id="confirm" class="confirm-btn">Post</button>
+                    <button type="submit" class="community-btn">Community Flyer</button>
+                </div>
             </div>
-            <div id="divider" class="divider"></div>
-            <!--Inputs forms and labels-->
-            <form class="sale-information-form">
-            <div id="info">
-                <label for="itemname" id="itemlabel">Item:</label>
-                <input type="text" id="itemname" class="item-name" placeholder="Item" required /><br><br>
-                <label for="itemprice">Price:</label>
-                <input type="text" id="itemprice" class="item-price" placeholder="Price" required><br><br>
-                <label for="store">Store:</label>
-                <input type="text" id="store" class="store" placeholder="Store" required /><br><br>
-                <label for="saledate">Sale Date:</label>
-                <input type="date" id="saledate" class="sale-date" placeholder="Date (yyyy/mm/dd)" required />
-            </div>
-            </form>
-
         </div>
-        
-        <div id="bottom">
-            <button type="submit" id="confirm" class="confirm-btn">Confirm</button>
-        </div>
-
         <script src='scripts/sale-info.js'></script>
         <script src="scripts/firebase.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 
 </html>

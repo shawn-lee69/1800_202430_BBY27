@@ -1,168 +1,29 @@
 
-/* html {
-    font-family: "Crimson Text", serif;
-}
-
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #E5E7EB;
-    margin: 0;
-}
-
-#main {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    align-items: flex-end;
-    width: 440px;
-    height: auto;
-    background-color: #ffffff;
-}
-
-header {
-    grid-row: 1 / 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: auto;
-}
-
-header img {
-    width: 180px;
-    margin: 12px 0 12px 0;
-}
-
-#salesinformation {
-    display: flex;
-    width: 440px;
-    height: auto; 
-}
-
-.divider {
-    width:90%;
-    height: 1px;
-    background-color:#D9D9D9 ;
-    margin-top: 16px;
-}
-
-#salesinformation img {
-    width: 50%;
-    margin-left: 106px;
-    margin-top: 10px;
-}
-
-#info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#welcome span {
-    margin-top: 102px;
-    font-size: 42px;
-    text-align: center;
-}
-
-label { position: relative;
-        right: 150px;
-        top: 30px;
-        font-size: 20px;
-}
-
-#info input{
-    border-radius: 4px;
-    height: 30px;
-}
-
-#itemlabel {
-    margin-top: 50px;
-    
-}
-#saledate {
-    margin-bottom: 100px;
-    
-}
-
-#welcome img {
-    width: 52.5%;
-    margin: 80px 0 256px 0;
-}
-
-/* this deals with tooltip image floating over the button */
-/*.tooltip {
-    position: absolute;
-    top: 720px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-}
-
-.tooltip img {
-    width: 229px;
-}
-
-#bottom {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    width: 440px;
-    height: 116px;
-    justify-items: center;
-    text-align: center;
-    position: relative;
-    background-color: rgb(223, 21, 21);
-    z-index: 1;
-}
-
-#saledate {
-    width: 170px;
-}
-
-#confirm {
-    height: 50px;
-    margin-top: 15px;
-    border-radius: 50px;
-}
-
-#confirm{
-    width: 50%;
-    border-radius: 4px;
-    padding:25px;
-}
-
-
-
-#center {
-    display: grid;
-    width: 440px;
-    height: 813px;
-
-}
-
-/* General styles */
-body {
-    margin: 0;
-    padding: 0;
     font-family: 'Crimson Text', serif;
-    background-color: rgb(189, 210, 252);
+    background-color:  #F3F4F6;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    min-height: 100vh;
+    height:100vh;
+    width: 100vw;
+    margin:0;
+    padding: 0;
+    border: 2px solid black;
 }
 
 
 /* Header styling */
+
 header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: white;
     width: 100%;
     padding: 20px 0;
-    display: flex;
-    justify-content: center;
+    
 }
 
 header img {
@@ -171,15 +32,22 @@ header img {
 
 #back-button {
     position: relative;
-    right: 60px;
+    right: 110px;
     max-height: 35px;
 }
 
-/* Sale information image styling */
 
 #main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    width: 440px;
     background-color: white;
 }
+
+/* Sale information image styling */
 #salesinformation {
     margin: 20px 0;
     text-align: center;
@@ -194,7 +62,7 @@ header img {
 .divider {
     height: 2px;
     background-color: #ddd;
-    margin: 20px 0;
+    margin:0;
     width: 100%;
 }
 
@@ -229,12 +97,6 @@ header img {
 }
 
 /* Button styling */
-#bottom {
-    width: 90%;
-    max-width: 320px;
-    text-align: center;
-    background-color: white;
-}
 
 .confirm-btn {
     background-color: #4CAF50;
@@ -246,7 +108,8 @@ header img {
     border-radius: 5px;
     cursor: pointer;
     width: 110px;
-    margin-bottom: 10px;
+    
+    height: 55px;
 }
 
 .confirm-btn:hover {
@@ -254,4 +117,45 @@ header img {
 
 }
 
+.button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
 
+.community-btn {
+background-color: #FCCD2A;
+color: black;
+font-size: 14px;
+font-weight: bold;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+width: 110px;
+height: 55px;
+}
+
+
+
+@media screen and (min-width: 440px) {
+
+    #main {
+        width: 100vw;
+        /* height: calc(100vh - 116px); */
+        overflow-y: auto;
+        max-width: 440px;
+    }
+
+    #content-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 440px;
+        height: 100vh;
+        background-color: #ffffff;
+    }
+}
