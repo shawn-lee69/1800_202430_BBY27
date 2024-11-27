@@ -353,6 +353,17 @@ document.getElementById('edit-button').addEventListener('click', function () {
         });
 
         saveButton.addEventListener('click', () => {
+          Swal.fire({
+            title: "New list name\n Saved!",
+            showConfirmButton: false,
+            timer: 1200,
+            imageUrl: "./images/create-list/success.png",
+            imageWidth: 100,
+            imageHeight: 'auto',
+            customClass: {
+              popup: 'custom-rounded-popup',
+          }
+          })
           editModal.style.display = 'none';
           modalOverlay.style.display = 'none';
         })

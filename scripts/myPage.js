@@ -67,6 +67,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById('save-button').addEventListener('click', function () {
+        Swal.fire({
+            title: "Successfully\n Saved!",
+            showConfirmButton: false,
+            timer: 1200,
+            imageUrl: "./images/create-list/success.png",
+            imageWidth: 100,
+            imageHeight: 'auto',
+            customClass: {
+                popup: 'custom-rounded-popup',
+            }    
+          })
         saveUserInfo();
     });
 
