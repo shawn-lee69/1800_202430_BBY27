@@ -225,7 +225,17 @@ function closeShareOverlay() {
 // Example functions for sharing options
 function copyLink() {
   navigator.clipboard.writeText(window.location.href)
-    .then(() => alert("Link copied to clipboard!"))
+    .then(() => Swal.fire({
+      title: "Link copied to\n clipboard!",
+      showConfirmButton: false,
+      timer: 1200,
+      imageUrl: "./images/create-list/success.png",
+      imageWidth: 100,
+      imageHeight: 'auto',
+      customClass: {
+        popup: 'custom-rounded-popup',
+    }
+    }))
     .catch((error) => console.error("Failed to copy link: ", error));
 }
 
