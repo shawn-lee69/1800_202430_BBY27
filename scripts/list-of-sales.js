@@ -1,4 +1,5 @@
-// This function grabs retrieves documents in the Sale-Information collection
+// This function retrieves documents in the Sale-Information collection
+// and orders them by the sale date in descending order
 
 function GetSalesData() {
     db.collection("Sale-Information").orderBy("saleDate", "desc").get().then((querySnapshot)=>{
@@ -28,8 +29,8 @@ function GetSaleDataRealtime() {
 
 
 
-// Recieves an item's details (name, price, date, store) and creates a table row with 
-// these details
+// Recieves an item's details (name, price, date, store) and
+// creates a table row filled with these details
 var itemNo=0;
 var tbody = document.getElementById('tbody1');
 
@@ -55,9 +56,11 @@ function AddDataToTable(Item,Price,Date,Store){
 
 }
 
-// Clears the table body to prevent duplicates
-// Loops over each item in the SaleInformationDocList array and calls
-// AddDataToTable to add each item as a row in the table
+// Clears the table body to prevent duplicates.
+// Loops over each item in the SaleInformationDocList array in firebase
+// and calls AddDataToTable to add each item as a row in the table
+// This function also checks the date, and will only show sales on the table
+// that have a date within the last 7 days
 function AddAllDataToTable(SalesInformationDocList){
     itemNo=0;
     tbody.innerHTML="";
@@ -79,3 +82,14 @@ profileElements.forEach(element => {
     window.location.href = "create-list.html";
   });
 });
+
+function goBackToTheList() {
+    const linkAnchor = document.createElement('a');
+    const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
+    linkAnchor.href = `${basePath}/create-list.html?id=${listId}&uid=${userId}`;
+    linkAnchor.innerHTML = `
+        <img src='/images/create-list/back-arrow.png' alt='arrow image for moving back'/>
+      `;
+    const backArrowDiv = document.querySelector('.back-btn');
+    backArrowDiv.appendChild(linkAnchor);
+  }

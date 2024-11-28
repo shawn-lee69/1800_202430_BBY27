@@ -26,6 +26,7 @@
         <div id="content-wrapper">
             <div id="main">
                 <!--Top bar of page-->
+                <!--Page titles are images-->
                 <header>
                     <img src="./images/create-list/back-arrow.png" alt="back-button" id="back-button">
                     <img src='images/SamePage.png' class="logo-img" alt="main logo">
@@ -34,34 +35,37 @@
                 <div id="salesinformation">
                     <img src='images/sales-infor/sale-information.png' alt="sales information">
                 </div>
-                <!--Inputs forms and labels-->
+                <!--Input forms and labels-->
+                
                 <form class="sale-information-form">
                     <div id="info">
                         <div class='input-wrapper'>
                             <label for="itemname" id="itemlabel">Item:</label>
-                            <input type="text" id="itemname" class="item-name" placeholder="e.g. Garlic Bread" required /><br><br>
+                            <input type="text" id="itemname" class="item-name" placeholder="e.g. Garlic Bread" required="required" /><br><br>
                         </div>
                         <div class='input-wrapper'>
                             <label for="itemprice">Price:</label>
-                            <input type="text" id="itemprice" class="item-price" placeholder="e.g. 5.50" required><br><br>
+                            <input type="text" id="itemprice" class="item-price" placeholder="e.g. 5.50" required="required"><br><br>
                         </div>
                         <div class='input-wrapper'>
                             <label for="store">Store:</label>
-                            <input type="text" id="store" class="store" placeholder="e.g. Walmart" required /><br><br>
+                            <input type="text" id="store" class="store" placeholder="e.g. Walmart" required="required" /><br><br>
                         </div>
                         <div class='input-wrapper'>
                             <label for="saledate">Sale Date:</label>
-                            <input type="date" id="saledate" class="sale-date" placeholder="(yyyy/mm/dd)" required />
+                            <input type="date" id="saledate" class="sale-date" placeholder="(yyyy/mm/dd)" required="required" />
                         </div>
                     </div>
                 </form>
+                <!--Bottom Buttons-->
                 <div class="button-wrapper">
-                    <button type="submit" id="confirm" class="confirm-btn">Post Deal</button>
-                    <button type="submit" class="community-btn" id="community-btn">Check Deals</button>
+                    <button type="submit" id="confirm" class="confirm-btn">Post Sale</button>
+                    <button type="submit" class="community-btn" id="community-btn">Check Community Flyer</button>
                 </div>
                 
             </div>
         </div>
+        <!--JavaScript scripts-->
         <script src='scripts/sale-info.js'></script>
         <script src="scripts/firebase.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

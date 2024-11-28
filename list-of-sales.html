@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang='en'>
+  <!--The Community Flyer Page links to "list-of=sales.css" and bootstrap for the table styling-->
 <head>
   <meta charset='UTF-8'>
-  <title>Check Sales!</title>
+  <title>Community Flyer</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href='styles/list-of-sales.css'>
 
@@ -13,21 +14,22 @@
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-  <!-- Your Firebase initialization script -->
+  <!--Firebase initialization script -->
   <script src="./scripts/firebase.js"></script>
 </head>
 
 <body>
   <div class='main'>
+    <!--The Top navigation bar, includes the an image for the title and a back button-->
     <div class='top-navbar'>
       <div class='back-arrow'>
-          <img src='images/create-list/back-arrow.png' alt='arrow image for moving back' id="back-btn"/>
+          <img src='images/create-list/back-arrow.png' alt='arrow image for back button' id="back-btn" class="back-btn"/>
       </div>
       <div class='current-sales'>Current Sales</div>
 
     </div>
     <div id="divider" class='divider'></div>
-          <!-- List of Sale Items -->
+          <!-- The outline of our table that gets filled with data from firebase -->
            <div class="container">
             <table class="table table-dark">
               <thead>
@@ -40,6 +42,7 @@
             </table>
            </div>
 
+           <!--Link to the javascript file "list-of-sales.js"-->
           <script src="./scripts/list-of-sales.js"></script>
 </body>
 </html>
