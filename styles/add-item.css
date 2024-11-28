@@ -76,7 +76,7 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: #ffffff;
+    background-color: #FFFDF4;
 }
 
 .top-navbar {
@@ -213,6 +213,7 @@ body {
     box-shadow: 0 3px 10px rgba(137, 142, 159, 0.12);
     border-radius: 8px;
     cursor: pointer;
+    background: #ffffff;
 }
 
 #first-item-add-button {
@@ -279,6 +280,6 @@ body {
         width: 100%;
         max-width: 440px;
         height: 100vh;
-        background-color: #ffffff;
+        background-color: #FFFDF4;
     }
 }

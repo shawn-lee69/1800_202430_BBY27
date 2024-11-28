@@ -1,3 +1,60 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 900;
+    src: local('Pretendard Black'),  url('/assets/fonts/Pretendard-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 800;
+    src: local('Pretendard ExtraBold'), url('/assets/fonts/Pretendard-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    src: local('Pretendard Bold'), url('/assets/fonts/Pretendard-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    src: local('Pretendard SemiBold'), url('/assets/fonts/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    src: local('Pretendard Medium'), url('/assets/fonts/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: local('Pretendard Regular'), url('/assets/fonts/Pretendard-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    src: local('Pretendard Light'), url('/assets/fonts/Pretendard-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 200;
+    src: local('Pretendard ExtraLight'), url('/assets/fonts/Pretendard-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 100;
+    src: local('Pretendard Thin'), url('/assets/fonts/Pretendard-Thin.woff') format('woff');
+}
+
+
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -24,7 +81,7 @@ body {
     width: 100%;
     max-width: 440px; 
     min-height: 100vh;
-    background-color: #ffffff;
+    background-color: #FFFDF4;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
@@ -47,19 +104,19 @@ body {
     font-weight: 600;
     position: absolute;
     left: 20px; 
-    top: 50%; 
+    top: 50%;
     transform: translateY(-50%);
 }
 
 img {
-    width: 160px; 
-    margin: 0 auto; 
-    display: block; 
+    width: 49%;
+    margin: 4px auto 0 auto;
+    display: block;
 }
 
 #userProfile {
     width: 90%; 
-    height: 90%;
+    height: auto;
 }
 
 .userInfo {
@@ -80,19 +137,20 @@ img {
 }
 
 .form-group label {
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #333333;
+    font-family: Pretendard, sans-serif;
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+    color: #6B7280;
 }
 
 .form-control {
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f9f9f9;
     transition: border-color 0.3s ease;
-    border: none; 
+    border: 1px solid #f9f9f9;
     /* To remove the border of the input */
 }
 
@@ -120,17 +178,21 @@ img {
 }
 
 #edit-button {
-    background-color: #007BFF;
-    color: white;
+    background: #cbcbcb;
+    color: #4B5563;
+    width: 20%;
 }
 
 #edit-button:hover {
-    background-color: #0056b3;
+    background-color: #368ffd;
+    color: #ffffff;
 }
 
 #save-button {
+    display: none;
     background-color: #28a745;
     color: white;
+    width: 20%;
 }
 
 #save-button:hover {
@@ -153,13 +215,14 @@ img {
 .logout-button {
     padding: 15px 70px;
     font-size: 18px;
-    border-radius: 30px;
+    border-radius: 8px;
     background-color: #4a873e;
     color: white;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, transform 0.2s;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 32px 0 50px 0;
 }
 
 .logout-button:hover {
@@ -167,7 +230,7 @@ img {
 }
 
 .logout-button:active {
-    transform: scale(0.95);
+    transform: scale(0.95);
 }
 
 @media screen and (min-width: 440px) {
@@ -178,6 +241,6 @@ img {
         max-width: 440px;
         min-height: 100vh;
         height: auto;
-        background-color: #ffffff;
+        background-color: #FFFDF4;
     }
 }

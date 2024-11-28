@@ -74,7 +74,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     height: 100vh;
-    background-color: #ffffff;
+    background-color: #FFFDF4;
 }
 
 .main {
@@ -82,7 +82,7 @@ body {
     flex-direction: column;
     width: 100vw;
     height: calc(100vh - 100px);
-    background-color: #ffffff;
+    background-color: #FFFDF4;
     flex-grow: 1;
     overflow-y: auto;
 }
@@ -391,7 +391,7 @@ a {
         width: 100%;
         max-width: 440px;
         height: 100vh;
-        background-color: #ffffff;
+        background-color: #FFFDF4;
     }
 
     .tooltip {
@@ -403,7 +403,7 @@ a {
         height: 116px;
         justify-items: center;
         text-align: center;
-        background-color: #E5E7EB;
+        background-color: #FFF3C1;
     }
 
     .add-span {
