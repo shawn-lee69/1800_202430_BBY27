@@ -49,7 +49,7 @@ const guestLoginButton = document.getElementById('guestLogin');
 
 guestLoginButton.addEventListener('click', (e) => {
     // window.location.href = window.location.pathname + "?isLoggedIn=false";
-    window.location.href = `/dashboard.html?isLoggedIn=false`;
+    window.location.href = `/pages/dashboard.html?isLoggedIn=false`;
 
 });
 

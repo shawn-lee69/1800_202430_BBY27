@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title: "Successfully\n Saved!",
             showConfirmButton: false,
             timer: 1200,
-            imageUrl: "./images/create-list/success.png",
+            imageUrl: "../images/create-list/success.png",
             imageWidth: 100,
             imageHeight: 'auto',
             customClass: {

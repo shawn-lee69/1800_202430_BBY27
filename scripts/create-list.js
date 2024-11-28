@@ -2,8 +2,8 @@
  * Global constants and functions
  */
 const DEFAULT_LIST_NAME = "New List";
-const CHECKBOX_EMPTY_SRC = './images/create-list/check-box-empty.png';
-const CHECKBOX_CHECKED_SRC = './images/create-list/check-box-checked.png';
+const CHECKBOX_EMPTY_SRC = '../images/create-list/check-box-empty.png';
+const CHECKBOX_CHECKED_SRC = '../images/create-list/check-box-checked.png';
 
 let listName = DEFAULT_LIST_NAME;
 
@@ -60,7 +60,7 @@ function displayItems() {
         <img class='checkbox' src='${checkboxSrc}' alt='checkbox' />
         ${item.name}
       </div>
-      <img class='delete-item-button' src='./images/create-list/delete-circle-button.png' alt='delete button' />
+      <img class='delete-item-button' src='../images/create-list/delete-circle-button.png' alt='delete button' />
     `;
 
     selectedItemsContainer.appendChild(itemDiv);
@@ -194,7 +194,7 @@ function removeItemFromFirestore(itemId) {
       title: "Item Successfully\n Deleted!",
       showConfirmButton: false,
       timer: 1000,
-      imageUrl: "./images/create-list/success.png",
+      imageUrl: "../images/create-list/success.png",
       imageWidth: 100,
       imageHeight: 'auto',
       imageAlt: "successfully added item",
@@ -229,7 +229,7 @@ function copyLink() {
       title: "Link copied to\n clipboard!",
       showConfirmButton: false,
       timer: 1200,
-      imageUrl: "./images/create-list/success.png",
+      imageUrl: "../images/create-list/success.png",
       imageWidth: 100,
       imageHeight: 'auto',
       customClass: {
@@ -382,7 +382,7 @@ document.getElementById('edit-button').addEventListener('click', function () {
             title: "New list name\n Saved!",
             showConfirmButton: false,
             timer: 1200,
-            imageUrl: "./images/create-list/success.png",
+            imageUrl: "../images/create-list/success.png",
             imageWidth: 100,
             imageHeight: 'auto',
             customClass: {
@@ -568,7 +568,7 @@ function shareListButton() {
                 title: "List Successfully\n Shared!",
                 showConfirmButton: false,
                 timer: 1000,
-                imageUrl: "./images/create-list/success.png",
+                imageUrl: "../images/create-list/success.png",
                 imageWidth: 100,
                 imageHeight: 'auto',
                 imageAlt: "successfully added item",

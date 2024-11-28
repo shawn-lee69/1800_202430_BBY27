@@ -1,28 +1,32 @@
-/*
- * Global constants and functions
- */
+// ==========================
+// Global Constants and Functions
+// ==========================
+
 // Function to get query parameters from the URL
 function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 }
 
+// Extract the list ID and user ID from the query parameters
 const listId = getQueryParam('id');
 const userId = getQueryParam('uid') || '';
 const userRef = userId ? db.collection("users").doc(userId) : null;
 
-/*
- * Following cluster of codes is for "go back" button navigation feature.
- */
-// Ensure that the back button is created after the DOM is loaded
+
+// ==========================
+// Back Button Navigation Feature
+// ==========================
+// This ensures the back button functionality is set up once the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
   goBackToTheList();
 });
 
+// Function to create a "go back" button linking to the create-list page
 function goBackToTheList() {
   const linkAnchor = document.createElement('a');
   const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-  linkAnchor.href = `${basePath}/create-list.html?id=${listId}&uid=${userId}`;
+  linkAnchor.href = `${basePath}/pages/create-list.html?id=${listId}&uid=${userId}`;
   linkAnchor.innerHTML = `
       <img src='/images/create-list/back-arrow.png' alt='arrow image for moving back'/>
     `;
@@ -31,9 +35,11 @@ function goBackToTheList() {
 }
 
 
-/*
- * Following cluster of codes is for item addition feature.
- */
+// ==========================
+// Item Addition Feature
+// ==========================
+
+// Function to add an item to Firestore
 function addItemToFirestore(itemName) {
   itemName = itemName ? itemName.trim() : '';
 
@@ -42,9 +48,10 @@ function addItemToFirestore(itemName) {
       name: itemName,
       isChecked: false,
       quantity: 1,
-      saleLink: 'https://google.com',
+      saleLink: 'https://google.com', // This field is for future updates
     };
 
+    // Fetch the current shopping list document
     db.collection('lists').doc(listId).get()
       .then((doc) => {
         if (doc.exists) {
@@ -56,6 +63,7 @@ function addItemToFirestore(itemName) {
               db.collection('lists').doc(listId).update({
                 totalNumberOfItems: currentTotalNumberOfItems + 1
               });
+              // Show success feedback using SweetAlert
               Swal.fire({
                 title: "Item Successfully\n Added!",
                 showDenyButton: true,
@@ -63,7 +71,7 @@ function addItemToFirestore(itemName) {
                 confirmButtonColor: "#347928",
                 denyButtonText: `Add more items`,
                 denyButtonColor: "#F3F4F6",
-                imageUrl: "./images/create-list/success.png",
+                imageUrl: "../images/create-list/success.png",
                 imageWidth: 100,
                 imageHeight: 'auto',
                 imageAlt: "successfully added item",
@@ -75,33 +83,33 @@ function addItemToFirestore(itemName) {
                 }
               }).then((result) => {
                 if (result.isConfirmed) {
-                  // Navigate user back to create-list page
+                  // Navigate user back to create-list page when user clicks confirm button
                   window.location.href = `create-list.html?id=${listId}&uid=${userId}`;
-                } else if (result.isDenied) {
                 }
               });
             })
             .then(() => {
-              // Add the item to user's history
+              // Add the item to the user's recent items list for easier future additions
               return userRef.get();
             })
             .then((doc) => {
               if (doc.exists) {
                 let userData = doc.data();
                 let recentItems = userData.recentItems || [];
-                recentItems.unshift(newItem); // Add new item to the startj
+                recentItems.unshift(newItem); // Add the new item to the beginning of the recent items array
 
-                // Remove duplicates based on item.name
+                // Remove duplicate items by name
                 recentItems = recentItems.filter((item, index, self) =>
                     index === self.findIndex((t) => (
                       t.name === item.name
                     ))
                 );
 
+                // Keep and show only the most recent 5 items
                 if (recentItems.length > 5) {
-                  recentItems = recentItems.slice(0, 5); // Keep only the first 5 items
+                  recentItems = recentItems.slice(0, 5);
                 }
-                return userRef.update({ recentItems });
+                return userRef.update({ recentItems }); // Update the user document with the trimmed recent items
               } else {
                 console.log("User document not found!");
               }
@@ -111,46 +119,51 @@ function addItemToFirestore(itemName) {
         }
       })
       .catch((error) => {
-        console.log('Failed to add item: ', error);
+        console.log('Failed to add item: ', error); // Log any errors that occur
       });
   } else {
-    console.log('No item added.');
+    console.log('No item added.'); // Log if the item name is invalid or empty
   }
 }
 
-/*
- * Following cluster of codes is for item search feature.
- */
+
+
+// ==========================
+// Search Feature
+// ==========================
+
+// Initialize an array to hold grocery items for search suggestions
 let groceryItems = [];
 
-// Fetch the grocery items JSON file
+// Fetch the grocery items JSON file and store it in the `groceryItems` array
 fetch('common-grocery-items.json')
   .then(response => response.json())
   .then(data => groceryItems = data)
   .catch(error => console.error('Error loading grocery items:', error));
 
-
-// Elements
+// DOM Elements for the search functionality
 const searchInput = document.getElementById('search-input');
 const resultsContainer = document.getElementById('results-container');
 const itemAddButton = document.querySelector('.item-add-button');
 
-
-// Search function
+// Function to search for grocery items based on user input
 function searchCommonGroceryItems(query) {
-  if (!query) return [];
+  if (!query) return []; // If no query is provided, return an empty array
+
   return groceryItems
     .filter(item => item.toLowerCase().includes(query.toLowerCase()))
     .sort((a, b) => {
+
+      // Sort results prioritizing those that start with the query
       const aStartsWith = a.toLowerCase().startsWith(query.toLowerCase());
       const bStartsWith = b.toLowerCase().startsWith(query.toLowerCase());
 
       if (aStartsWith && !bStartsWith) {
-        return -1; // a comes before b
+        return -1; // a comes first
       } else if (!aStartsWith && bStartsWith) {
-        return 1; // b comes before a
+        return 1; // b comes first
       } else {
-        // Both start or don't start with query; sort alphabetically
+        // Fallback: Sort alphabetically
         return a.toLowerCase().localeCompare(b.toLowerCase());
       }
     })
@@ -160,10 +173,10 @@ function searchCommonGroceryItems(query) {
 // Reference to the list item container
 const listItemContainer = document.querySelector('.list-items-container');
 
-// Display search results
+// Function to display search results in the DOM
 function displaySearchResults(results) {
   resultsContainer.innerHTML = ''; // Clear previous results
-  resultsContainer.style.display = 'block';
+  resultsContainer.style.display = 'block'; // Show the results container
 
   while (listItemContainer.children.length > 1) {
     listItemContainer.removeChild(listItemContainer.lastChild);
@@ -217,7 +230,7 @@ searchInput.addEventListener('input', event => {
   itemAddButton.innerHTML = ''; // Clear existing content
 
   const addIcon = document.createElement('img'); // Define addIcon here
-  addIcon.src = './images/add-item/add-circle-green.png';
+  addIcon.src = '../images/add-item/add-circle-green.png';
   addIcon.alt = 'button for adding an item in the list';
 
   itemAddButton.appendChild(addIcon);
@@ -233,7 +246,7 @@ function updateFirstAddItemButton(query) {
   firstItemAddButton.innerHTML = ''; // Clear existing content
 
   const addIcon = document.createElement('img');
-  addIcon.src = './images/add-item/add-circle-green.png';
+  addIcon.src = '../images/add-item/add-circle-green.png';
   addIcon.alt = 'Add item button';
 
   firstItemAddButton.appendChild(addIcon);
@@ -261,7 +274,7 @@ function updateAddItemButton(query) {
   itemAddButton.innerHTML = ''; // Clear existing content
 
   const addIcon = document.createElement('img');
-  addIcon.src = './images/add-item/add-circle-green.png';
+  addIcon.src = '../images/add-item/add-circle-green.png';
   addIcon.alt = 'Add item button';
 
   itemAddButton.appendChild(addIcon);
@@ -293,7 +306,7 @@ function renderRecentItems() {
     itemAddButton.classList.add('item-add-button');
     itemAddButton.setAttribute('data-item-name', item.name); // Adding data attribute for event delegation
     itemAddButton.innerHTML = `
-      <img src='./images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
+      <img src='../images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
       ${item.name}
     `;
 
@@ -314,7 +327,7 @@ function renderPopularItems() {
     itemAddButton.classList.add('item-add-button');
     itemAddButton.setAttribute('data-item-name', item); // Adding data attribute for event delegation
     itemAddButton.innerHTML = `
-      <img src='./images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
+      <img src='../images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
       ${item}
     `;
 

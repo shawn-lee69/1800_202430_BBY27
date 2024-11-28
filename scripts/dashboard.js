@@ -91,7 +91,7 @@ function displayListItems() {
   itemsList.forEach((item) => {
     const semanticTime = formatSemanticTime(item.createdAt);
     const itemAnchor = document.createElement('a');
-    itemAnchor.href = `${basePath}/create-list.html?id=${item.id}&uid=${userId}`;
+    itemAnchor.href = `${basePath}/pages/create-list.html?id=${item.id}&uid=${userId}`;
     itemAnchor.classList.add('list-item-wrapper');
 
     // determine if the CSS for completed items should be applied
@@ -108,7 +108,7 @@ function displayListItems() {
 
     // Check if the list is shared
     const sharedIconHTML = item.isSharedWithOthers ? `
-      <img src="./images/dashboard/shared-button.png" alt="this list is shared list">
+      <img src="../images/dashboard/shared-button.png" alt="this list is shared list">
     ` : '';
 
     itemAnchor.innerHTML = `
@@ -155,7 +155,7 @@ function displaySharedListItems() {
   sharedItemsList.forEach((item) => {
     const semanticTime = formatSemanticTime(item.createdAt);
     const itemAnchor = document.createElement('a');
-    itemAnchor.href = `${basePath}/create-list.html?id=${item.id}&uid=${userId}`;
+    itemAnchor.href = `${basePath}/pages/create-list.html?id=${item.id}&uid=${userId}`;
     itemAnchor.classList.add('list-item-wrapper');
 
     // determine if the CSS for completed items should be applied

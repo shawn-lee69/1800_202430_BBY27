@@ -86,7 +86,7 @@ profileElements.forEach(element => {
 function goBackToTheList() {
     const linkAnchor = document.createElement('a');
     const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-    linkAnchor.href = `${basePath}/create-list.html?id=${listId}&uid=${userId}`;
+    linkAnchor.href = `${basePath}/pages/create-list.html?id=${listId}&uid=${userId}`;
     linkAnchor.innerHTML = `
         <img src='/images/create-list/back-arrow.png' alt='arrow image for moving back'/>
       `;
