@@ -88,7 +88,6 @@ body {
     overflow-y: auto;
 }
 
-
 .top-bar {
     display: flex;
     align-items: center;
@@ -109,7 +108,7 @@ body {
 }
 
 img {
-    width: 49%;
+    width: 58.5%;
     margin: 4px auto 0 auto;
     display: block;
 }
@@ -167,7 +166,7 @@ img {
 }
 
 #edit-button, #save-button {
-    padding: 12px 20px;
+    padding: 12px 12px;
     font-size: 16px;
     font-weight: bold;
     border-radius: 5px;
@@ -201,6 +200,17 @@ img {
 
 #save-button:active {
     transform: scale(0.95);
+}
+
+/* Sweetalert */
+.custom-rounded-popup {
+    background-color: #ffffff;
+    padding: 24px 20px 24px 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 300px;
+    margin: 15% auto;
+    text-align: center;
 }
 
 /* Logout Button */
@@ -242,5 +252,11 @@ img {
         min-height: 100vh;
         height: auto;
         background-color: #FFFDF4;
+    }
+
+    img {
+        width: 49%;
+        margin: 4px auto 0 auto;
+        display: block;
     }
 }
