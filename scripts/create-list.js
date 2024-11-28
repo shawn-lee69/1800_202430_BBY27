@@ -342,9 +342,24 @@ document.getElementById('edit-button').addEventListener('click', function () {
       if (doc.exists) {
         // Set the current name in the input field
         listNameInput.value = doc.data().name || "New List";
-        // Show the modal
-        editModal.style.display = 'block';
-        modalOverlay.style.display = 'block';
+
+        // Check if this list is shared by others and if so, prevent deletion
+        if (doc.data().isSharedWithOthers && userId !== doc.data().userID) {
+          Swal.fire({
+            title: "You cannot edit shared list!",
+            showConfirmButton: false,
+            timer: 1000,
+            customClass: {
+              popup: 'custom-rounded-popup-no-img',
+              title: 'custom-title',
+            }
+          })
+          return;
+        } else if (userId === doc.data().userID) {
+          // Show the modal
+          editModal.style.display = 'block';
+          modalOverlay.style.display = 'block';
+        }
 
         // Close modal
         closeModalButton.addEventListener('click', () => {
@@ -416,6 +431,20 @@ if (deleteListButton) {
     if (listId) {
       getFirestoreDocument('lists', listId).then(listData => {
         if (listData) {
+          // Check if this list is shared by others and if so, prevent deletion
+          if (listData.isSharedWithOthers && userId !== listData.userID) {
+            Swal.fire({
+              title: "You cannot delete shared list!",
+              showConfirmButton: false,
+              timer: 1000,
+              customClass: {
+                popup: 'custom-rounded-popup-no-img',
+                title: 'custom-title',
+              }
+            })
+            return;
+          }
+
           // Update the global listName variable
           listName = listData.name || DEFAULT_LIST_NAME;
 
@@ -490,7 +519,7 @@ function shareListButton() {
         Swal.fire({
           title: "Sorry, we could not find the user",
           showConfirmButton: false,
-          timer: 5000,
+          timer: 1000,
           customClass: {
             popup: 'custom-rounded-popup-no-img',
             title: 'custom-title',
@@ -498,9 +527,20 @@ function shareListButton() {
         })
       } else {
         querySnapshot.forEach((doc) => {
+          if (userId === doc.id){
+            Swal.fire({
+              title: "Sorry, you cannot share this with yourself",
+              showConfirmButton: false,
+              timer: 1000,
+              customClass: {
+                popup: 'custom-rounded-popup-no-img',
+                title: 'custom-title',
+              }
+            })
+            return;
+          }
           let sharedLists = doc.data().sharedLists;
           sharedLists.unshift(listId);
-
           db.collection("users").doc(doc.id).update({ sharedLists })
             .then(() => {
               Swal.fire({
