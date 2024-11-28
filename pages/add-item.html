@@ -4,7 +4,7 @@
     <meta charset='UTF-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add an item!</title>
-    <link rel="stylesheet" href='styles/add-item.css'>
+    <link rel="stylesheet" href='../styles/add-item.css'>
 
     <!-- Firebase SDKs (Place these before your scripts) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -15,7 +15,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <!-- Your Firebase initialization script -->
-    <script src="./scripts/firebase.js"></script>
+    <script src='../scripts/firebase.js'></script>
   </head>
   <body>
     <div class='main'>
@@ -26,14 +26,14 @@
       </div>
       <div class='search-bar'>
         <div class="search-input-container">
-          <img src="images/add-item/magnifying-glass-icon.png" alt="Search" class="search-icon">
+          <img src='../images/add-item/magnifying-glass-icon.png' alt="Search" class="search-icon">
           <input type="text" id="search-input" placeholder="Type in items to search">
         </div>
         <a href="#" class="cancel-button" id="cancel-button">Cancel</a>
       </div>
       <div id="results-container" class="results-container"></div>
       <div class='item-add-button' id='first-item-add-button'>
-        <img src='./images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
+        <img src='../images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
       </div>
       <div class='divider'></div>
       <div class='favorite-tab'>
@@ -42,11 +42,11 @@
       </div>
       <div class='list-items-container'>
         <div class='item-add-button'>
-          <img src='./images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
+          <img src='../images/add-item/add-circle-green.png' alt='button for adding an item in the list' />
         </div>
       </div>
     </div>
-    <script src="./scripts/add-item.js"></script>
+    <script src='../scripts/add-item.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

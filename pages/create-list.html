@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create a shopping list!</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href='styles/create-list.css'>
+  <link rel="stylesheet" href='../styles/create-list.css'>
 
   <!-- Firebase SDKs (Place these before your scripts) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -17,7 +17,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
   <!-- Your Firebase initialization script -->
-  <script src="./scripts/firebase.js"></script>
+  <script src='../scripts/firebase.js'></script>
 </head>
 
 <body>
@@ -26,22 +26,22 @@
       <div class='name-arrow-wrapper'>
         <div class='back-arrow'>
           <a href='dashboard.html'>
-            <img src='images/create-list/back-arrow.png' alt='arrow image for moving back' />
+            <img src='../images/create-list/back-arrow.png' alt='arrow image for moving back' />
           </a>
         </div>
 
         <div class='list-name'>&nbsp;</div>
       </div>
       <div class='top-right-menu-icons'>
-        <img id='edit-button' src='./images/create-list/edit-button.png' alt='edit button image' />
-        <img id='share-button' src='./images/create-list/share-button.png' alt='share button image' />
-        <img id='delete-list-button' src='./images/create-list/delete-button.png' alt='delete button image' />
+        <img id='edit-button' src='../images/create-list/edit-button.png' alt='edit button image' />
+        <img id='share-button' src='../images/create-list/share-button.png' alt='share button image' />
+        <img id='delete-list-button' src='../images/create-list/delete-button.png' alt='delete button image' />
       </div>
     </div>
     <div class='divider'></div>
     <div class='list-items-container'>
       <div id='item-add-button'>
-        <img src='./images/create-list/add-item-button.png' alt='button for adding an item in the list' />
+        <img src='../images/create-list/add-item-button.png' alt='button for adding an item in the list' />
       </div>
       <div class="d-flex justify-content-center">
         <div class="spinner-border text-success m-5" role="status">
@@ -79,10 +79,10 @@
       <button class="share-button" onclick="shareListButton()">Share</button>
       <div class="share-option-title">Other ways to share</div>
       <div class="share-options">
-        <button onclick="copyLink()"><img class="share-icon" src='images/create-list/copy-link.png' alt='button for Copy Link'></button>
-        <button onclick="shareOnWhatsApp()"><img class="share-icon" src='images/create-list/group.png' alt='button for WhatsApp'></button>
-        <button onclick="shareViaMessages()"><img class="share-icon" src='images/create-list/message.png' alt='button for Message'></button>
-        <button onclick="shareViaEmail()"><img class="share-icon" src='./images/create-list/email.png' alt='button for Email'></button>
+        <button onclick="copyLink()"><img class="share-icon" src='../images/create-list/copy-link.png' alt='button for Copy Link'></button>
+        <button onclick="shareOnWhatsApp()"><img class="share-icon" src='../images/create-list/group.png' alt='button for WhatsApp'></button>
+        <button onclick="shareViaMessages()"><img class="share-icon" src='../images/create-list/message.png' alt='button for Message'></button>
+        <button onclick="shareViaEmail()"><img class="share-icon" src='../images/create-list/email.png' alt='button for Email'></button>
       </div>
       <button class="close-overlay" onclick="closeShareOverlay()">Close</button>
     </div>
@@ -99,11 +99,11 @@
   </div>
   <div id='delete-success-modal' class='modal'>
     <div class='modal-success-content'>
-      <img src='./images/create-list/success.png' alt='successfully deleted list' />
+      <img src='../images/create-list/success.png' alt='successfully deleted list' />
       <p>List deleted!</p>
     </div>
   </div>
-  <script src="./scripts/create-list.js"></script>
+  <script src='../scripts/create-list.js'></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
