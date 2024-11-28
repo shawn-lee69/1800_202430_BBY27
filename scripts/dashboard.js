@@ -14,11 +14,11 @@ if (getQueryParameter('isLoggedIn') === 'false') {
   isLoggedIn = false;
 }
 
-// add navigations for nav bottom buttons by selecting all elements that should navigate to "myPage.html"
+// add navigations for nav bottom buttons by selecting all elements that should navigate to "my-page.html"
 const profileElements = document.querySelectorAll('.profile, .profile-span');
 profileElements.forEach(element => {
   element.addEventListener("click", () => {
-    window.location.href = "myPage.html";
+    window.location.href = "my-page.html";
   });
 });
 
