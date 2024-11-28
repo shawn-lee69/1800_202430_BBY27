@@ -1,6 +1,60 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 900;
+    src: local('Pretendard Black'),  url('/assets/fonts/Pretendard-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 800;
+    src: local('Pretendard ExtraBold'), url('/assets/fonts/Pretendard-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    src: local('Pretendard Bold'), url('/assets/fonts/Pretendard-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    src: local('Pretendard SemiBold'), url('/assets/fonts/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    src: local('Pretendard Medium'), url('/assets/fonts/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: local('Pretendard Regular'), url('/assets/fonts/Pretendard-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    src: local('Pretendard Light'), url('/assets/fonts/Pretendard-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 200;
+    src: local('Pretendard ExtraLight'), url('/assets/fonts/Pretendard-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 100;
+    src: local('Pretendard Thin'), url('/assets/fonts/Pretendard-Thin.woff') format('woff');
+}
+
 
 body {
-    font-family: 'Crimson Text', serif;
+    font-family: 'Pretendard', serif;
     background-color:  #F3F4F6;
     display: flex;
     flex-direction: column;
@@ -10,7 +64,6 @@ body {
     width: 100vw;
     margin:0;
     padding: 0;
-    border: 2px solid black;
 }
 
 
@@ -20,19 +73,21 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: #FFFDF4;
     width: 100%;
     padding: 20px 0;
-    
 }
 
-header img {
-    max-width: 150px;
+.logo-img {
+    width: 40%;
+    margin-top: 4px;
+    margin-right: 16px;
 }
 
 #back-button {
     position: relative;
-    right: 110px;
+    right: 80px;
+    width: 16px;
     max-height: 35px;
 }
 
@@ -44,7 +99,7 @@ header img {
     align-items: center;
     height: 100vh;
     width: 440px;
-    background-color: white;
+    background-color: #FFFDF4;
 }
 
 /* Sale information image styling */
@@ -68,7 +123,7 @@ header img {
 
 /* Form container */
 .sale-information-form {
-    background-color: #FFFBE6;
+    background-color: #ffffff;
     padding: 20px 30px;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -77,16 +132,15 @@ header img {
 }
 
 .sale-information-form label {
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-weight: 600;
     color: #333;
     display: inline-block;
+    margin-bottom: 4px;
 }
 
 .sale-information-form input {
-    width: 100%;
+    width: auto;
     padding: 10px;
-    margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
@@ -96,20 +150,34 @@ header img {
     color: #555;
 }
 
+#info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 /* Button styling */
 
 .confirm-btn {
     background-color: #4CAF50;
     color: white;
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: bold;
-    padding: 10px 20px;
+    padding: 10px 8px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 110px;
-    
-    height: 55px;
+    width: 90%;
+    max-width: 180px;
+    height: 100%;
+    min-height: 60px;
 }
 
 .confirm-btn:hover {
@@ -119,23 +187,27 @@ header img {
 
 .button-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     padding: 10px;
+    width: 100%;
+    margin: 12px 0 20px 0;
 }
 
 .community-btn {
-background-color: #FCCD2A;
-color: black;
-font-size: 14px;
-font-weight: bold;
-padding: 10px 20px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-width: 110px;
-height: 55px;
+    background-color: #FCCD2A;
+    color: #524900;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 90%;
+    max-width: 180px;
+    height: 100%;
+    min-height: 60px;
 }
 
 
@@ -144,7 +216,6 @@ height: 55px;
 
     #main {
         width: 100vw;
-        /* height: calc(100vh - 116px); */
         overflow-y: auto;
         max-width: 440px;
     }

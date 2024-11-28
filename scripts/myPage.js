@@ -63,7 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
     populateUserInfo();
 
     document.getElementById('edit-button').addEventListener('click', function () {
-        updateUserInfo();
+      updateUserInfo();
+      const elements = document.querySelectorAll('.form-control');
+      elements.forEach(element => {
+        element.style.border = '1px solid #3575FF';
+      });
+      document.getElementById('edit-button').style.display = "none";
+      document.getElementById('save-button').style.display = "block";
     });
 
     document.getElementById('save-button').addEventListener('click', function () {
@@ -79,6 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }    
           })
         saveUserInfo();
+      const elements = document.querySelectorAll('.form-control');
+      elements.forEach(element => {
+        element.style.border = '1px solid #f9f9f9';
+      });
+      document.getElementById('edit-button').style.display = "block";
+      document.getElementById('save-button').style.display = "none";
     });
 
     document.getElementById('logout').addEventListener('click', function () {

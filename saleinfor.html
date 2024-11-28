@@ -28,28 +28,36 @@
                 <!--Top bar of page-->
                 <header>
                     <img src="./images/create-list/back-arrow.png" alt="back-button" id="back-button">
-                    <img src="SamePage.png" alt="main logo">
+                    <img src='images/SamePage.png' class="logo-img" alt="main logo">
                 </header>
                 <div id="divider" class="divider"></div>
                 <div id="salesinformation">
-                    <img src="sale-information.png" alt="sales information">
+                    <img src='images/sales-infor/sale-information.png' alt="sales information">
                 </div>
                 <!--Inputs forms and labels-->
                 <form class="sale-information-form">
-                <div id="info">
-                    <label for="itemname" id="itemlabel">Item:</label>
-                    <input type="text" id="itemname" class="item-name" placeholder="Item" required /><br><br>
-                    <label for="itemprice">Price:</label>
-                    <input type="text" id="itemprice" class="item-price" placeholder="Price" required><br><br>
-                    <label for="store">Store:</label>
-                    <input type="text" id="store" class="store" placeholder="Store" required /><br><br>
-                    <label for="saledate">Sale Date:</label>
-                    <input type="date" id="saledate" class="sale-date" placeholder="Date (yyyy/mm/dd)" required />
-                </div>
+                    <div id="info">
+                        <div class='input-wrapper'>
+                            <label for="itemname" id="itemlabel">Item:</label>
+                            <input type="text" id="itemname" class="item-name" placeholder="e.g. Garlic Bread" required /><br><br>
+                        </div>
+                        <div class='input-wrapper'>
+                            <label for="itemprice">Price:</label>
+                            <input type="text" id="itemprice" class="item-price" placeholder="e.g. 5.50" required><br><br>
+                        </div>
+                        <div class='input-wrapper'>
+                            <label for="store">Store:</label>
+                            <input type="text" id="store" class="store" placeholder="e.g. Walmart" required /><br><br>
+                        </div>
+                        <div class='input-wrapper'>
+                            <label for="saledate">Sale Date:</label>
+                            <input type="date" id="saledate" class="sale-date" placeholder="(yyyy/mm/dd)" required />
+                        </div>
+                    </div>
                 </form>
                 <div class="button-wrapper">
-                    <button type="submit" id="confirm" class="confirm-btn">Post</button>
-                    <button type="submit" class="community-btn" id="community-btn">Community Flyer</button>
+                    <button type="submit" id="confirm" class="confirm-btn">Post Deal</button>
+                    <button type="submit" class="community-btn" id="community-btn">Check Deals</button>
                 </div>
                 
             </div>
