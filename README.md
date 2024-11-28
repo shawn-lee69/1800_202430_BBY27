@@ -4,42 +4,39 @@
 Our team bby27 is developing a web application to help households organize their shopping to save both time and money with shared lists and community feedback.
 
 ## 2. Names of Contributors
-List team members and/or short bio's here... 
 
+* Shawn Lee: Hello, my name is Shawn! I am thrilled to make our own application!
 
+* Kyle Cheon: Hi everyone! I am Kyle. I am looking forward to this new app we will create.
 
-* Hello, my name is Shawn! I am thrilled to make our own application!
-
-* Hi everyone! I am Kyle. I am looking forward to this new app we will create.
-* 
-* Hi I'm Kaid and I'm excited and terrified to work on this project!
+* Kaid Krawchuck: Hi I'm Kaid and I'm excited and terrified to work on this project!
 
 	
 ## 3. Technologies and Resources Used
-List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
 * HTML, CSS, JavaScript
 * Bootstrap 5.0 (Frontend library)
-* Firebase 8.0 (BAAS - Backend as a Service)
-* ...
+* Firebase Version 8 (Authentication, Firestore, Storage, Hosting)
+* SweetAlert2 11.14.5
 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
 Here are the steps ...
-* ...
-* ...
-* ...
+* As always, you can start your journey from index.html
+* You may access other pages but without proper sign up and right passage, you may not be able to use certain features.
+* Once you get to dashboard page, you may start adding grocery list by clicking the 'create list' button at the bottom center of the page.
+* You may add, and modify, delete grocery lists and the items inside.
+* You may post new sales or deals to the public board.
+* You can update your personal information through My Page.
 
 ## 5. Known Bugs and Limitations
 Here are some known bugs:
-* ...
-* ...
-* ...
+* Accessing certain page directly without properly populating your url parameters will cause error.
+* Certain cases of input validation may not work properly.
 
 ## 6. Features for Future
 What we'd like to build in the future:
-* ...
-* ...
-* ...
+* We could add "item qunatity" feature so that you can record the number of items you add.
+* We could add notification feature so when users share lists they will be notified of lists being shared or updates made in the shared lists.
 	
 ## 7. Contents of Folder
 Content of the project folder:
