@@ -109,7 +109,7 @@ body {
 }
 
 img {
-    width: 49%;
+    width: 58.5%;
     margin: 4px auto 0 auto;
     display: block;
 }
@@ -242,5 +242,11 @@ img {
         min-height: 100vh;
         height: auto;
         background-color: #FFFDF4;
+    }
+
+    img {
+        width: 49%;
+        margin: 4px auto 0 auto;
+        display: block;
     }
 }
