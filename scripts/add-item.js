@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function goBackToTheList() {
   const linkAnchor = document.createElement('a');
   const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-  linkAnchor.href = `${basePath}/pages/create-list.html?id=${listId}&uid=${userId}`;
+  linkAnchor.href = `${basePath}/create-list.html?id=${listId}&uid=${userId}`;
   linkAnchor.innerHTML = `
       <img src='/images/create-list/back-arrow.png' alt='arrow image for moving back'/>
     `;
@@ -136,7 +136,7 @@ function addItemToFirestore(itemName) {
 let groceryItems = [];
 
 // Fetch the grocery items JSON file and store it in the `groceryItems` array
-fetch('common-grocery-items.json')
+fetch('../common-grocery-items.json')
   .then(response => response.json())
   .then(data => groceryItems = data)
   .catch(error => console.error('Error loading grocery items:', error));
@@ -336,7 +336,7 @@ function renderPopularItems() {
 }
 
 // Fetch the popular items JSON file
-fetch('popular-items.json')
+fetch('../popular-items.json')
   .then(response => response.json())
   .then(data => {
     popularItems = data;
