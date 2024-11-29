@@ -178,32 +178,25 @@ function displaySearchResults(results) {
   resultsContainer.innerHTML = ''; // Clear previous results
   resultsContainer.style.display = 'block'; // Show the results container
 
-  while (listItemContainer.children.length > 1) {
-    listItemContainer.removeChild(listItemContainer.lastChild);
-  }
-
   if (results.length === 0) {
-    noResultItem.addEventListener('click', () => {
-      const query = searchInput.value.trim();
-      updateAddItemButton(query);
-      resultsContainer.innerHTML = '';
-      resultsContainer.style.display = 'none';
-    });
-    resultsContainer.appendChild(noResultItem);
+    // No results found, clear and hide the results container
+    resultsContainer.innerHTML = '';
+    resultsContainer.style.display = 'none';
     return;
   }
 
+  // Populate results container with matching items
   results.forEach(item => {
     const resultItem = document.createElement('div');
     resultItem.textContent = item;
     resultItem.addEventListener('click', () => {
-      searchInput.value = item;         // Update input field
-      updateAddItemButton(item);        // Update 'add item' button
+      searchInput.value = item;         // Set search input to the clicked item
+      updateAddItemButton(item);        // Update the add-item button with the item
       resultsContainer.innerHTML = '';  // Clear search results
-      resultsContainer.style.display = 'none';
+      resultsContainer.style.display = 'none'; // Hide the results container
       renderPopularItems();
     });
-    resultsContainer.appendChild(resultItem);
+    resultsContainer.appendChild(resultItem); // Add the item to the results container
   });
 }
 
@@ -218,7 +211,7 @@ searchInput.addEventListener('input', event => {
     return;
   }
 
-  const results = searchCommonGroceryItems(query);
+  const results = searchCommonGroceryItems(query); // Get matching results
 
   // Display results and update button text
   displaySearchResults(results);
@@ -241,7 +234,7 @@ searchInput.addEventListener('input', event => {
 // Reference to the first item-add-button
 const firstItemAddButton = document.getElementById('first-item-add-button');
 
-// Update the add button with the default or current query
+// Update the first add button with the default or current query
 function updateFirstAddItemButton(query) {
   firstItemAddButton.innerHTML = ''; // Clear existing content
 
@@ -269,7 +262,7 @@ firstItemAddButton.addEventListener('click', function(event) {
   }
 });
 
-
+// Update other add item buttons
 function updateAddItemButton(query) {
   itemAddButton.innerHTML = ''; // Clear existing content
 
@@ -291,14 +284,15 @@ document.getElementById('cancel-button').addEventListener('click', function(even
 });
 
 
-/*
- * Following is the cluster of codes for favorite bar feature.
- */
+// ==========================
+// Favorite Bar Feature
+// ==========================
+
+// Arrays to hold popular and recent items
 let popularItems = [];
 let recentItems = [];
 
-
-// Function to render popular items
+// Function to render recent items
 function renderRecentItems() {
   // Append recent items
   recentItems.forEach((item) => {
@@ -385,9 +379,11 @@ favoritePopularBar.addEventListener('click', () => {
   renderPopularItems();
 })
 
-/*
- * Event Delegation for 'Add Item' Buttons
- */
+
+// ==========================
+// Event Delegation for 'Add Item' Buttons
+// ==========================
+
 listItemContainer.addEventListener('click', function(event) {
   const itemButton = event.target.closest('.item-add-button');
 
