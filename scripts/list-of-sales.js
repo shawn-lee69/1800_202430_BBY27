@@ -76,6 +76,7 @@ function AddAllDataToTable(SalesInformationDocList){
 
 window.onload = GetSalesData;
 
+
 const profileElements = document.querySelectorAll('#back-btn');
 profileElements.forEach(element => {
   element.addEventListener("click", () => {
@@ -83,7 +84,9 @@ profileElements.forEach(element => {
   });
 });
 
-function goBackToTheList() {
+
+
+/*function goBackToTheList() {
     const linkAnchor = document.createElement('a');
     const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
     linkAnchor.href = `${basePath}/pages/create-list.html?id=${listId}&uid=${userId}`;
@@ -92,4 +95,4 @@ function goBackToTheList() {
       `;
     const backArrowDiv = document.querySelector('.back-btn');
     backArrowDiv.appendChild(linkAnchor);
-  }
+  } */
