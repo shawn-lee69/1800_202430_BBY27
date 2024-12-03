@@ -195,12 +195,12 @@ function displaySearchResults(results) {
       resultsContainer.innerHTML = '';  // Clear search results
       resultsContainer.style.display = 'none'; // Hide the results container
 
-      // reset the additional item list to 'popular' items
-      favoritePopularBar.style.backgroundColor = '';
-      favoritePopularBar.style.color = '';
-      favoriteRecentBar.style.backgroundColor ='';
-      favoriteRecentBar.style.color = '';
-      renderPopularItems();
+      // // reset the additional item list to 'popular' items
+      // favoritePopularBar.style.backgroundColor = '';
+      // favoritePopularBar.style.color = '';
+      // favoriteRecentBar.style.backgroundColor ='';
+      // favoriteRecentBar.style.color = '';
+      // renderPopularItems();
     });
     resultsContainer.appendChild(resultItem); // Add the item to the results container
   });
