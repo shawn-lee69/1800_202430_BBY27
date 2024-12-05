@@ -6,8 +6,3 @@ function logout() {
         
       });
 }
-
-function sayHello() {
-    
-}
-//sayHello();

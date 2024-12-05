@@ -1,24 +1,34 @@
-/*
- * Global constants and functions
- */
+
+// ==========================
+// Global constants and functions
+// ==========================
+
+// Default name for a new list if none is provided
 const DEFAULT_LIST_NAME = "New List";
+
+// Paths to checkbox images for checked and unchecked states
 const CHECKBOX_EMPTY_SRC = '../images/create-list/check-box-empty.png';
 const CHECKBOX_CHECKED_SRC = '../images/create-list/check-box-checked.png';
 
+// A variable to hold the current list's name; defaults to DEFAULT_LIST_NAME
 let listName = DEFAULT_LIST_NAME;
 
-// Function to get query parameters from the URL
+
+// ==========================
+// Function to extract query parameters from the URL
+// ==========================
 function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 }
 
+// Extract the list ID and user ID from URL query parameters
 const listId = getQueryParam('id');
 const userId = getQueryParam('uid') || '';
 
-/*
- * This is a utility function for fetching data from Firestore
- */
+// ==========================
+// Utility function to fetch a single document from Firestore
+// ==========================
 function getFirestoreDocument(collection, docId) {
   return db.collection(collection).doc(docId).get()
     .then(doc => {
@@ -36,12 +46,19 @@ function getFirestoreDocument(collection, docId) {
 }
 
 
+// ==========================
+// Items fetching and displaying logic
+// ==========================
 /*
- * Following cluster of codes is responsible for fetching lists from DB
+ * The following block of code is responsible for:
+ * 1. Fetching items for the current list from Firestore
+ * 2. Displaying them in the DOM
  */
-// Declare itemsList globally
+
+// Global array to store the list items currently displayed
 let itemsList = [];
 
+// Function to display items in the ".selected-items-container" element
 function displayItems() {
   const selectedItemsContainer = document.querySelector('.selected-items-container');
   selectedItemsContainer.innerHTML = '';
@@ -49,12 +66,13 @@ function displayItems() {
   itemsList.forEach((item) => {
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('shopping-item');
-    itemDiv.setAttribute('data-item-id', item.id); // Add data-item-id attribute
+    // Store the item ID as a data attribute for easy reference later
+    itemDiv.setAttribute('data-item-id', item.id);
 
-    const checkboxSrc = item.isChecked
-      ? CHECKBOX_CHECKED_SRC
-      : CHECKBOX_EMPTY_SRC;
+    // Determine which checkbox image to display based on 'isChecked'
+    const checkboxSrc = item.isChecked ? CHECKBOX_CHECKED_SRC : CHECKBOX_EMPTY_SRC;
 
+    // Construct the inner HTML for the item
     itemDiv.innerHTML = `
       <div class='item-header'>
         <img class='checkbox' src='${checkboxSrc}' alt='checkbox' />
@@ -63,17 +81,17 @@ function displayItems() {
       <img class='delete-item-button' src='../images/create-list/delete-circle-button.png' alt='delete button' />
     `;
 
+    // Append the item to the container
     selectedItemsContainer.appendChild(itemDiv);
   });
 }
 
-// Function to fetch items from Firestore and display them
+// Function to fetch items from Firestore and then display them
 function fetchAndDisplayItems(listId) {
-  // code snippet for spinner
+  // Show a loading spinner while fetching data
   const spinner = document.querySelector('.spinner-border');
   const selectedItemsContainer = document.querySelector('.selected-items-container');
 
-  // Show the spinner and clear the selected item list div
   if (spinner) {
     spinner.style.display = 'block';
   }
@@ -81,7 +99,7 @@ function fetchAndDisplayItems(listId) {
     selectedItemsContainer.innerHTML = '';
   }
 
-
+  // Fetch all items for the given list from the 'items' subcollection in Firestore
   db.collection('lists').doc(listId).collection('items').get().then((querySnapshot) => {
     itemsList = [];
     querySnapshot.forEach((doc) => {
@@ -95,34 +113,35 @@ function fetchAndDisplayItems(listId) {
       });
     });
 
-    // Hide the spinner after fetching is done
+    // Once data is fetched, hide the spinner
     if (spinner) {
       spinner.style.display = 'none';
     }
 
+    // Display the fetched items in the UI
     displayItems();
   }).catch((error) => {
     console.error('Error fetching items: ', error);
 
-    // Hide the spinner even if an error occurs
+    // Hide the spinner even if there's an error
     if (spinner) {
       spinner.style.display = 'none';
     }
   });
 }
 
-// Ensure code runs after DOM is fully loaded
+// Ensure that the page content is fully loaded before executing certain scripts
 document.addEventListener('DOMContentLoaded', function () {
-
   const listNameElement = document.querySelector('.list-name');
 
-  // Check if listNameElement exists before using it
+  // If the element for displaying the list name doesn't exist, log a warning
   if (!listNameElement) {
     console.warn('Element with class "list-name" not found');
   }
 
+  // If a list ID is present, fetch the list name and items
   if (listId) {
-    // Fetch the list from Firestore
+    // Fetch the list document from Firestore and update the UI with its name
     getFirestoreDocument('lists', listId).then(listData => {
       if (listData) {
         listName = listData.name || DEFAULT_LIST_NAME;
@@ -131,6 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       listNameElement.innerText = listName;
     });
+
+    // Fetch and display the items for this list
     fetchAndDisplayItems(listId);
   } else {
     console.log('No list ID provided in the URL.');
@@ -139,19 +160,23 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// ==========================
+// Navigation to add-item page
+// ==========================
 /*
- * Following snippet of code navigates user to add-item page when add item button is clicked.
+ * When user clicks the add-item button, navigate to add-item page with list & user IDs
  */
 document.getElementById('item-add-button').addEventListener('click', function (event) {
   window.location.href = `add-item.html?id=${listId}&uid=${userId}`;
 });
 
-
+// ==========================
+// Item deletion feature
+// ==========================
 /*
- * Following cluster of codes is for item deleting feature
+ * This section handles removing an item from the Firestore database and updating the UI.
  */
 function removeItemFromFirestore(itemId) {
-
   if (!listId) {
     console.error("Error: listId is empty or undefined.");
     return;
@@ -161,6 +186,7 @@ function removeItemFromFirestore(itemId) {
   const itemRef = listRef.collection('items').doc(itemId);
 
   db.runTransaction(async (transaction) => {
+    // Retrieve the current list and the specific item from Firestore
     const listDoc = await transaction.get(listRef);
     const itemDoc = await transaction.get(itemRef);
 
@@ -172,24 +198,30 @@ function removeItemFromFirestore(itemId) {
       throw "Item does not exist!";
     }
 
+    // Check if the item is currently checked
     const isChecked = itemDoc.data().isChecked || false;
+
+    // Retrieve counts for total and checked items from the list
     let totalNumberOfItems = listDoc.data().totalNumberOfItems || 0;
     let checkedNumberOfItems = listDoc.data().checkedNumberOfItems || 0;
 
-    // Calculate new counts ensuring they don't go below zero
+    // Calculate the new counts after item deletion
     const newTotal = Math.max(totalNumberOfItems - 1, 0);
     const newChecked = isChecked ? Math.max(checkedNumberOfItems - 1, 0) : checkedNumberOfItems;
 
-    // Update counts
+    // Update the main list's item counts
     transaction.update(listRef, {
       totalNumberOfItems: newTotal,
       checkedNumberOfItems: newChecked
     });
 
-    // Delete the item
+    // Delete the item from Firestore
     transaction.delete(itemRef);
   }).then(() => {
+    // Remove the deleted item from the itemsList array
     itemsList = itemsList.filter(item => item.id !== itemId);
+
+    // Show a success popup using SweetAlert
     Swal.fire({
       title: "Item Successfully\n Deleted!",
       showConfirmButton: false,
@@ -197,32 +229,40 @@ function removeItemFromFirestore(itemId) {
       imageUrl: "../images/create-list/success.png",
       imageWidth: 100,
       imageHeight: 'auto',
-      imageAlt: "successfully added item",
+      imageAlt: "successfully deleted item",
       customClass: {
         popup: 'custom-rounded-popup',
         title: 'custom-title',
       }
     })
+
+    // Re-display the updated item list
     displayItems();
   }).catch((error) => {
     console.error("Transaction failed: ", error);
   });
 }
 
+
+// ==========================
+// List sharing feature
+// ==========================
 /*
- * Following cluster of codes is for list sharing feature
+ * The following code controls the overlay that appears for sharing the list,
+ * as well as various methods of sharing (e.g., copy link, WhatsApp).
  */
-// Show the overlay when the share button is clicked
+
+// Show the share overlay when the share button is clicked
 document.getElementById('share-button').addEventListener('click', function () {
   document.getElementById('share-overlay').classList.remove('hidden');
 });
 
-// Hide the overlay when the close button is clicked
+// Hide the share overlay
 function closeShareOverlay() {
   document.getElementById('share-overlay').classList.add('hidden');
 }
 
-// Example functions for sharing options
+// Copy the current page link to clipboard and show a success message
 function copyLink() {
   navigator.clipboard.writeText(window.location.href)
     .then(() => Swal.fire({
@@ -234,46 +274,54 @@ function copyLink() {
       imageHeight: 'auto',
       customClass: {
         popup: 'custom-rounded-popup',
-    }
+      }
     }))
     .catch((error) => console.error("Failed to copy link: ", error));
 }
 
+// Share the current page link via WhatsApp
 function shareOnWhatsApp() {
   const url = `https://wa.me/?text=${encodeURIComponent(window.location.href)}`;
   window.open(url, '_blank');
 }
 
+// Share the current page link via SMS
 function shareViaMessages() {
   window.open(`sms:?body=${encodeURIComponent(window.location.href)}`);
 }
 
+// Share the current page link via Email
 function shareViaEmail() {
   window.open(`mailto:?subject=Check out this list&body=${encodeURIComponent(window.location.href)}`);
 }
 
 
+// ==========================
+// Toggle items (cross-off or check) feature
+// ==========================
 /*
- * Following cluster of codes is for item toggling(crossing-off) feature
+ * Clicking the checkbox toggles the isChecked state of the item in Firestore,
+ * updates the UI checkbox state, and adjusts the count of checked items in the list.
  */
-// Get the container that holds all the items
 const selectedItemsContainer = document.querySelector('.selected-items-container');
 
-// Attach a single event listener to the container
+// Event delegation for the selected items container
+// This allows handling clicks on dynamically generated elements
 selectedItemsContainer.addEventListener('click', function (event) {
   const target = event.target;
   const itemDiv = target.closest('.shopping-item');
 
-  if (!itemDiv) return;
+  if (!itemDiv) return; // If the click is not on a shopping-item element, exit
+
   const itemId = itemDiv.getAttribute('data-item-id');
 
+  // If the delete button was clicked, remove the item
   if (target.classList.contains('delete-item-button')) {
-    // Delete button was clicked
     removeItemFromFirestore(itemId);
-  } else if (target.classList.contains('checkbox')) {
-    // Checkbox was clicked
-
-    // Toggle the checkbox UI
+  }
+  // If the checkbox was clicked, toggle the isChecked state
+  else if (target.classList.contains('checkbox')) {
+    // Update the checkbox image in the UI immediately
     if (target.src.includes('check-box-empty.png')) {
       target.src = CHECKBOX_CHECKED_SRC;
       target.classList.add('checked');
@@ -284,11 +332,12 @@ selectedItemsContainer.addEventListener('click', function (event) {
       target.classList.remove('shrink');
     }
 
-    // Toggle the isChecked value in Firestore
+    // Update the Firestore document with the new isChecked value
     toggleIsChecked(itemId);
   }
 });
 
+// Function to toggle the 'isChecked' status of an item in Firestore
 async function toggleIsChecked(itemId) {
   if (!listId) {
     console.error("Error: listId is empty or undefined.");
@@ -300,6 +349,7 @@ async function toggleIsChecked(itemId) {
 
   try {
     await db.runTransaction(async (transaction) => {
+      // Get the current item and list
       const itemDoc = await transaction.get(itemRef);
       const listDoc = await transaction.get(listRef);
 
@@ -311,38 +361,40 @@ async function toggleIsChecked(itemId) {
         throw "List does not exist!";
       }
 
+      // Determine the new checked state
       const currentIsChecked = itemDoc.data().isChecked || false;
       const newIsChecked = !currentIsChecked;
 
-      // Update the item's isChecked status
+      // Update the item's isChecked field
       transaction.update(itemRef, { isChecked: newIsChecked });
 
-      // Update the checkedNumberOfItems using FieldValue.increment
+      // Update the checkedNumberOfItems count accordingly
       const incrementValue = newIsChecked ? 1 : -1;
-
-      // Ensure that checkedNumberOfItems does not go below zero
       let currentCheckedNumberOfItems = listDoc.data().checkedNumberOfItems || 0;
       let newCheckedNumberOfItems = currentCheckedNumberOfItems + incrementValue;
       newCheckedNumberOfItems = Math.max(newCheckedNumberOfItems, 0);
 
       transaction.update(listRef, { checkedNumberOfItems: newCheckedNumberOfItems });
     });
-
   } catch (error) {
     console.error("Transaction failed: ", error);
   }
 }
 
-// Start of the code for editing list name
+
+// ==========================
+// Editing the list name feature
+// ==========================
+/*
+ * This code shows a modal allowing the user to change the name of the current list.
+ */
 const editModal = document.getElementById('editModal-1');
 const closeModalButton = editModal.querySelector('.close');
 const saveButton = document.getElementById('saveButton-1');
 const listNameInput = document.getElementById('listNameInput-1');
 const modalOverlay = document.getElementById('editModal-1-overlay');
 
-
-
-// Open the modal and populate the current list name
+// When the edit button is clicked, open the modal and populate the current list name
 document.getElementById('edit-button').addEventListener('click', function () {
   if (listId) {
     const docRef = db.collection('lists').doc(listId);
@@ -353,7 +405,7 @@ document.getElementById('edit-button').addEventListener('click', function () {
         // Set the current name in the input field
         listNameInput.value = doc.data().name || "New List";
 
-        // Check if this list is shared by others and if so, prevent deletion
+        // If the list is shared and the user is not the owner, prevent editing
         if (doc.data().isSharedWithOthers && userId !== doc.data().userID) {
           Swal.fire({
             title: "You cannot edit shared list!",
@@ -365,18 +417,20 @@ document.getElementById('edit-button').addEventListener('click', function () {
             }
           })
           return;
-        } else if (userId === doc.data().userID) {
-          // Show the modal
+        }
+        // If the user owns the list, show the edit modal
+        else if (userId === doc.data().userID) {
           editModal.style.display = 'block';
           modalOverlay.style.display = 'block';
         }
 
-        // Close modal
+        // Close modal when the close button is clicked
         closeModalButton.addEventListener('click', () => {
           editModal.style.display = 'none';
           modalOverlay.style.display = 'none';
         });
 
+        // Show a success message when the save button is clicked (before actually saving)
         saveButton.addEventListener('click', () => {
           Swal.fire({
             title: "New list name\n Saved!",
@@ -387,7 +441,7 @@ document.getElementById('edit-button').addEventListener('click', function () {
             imageHeight: 'auto',
             customClass: {
               popup: 'custom-rounded-popup',
-          }
+            }
           })
           editModal.style.display = 'none';
           modalOverlay.style.display = 'none';
@@ -403,19 +457,18 @@ document.getElementById('edit-button').addEventListener('click', function () {
   }
 });
 
-// Close the modal
+// Close the modal when the close button is clicked
 closeModalButton.addEventListener('click', function () {
   editModal.style.display = 'none';
 });
 
-// Save the new list name to Firestore
+// Save the new list name to Firestore when the save button is clicked
 saveButton.addEventListener('click', function () {
   const newListName = listNameInput.value.trim();
 
   if (newListName && listId) {
     const docRef = db.collection('lists').doc(listId);
 
-    // Update the list name in Firestore
     docRef.update({
       name: newListName,
       updatedAt: firebase.firestore.Timestamp.fromDate(new Date())
@@ -435,16 +488,18 @@ saveButton.addEventListener('click', function () {
   }
 });
 
+// ==========================
+// List deletion feature
+// ==========================
 /*
- * Following cluster of codes is for list deletion function.
+ * The following code handles showing a confirmation modal and deleting the list.
  */
-// Modal elements
 const deleteModal = document.getElementById('deleteModal');
 const deleteSuccessModal = document.getElementById('delete-success-modal');
 const confirmDeleteButton = document.getElementById('confirmDeleteButton');
 const cancelDeleteButton = document.getElementById('cancelDeleteButton');
 
-// Show the modal when the delete button is clicked
+// Show the delete confirmation modal when the delete button is clicked
 const deleteListButton = document.getElementById('delete-list-button');
 
 if (deleteListButton) {
@@ -452,7 +507,7 @@ if (deleteListButton) {
     if (listId) {
       getFirestoreDocument('lists', listId).then(listData => {
         if (listData) {
-          // Check if this list is shared by others and if so, prevent deletion
+          // If the list is shared and the user is not the owner, prevent deletion
           if (listData.isSharedWithOthers && userId !== listData.userID) {
             Swal.fire({
               title: "You cannot delete shared list!",
@@ -469,11 +524,11 @@ if (deleteListButton) {
           // Update the global listName variable
           listName = listData.name || DEFAULT_LIST_NAME;
 
-          // Set the modal message with the list name
+          // Set the confirmation message with the list name
           const modalMessage = deleteModal.querySelector('p');
           modalMessage.innerHTML = `Delete list <br>"${listName}"?`;
 
-          // Show the modal
+          // Show the delete confirmation modal
           deleteModal.style.display = 'block';
         } else {
           console.log("No such document!");
@@ -487,29 +542,31 @@ if (deleteListButton) {
   console.warn('Element with ID "delete-list-button" not found');
 }
 
-// Hide the modal and proceed with delete if "Yes" is clicked
+// If user confirms deletion, delete the list and show success modal
 confirmDeleteButton.addEventListener('click', function () {
   removeListFromFirestore(listId);
   deleteSuccessModal.style.display = 'block';
   deleteModal.style.display = 'none';
 });
 
-// Hide the modal if "Cancel" is clicked
+// If user cancels deletion, hide the modal
 cancelDeleteButton.addEventListener('click', function () {
   deleteModal.style.display = 'none';
 });
 
-// Hide modal when clicking outside of it
+// Close the delete modal if user clicks outside it
 window.addEventListener('click', function (event) {
   if (event.target === deleteModal) {
     deleteModal.style.display = 'none';
   }
 });
 
+// A helper function to pause execution for a given number of milliseconds
 function pause(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Actually remove the list from Firestore and then redirect the user
 async function removeListFromFirestore(listId) {
   if (!listId) {
     console.error("Error: listId is empty or undefined.");
@@ -517,14 +574,23 @@ async function removeListFromFirestore(listId) {
   }
 
   try {
+    // Delete the list document
     await db.collection('lists').doc(listId).delete();
-    await pause(1000); // Wait for 1 second (1000 milliseconds)
+    // Wait for 1 second before redirecting
+    await pause(1000);
+    // Redirect the user to the dashboard
     window.location.href = 'dashboard.html';
   } catch (error) {
     console.log('Failed to remove list: ', error);
   }
 }
-// function to bring user to the list of sales page
+
+// ==========================
+// Navigation to the sales page
+// ==========================
+/*
+ * When certain buttons are clicked, navigate to "list-of-sales.html".
+ */
 const profileElements = document.querySelectorAll('.btn, #sale-button');
 profileElements.forEach(element => {
   element.addEventListener("click", () => {
@@ -532,10 +598,19 @@ profileElements.forEach(element => {
   });
 });
 
+// ==========================
+// Share list with a specific user by their email
+// ==========================
+/*
+ * This function reads the email input, checks if the user exists in Firestore,
+ * and adds the current list to their 'sharedLists'.
+ */
 function shareListButton() {
   const recipientInput = document.getElementById('recipient-input').value.trim();
+
   db.collection("users").where("email", "==", recipientInput).get()
     .then((querySnapshot) => {
+      // If no user found with that email, show error
       if (querySnapshot.empty) {
         Swal.fire({
           title: "Sorry, we could not find the user",
@@ -547,8 +622,10 @@ function shareListButton() {
           }
         })
       } else {
+        // If user found, add the list to their 'sharedLists'
         querySnapshot.forEach((doc) => {
-          if (userId === doc.id){
+          // Prevent sharing the list with oneself
+          if (userId === doc.id) {
             Swal.fire({
               title: "Sorry, you cannot share this with yourself",
               showConfirmButton: false,
@@ -560,8 +637,10 @@ function shareListButton() {
             })
             return;
           }
+
           let sharedLists = doc.data().sharedLists;
           sharedLists.unshift(listId);
+
           db.collection("users").doc(doc.id).update({ sharedLists })
             .then(() => {
               Swal.fire({
@@ -571,7 +650,7 @@ function shareListButton() {
                 imageUrl: "../images/create-list/success.png",
                 imageWidth: 100,
                 imageHeight: 'auto',
-                imageAlt: "successfully added item",
+                imageAlt: "successfully shared list",
                 customClass: {
                   popup: 'custom-rounded-popup',
                   title: 'custom-title',

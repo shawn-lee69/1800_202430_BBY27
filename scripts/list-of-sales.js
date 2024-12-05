@@ -83,16 +83,3 @@ profileElements.forEach(element => {
     window.location.href = "create-list.html";
   });
 });
-
-
-
-/*function goBackToTheList() {
-    const linkAnchor = document.createElement('a');
-    const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-    linkAnchor.href = `${basePath}/pages/create-list.html?id=${listId}&uid=${userId}`;
-    linkAnchor.innerHTML = `
-        <img src='/images/create-list/back-arrow.png' alt='arrow image for moving back'/>
-      `;
-    const backArrowDiv = document.querySelector('.back-btn');
-    backArrowDiv.appendChild(linkAnchor);
-  } */

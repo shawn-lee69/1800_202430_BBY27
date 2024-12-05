@@ -1,20 +1,38 @@
-// Change this value based on user's login status
+// ==========================
+// Global variables and initialization
+// ==========================
+
+// Boolean indicating if the user is logged in; default is true
 var isLoggedIn = true;
+
+// Global variable to store the current user's ID
 let userId = null;
+
+// Arrays to store the user's lists and shared lists retrieved from Firestore
 let itemsList = [];
 let sharedItemsList = [];
 
+// ==========================
+// Function to get a query parameter value from the URL
+// ==========================
 function getQueryParameter(name) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(name);
 }
 
+// Check if 'isLoggedIn' query parameter is false, and update global state accordingly
 if (getQueryParameter('isLoggedIn') === 'false') {
-
   isLoggedIn = false;
 }
 
-// add navigations for nav bottom buttons by selecting all elements that should navigate to "my-page.html"
+// ==========================
+// Navigation for profile-related elements
+// ==========================
+/*
+ * This block sets up event listeners on elements that should navigate the user
+ * to "my-page.html" when clicked. Both elements with class 'profile' and 'profile-span'
+ * are targeted. Similarly, elements with class 'tag' and 'tag-span' navigate to "saleinfor.html".
+ */
 const profileElements = document.querySelectorAll('.profile, .profile-span');
 profileElements.forEach(element => {
   element.addEventListener("click", () => {
@@ -29,20 +47,34 @@ profileElement.forEach(element => {
   });
 });
 
+// ==========================
+// Main content rendering logic
+// ==========================
+/*
+ * The renderContent function checks the user's authentication state.
+ * If the user is logged in, it fetches and displays their lists from Firestore.
+ * If the user is not logged in, it shows an empty content message.
+ */
 function renderContent() {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
       const userID = user.uid;
       userId = user.uid;
       document.getElementById('listContent').style.display = 'block';
-      fetchAndDisplayLists(userID);
+      fetchAndDisplayLists(userID); // Fetch the user's lists from Firestore
     } else {
       document.getElementById('emptyListContent').style.display = 'block';
     }
   });
 }
 
-// Helper function to format date dynamically
+// ==========================
+// Helper function to format timestamps into user-friendly strings
+// ==========================
+/*
+ * The formatSemanticTime function converts a JavaScript Date into a "semantic" time format
+ * (e.g., "Just now", "5 minutes ago", "Yesterday", "2023-03-10") depending on how old it is.
+ */
 function formatSemanticTime(createdAt) {
   const now = new Date();
   const diffInMs = now - createdAt; // Difference in milliseconds
@@ -51,54 +83,63 @@ function formatSemanticTime(createdAt) {
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
   const diffInYears = Math.floor(diffInDays / 365);
 
+  // Determine appropriate time format based on difference
   if (diffInYears >= 1) {
+    // Format as YYYY-MM-DD for dates older than a year
     return `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(createdAt.getDate()).padStart(2, '0')}`;
   } else if (diffInDays === 1) {
     return 'Yesterday';
   } else if (diffInDays > 1) {
+    // For multiple days in the past, format as DD-MM-YYYY
     return `${String(createdAt.getDate()).padStart(2, '0')}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${createdAt.getFullYear()}`;
-  } else if (diffInHours >= 1) {
+  } else if (diffInHours === 1) {
     return `${diffInHours} hour ago`;
-  } else if (diffInHours >= 2) {
+  } else if (diffInHours > 1) {
     return `${diffInHours} hours ago`;
-  } else if (diffInMinutes >= 1) {
+  } else if (diffInMinutes === 1) {
     return `${diffInMinutes} minute ago`;
-  } else if (diffInMinutes >= 2) {
+  } else if (diffInMinutes > 1) {
     return `${diffInMinutes} minutes ago`;
   } else {
     return 'Just now';
   }
 }
 
-// Function to display the list items in the shoppingList div
+// ==========================
+// Displaying the user's own lists
+// ==========================
+/*
+ * The displayListItems function updates the UI to show the user's own lists.
+ * If there are no items, it shows a "List is empty" message.
+ */
 function displayListItems() {
   const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-
   const shoppingListDiv = document.querySelector('.shoppingList');
-  shoppingListDiv.innerHTML = ''; // Clear any existing items
 
+  // Clear any existing items
+  shoppingListDiv.innerHTML = '';
+
+  // If no lists found, show an empty message
   if (!itemsList || itemsList.length === 0) {
-    // Create a message element
     const emptyMessage = document.createElement('div');
     emptyMessage.classList.add('empty-message');
     emptyMessage.textContent = 'List is empty';
-
-    // Append the message to the shopping list div
     shoppingListDiv.appendChild(emptyMessage);
-    return; // Exit the function since there's nothing to display
+    return;
   }
 
+  // Iterate through each list and create corresponding DOM elements
   itemsList.forEach((item) => {
     const semanticTime = formatSemanticTime(item.createdAt);
     const itemAnchor = document.createElement('a');
     itemAnchor.href = `${basePath}/create-list.html?id=${item.id}&uid=${userId}`;
     itemAnchor.classList.add('list-item-wrapper');
 
-    // determine if the CSS for completed items should be applied
+    // Determine if the list is complete (all items checked off)
     const isCompleted = item.totalNumberOfItems === item.checkedNumberOfItems;
     const listItemClass = isCompleted ? 'list-item completed' : 'list-item';
 
-    // determine the text to display in the counter
+    // Determine the counter text (e.g., "2/5" or "empty")
     let itemCounterText;
     if (item.totalNumberOfItems === 0 && item.checkedNumberOfItems === 0) {
       itemCounterText = 'empty';
@@ -106,11 +147,12 @@ function displayListItems() {
       itemCounterText = `${item.checkedNumberOfItems} / ${item.totalNumberOfItems}`;
     }
 
-    // Check if the list is shared
+    // If the list is shared, display a shared icon
     const sharedIconHTML = item.isSharedWithOthers ? `
       <img src="../images/dashboard/shared-button.png" alt="this list is shared list">
     ` : '';
 
+    // Construct the inner HTML for the list item
     itemAnchor.innerHTML = `
       <div class='${listItemClass}'>
         <div class='list-item-content-header'>
@@ -123,9 +165,12 @@ function displayListItems() {
         </div>
       </div>
     `;
+
+    // Append the constructed element to the shopping list container
     shoppingListDiv.appendChild(itemAnchor);
   });
 
+  // Style the counters for empty lists
   document.querySelectorAll('.list-item-number-counter').forEach(counter => {
     if (counter.textContent.trim() === 'empty') {
       counter.style.color = 'rgba(119,119,119,0.45)';
@@ -135,34 +180,42 @@ function displayListItems() {
   });
 }
 
-// Function to display the shared list items in the shoppingList div
+// ==========================
+// Displaying the shared lists
+// ==========================
+/*
+ * The displaySharedListItems function updates the UI to show lists shared with the user.
+ * If there are shared lists, it adds a title "Shared with Me" above them.
+ */
 function displaySharedListItems() {
   const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-
   const sharedShoppingListDiv = document.querySelector('.shared-shopping-list');
-  sharedShoppingListDiv.innerHTML = ''; // Clear any existing items
 
+  // Clear any existing items
+  sharedShoppingListDiv.innerHTML = '';
+
+  // If there are shared items, create a title section
   if (sharedItemsList && sharedItemsList.length !== 0) {
-    // Create a message element
     const sharedListSectionTitle = document.createElement('div');
     sharedListSectionTitle.classList.add('listContainerTitle');
     sharedListSectionTitle.textContent = 'Shared with Me';
 
-    // Append the title to the shopping list div
+    // Insert the title before the shared shopping list items
     document.querySelector('.listContainer').insertBefore(sharedListSectionTitle, sharedShoppingListDiv);
   }
 
+  // Iterate through each shared list item and construct UI elements
   sharedItemsList.forEach((item) => {
     const semanticTime = formatSemanticTime(item.createdAt);
     const itemAnchor = document.createElement('a');
     itemAnchor.href = `${basePath}/create-list.html?id=${item.id}&uid=${userId}`;
     itemAnchor.classList.add('list-item-wrapper');
 
-    // determine if the CSS for completed items should be applied
+    // Determine if the shared list is complete
     const isCompleted = item.totalNumberOfItems === item.checkedNumberOfItems;
     const listItemClass = isCompleted ? 'shared-list-item completed' : 'shared-list-item';
 
-    // determine the text to display in the counter
+    // Determine the counter text for the shared list
     let itemCounterText;
     if (item.totalNumberOfItems === 0 && item.checkedNumberOfItems === 0) {
       itemCounterText = 'empty';
@@ -170,6 +223,7 @@ function displaySharedListItems() {
       itemCounterText = `${item.checkedNumberOfItems} / ${item.totalNumberOfItems}`;
     }
 
+    // Construct the shared list item's HTML
     itemAnchor.innerHTML = `
       <div class='${listItemClass}'>
         <div class='list-item-content-header'>
@@ -181,9 +235,11 @@ function displaySharedListItems() {
         </div>
       </div>
     `;
+
     sharedShoppingListDiv.appendChild(itemAnchor);
   });
 
+  // Style the counters for empty shared lists
   document.querySelectorAll('.list-item-number-counter').forEach(counter => {
     if (counter.textContent.trim() === 'empty') {
       counter.style.color = 'rgba(119,119,119,0.45)';
@@ -193,15 +249,23 @@ function displaySharedListItems() {
   });
 }
 
-
-// Function to fetch lists from Firestore and display them
+// ==========================
+// Fetching and displaying all lists from Firestore
+// ==========================
+/*
+ * The fetchAndDisplayLists function:
+ * 1. Shows a spinner while data is loading.
+ * 2. Fetches the user's lists from Firestore.
+ * 3. Sorts them so that incomplete lists appear first.
+ * 4. Hides the spinner and displays the lists in the UI.
+ * 5. Additionally fetches lists shared with the user and displays them.
+ */
 function fetchAndDisplayLists(userId) {
-  // code snippet for spinner
   const spinner = document.querySelector('.spinner-border');
   const shoppingListDiv = document.querySelector('.shoppingList');
   const sharedShoppingListDiv = document.querySelector('.shared-shopping-list');
 
-  // Show the spinner and clear the shopping list div
+  // Show the spinner and clear the areas before fetching
   if (spinner) {
     spinner.style.display = 'block';
   }
@@ -212,6 +276,7 @@ function fetchAndDisplayLists(userId) {
     sharedShoppingListDiv.innerHTML = '';
   }
 
+  // Fetch lists owned by the user
   db.collection('lists').where('userID', '==', userId).get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       const data = doc.data();
@@ -225,7 +290,7 @@ function fetchAndDisplayLists(userId) {
       });
     });
 
-    // sort the itemsList so that incomplete lists come first
+    // Sort the lists: incomplete first, then by recency
     itemsList.sort((a, b) => {
       const aIsComplete = a.totalNumberOfItems === a.checkedNumberOfItems;
       const bIsComplete = b.totalNumberOfItems === b.checkedNumberOfItems;
@@ -245,24 +310,24 @@ function fetchAndDisplayLists(userId) {
       spinner.style.display = 'none';
     }
 
+    // Display the fetched lists
     displayListItems();
   }).catch((error) => {
     console.error('Error fetching lists: ', error);
-
-    // Hide the spinner even if an error occurs
+    // Hide spinner even if an error occurred
     if (spinner) {
       spinner.style.display = 'none';
     }
   });
 
-  // fetch list of shared lists
+  // Fetch the user's shared lists from Firestore
   db.collection("users").doc(userId).get().then((userDoc) => {
     if (!userDoc.exists) {
       console.warn('User document does not exist');
       return;
     }
 
-    // Safely fetch sharedLists
+    // Safely retrieve sharedLists from the userDoc
     const sharedLists = userDoc.data().sharedLists || [];
     if (Array.isArray(sharedLists) && sharedLists.length > 0) {
       const fetchPromises = sharedLists.filter(id => id).map((id) =>
@@ -282,8 +347,9 @@ function fetchAndDisplayLists(userId) {
         })
       );
 
-      // Wait for all fetches to complete
+      // Wait until all shared lists are fetched
       Promise.all(fetchPromises).then(() => {
+        // Sort shared lists similarly: incomplete first, then by recency
         sharedItemsList.sort((a, b) => {
           const aIsComplete = a.totalNumberOfItems === a.checkedNumberOfItems;
           const bIsComplete = b.totalNumberOfItems === b.checkedNumberOfItems;
@@ -297,6 +363,7 @@ function fetchAndDisplayLists(userId) {
           }
         });
 
+        // Display the shared lists
         displaySharedListItems();
       });
     } else {
@@ -307,16 +374,19 @@ function fetchAndDisplayLists(userId) {
   });
 }
 
-
-// Function to add a new list to Firestore and navigate to create-list.html
+// ==========================
+// Adding a new list to Firestore
+// ==========================
+/*
+ * The addListToFirestore function creates a new list document in Firestore and then redirects the
+ * user to "create-list.html" with the new list ID.
+ */
 function addListToFirestore() {
-  // Ensure the user is authenticated
+  // Ensure the user is authenticated before creating a list
   firebase.auth().onAuthStateChanged(user => {
-
     if (user) {
-      // Get the user ID
       const userID = user.uid;
-      const listName = 'New List'; // Prompt the user for a name or let them edit it later
+      const listName = 'New List'; // Default new list name
 
       if (listName) {
         const currentTime = new Date();
@@ -343,16 +413,21 @@ function addListToFirestore() {
         console.log('No list created.');
       }
     } else {
+      // If user is not authenticated, redirect them to create-list.html anyway
       window.location.href = "create-list.html";
       console.error("User is not authenticated. Please log in first.");
     }
   });
 }
 
-
-// Function to set up the 'add' button event listener
+// ==========================
+// Setting up the "Add List" button
+// ==========================
+/*
+ * The setupAddListButton function sets click event listeners on elements that should trigger
+ * the creation of a new list and navigation to the "create-list.html" page.
+ */
 function setupAddListButton() {
-  // navigate users when they either click the image area or text
   const addElements = document.querySelectorAll('.create-list-link, .add-span');
 
   addElements.forEach(element => {
@@ -362,5 +437,11 @@ function setupAddListButton() {
   });
 }
 
+// ==========================
+// Initial page load
+// ==========================
+/*
+ * On page load, render the content (fetch user state and lists) and set up the add list button.
+ */
 renderContent();
 setupAddListButton();
